@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">AndroidApplication-Reto2</string>
+
+    <string name="logout">LogOut</string>
+    <string name="welcome">Welcome</string>
+    <string name="user_data">User Data</string>
+    <string name="getit">GetIt</string>
+    <string name="paramethers_signup">*Username 4 -10 characters *Email possibility example email.example@extension.cope*Password 8 -14 characters *Password must have at least one upper case and one number</string>
+    <string name="username_login">Username</string>
+    <string name="password_login">Password</string>
+    <string name="login_button">LogIn</string>
+    <string name="signup_login">SignUp</string>
+    <string name="company_name">2DAM 2CURIOUS</string>
+    <string name="textview">TextView</string>
+    <string name="todo">TODO</string>
+    <string name="full_name">Full Name</string>
+    <string name="signup_text">Complete all the fields for a succesfull SignUp</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="confirm">Confirm</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
