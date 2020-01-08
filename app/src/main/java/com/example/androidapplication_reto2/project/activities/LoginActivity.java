@@ -1,4 +1,4 @@
-package com.example.androidapplication_reto2.activities;
+package com.example.androidapplication_reto2.project.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.androidapplication_reto2.R;
 import com.google.android.material.snackbar.Snackbar;

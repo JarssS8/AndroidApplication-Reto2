@@ -8,31 +8,31 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.androidapplication_reto2.activities.navigationfragments.PrincipalUserFragment"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.PrincipalUserFragment"
         android:label="Home"
         tools:layout="@layout/fragment_principal_user"
         />
     <fragment
         android:id="@+id/nav_user_data"
-        android:name="com.example.androidapplication_reto2.activities.navigationfragments.SeeAndModifyUserDataFragment"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SeeAndModifyUserDataFragment"
         android:label="Home"
         tools:layout="@layout/fragment_see_and_modify_user_data"
         />
     <fragment
         android:id="@+id/nav_join_group"
-        android:name="com.example.androidapplication_reto2.activities.navigationfragments.JoinCreateGroupFragment"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.JoinCreateGroupFragment"
         android:label="Home"
         tools:layout="@layout/fragment_join_create_group"
         />
     <fragment
         android:id="@+id/nav_user_groups"
-        android:name="com.example.androidapplication_reto2.activities.navigationfragments.SeeUserGroupsFragment"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SeeUserGroupsFragment"
         android:label="Home"
         tools:layout="@layout/fragment_see_user_groups"
         />
     <fragment
         android:id="@+id/nav_search_documents"
-        android:name="com.example.androidapplication_reto2.activities.navigationfragments.SearchDocumentsFragment"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SearchDocumentsFragment"
         android:label="Home"
         tools:layout="@layout/fragment_search_documents"
         />

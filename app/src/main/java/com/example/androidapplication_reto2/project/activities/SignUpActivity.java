@@ -1,6 +1,5 @@
-package com.example.androidapplication_reto2.activities;
+package com.example.androidapplication_reto2.project.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -15,8 +14,6 @@ import android.widget.TextView;
 import android.view.ViewGroup.LayoutParams;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidapplication_reto2.R;
-import com.google.android.material.snackbar.Snackbar;
-
 
 
 public class SignUpActivity extends AppCompatActivity {

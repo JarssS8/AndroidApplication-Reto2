@@ -1,4 +1,4 @@
-package com.example.androidapplication_reto2.activities.navigationfragments;
+package com.example.androidapplication_reto2.project.activities.navigationfragments;
 
 
 import android.os.Bundle;

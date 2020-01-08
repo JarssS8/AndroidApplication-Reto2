@@ -1,4 +1,4 @@
-package com.example.androidapplication_reto2.activities.navigationfragments;
+package com.example.androidapplication_reto2.project.activities.navigationfragments;
 
 
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import com.example.androidapplication_reto2.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PrincipalUserFragment extends Fragment {
+public class SeeUserGroupsFragment extends Fragment {
 
 
-    public PrincipalUserFragment() {
+    public SeeUserGroupsFragment() {
         // Required empty public constructor
     }
 
@@ -26,7 +26,7 @@ public class PrincipalUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_principal_user, container, false);
+        return inflater.inflate(R.layout.fragment_see_user_groups, container, false);
     }
 
 }

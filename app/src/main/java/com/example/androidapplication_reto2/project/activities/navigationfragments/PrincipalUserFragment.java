@@ -1,4 +1,4 @@
-package com.example.androidapplication_reto2.activities.navigationfragments;
+package com.example.androidapplication_reto2.project.activities.navigationfragments;
 
 
 import android.os.Bundle;
@@ -14,20 +14,19 @@ import com.example.androidapplication_reto2.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SeeAndModifyUserDataFragment extends Fragment {
+public class PrincipalUserFragment extends Fragment {
 
 
-    public SeeAndModifyUserDataFragment() {
+    public PrincipalUserFragment() {
         // Required empty public constructor
     }
 
-    //ADD CREDIT CARD POP UP
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root=inflater.inflate(R.layout.fragment_see_and_modify_user_data, container, false);
-        return root;
+        return inflater.inflate(R.layout.fragment_principal_user, container, false);
     }
 
 }

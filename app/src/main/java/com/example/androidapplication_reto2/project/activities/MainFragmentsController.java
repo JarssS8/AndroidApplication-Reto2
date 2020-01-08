@@ -1,4 +1,4 @@
-package com.example.androidapplication_reto2.activities;
+package com.example.androidapplication_reto2.project.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
