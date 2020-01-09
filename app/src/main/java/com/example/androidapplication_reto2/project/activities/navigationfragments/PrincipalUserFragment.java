@@ -119,8 +119,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                 .withSupportFragment(PrincipalUserFragment.this)
                 .withRequestCode(FILE_PICKER_REQUEST_CODE)
                 .withHiddenFiles(true)
-                .withFilterDirectories(true)
-                //.withFilter(Pattern.compile(".*\\.pdf$"))
+                .withFilter(Pattern.compile(".*\\.pdf$"))
                 .withTitle("Select PDF file")
                 .start();
 
