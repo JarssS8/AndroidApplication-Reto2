@@ -22,6 +22,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    repositories {
+        maven {
+            url "http://dl.bintray.com/lukaville/maven"
+        }
+    }
 }
 
 dependencies {
@@ -39,6 +44,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+    implementation 'com.nbsp:library:1.8'
 
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
