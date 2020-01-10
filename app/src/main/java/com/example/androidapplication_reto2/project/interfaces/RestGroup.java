@@ -4,10 +4,6 @@ import com.example.androidapplication_reto2.project.beans.Group;
 import com.example.androidapplication_reto2.project.beans.User;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import okhttp3.MediaType;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -38,5 +34,5 @@ public interface RestGroup {
 
     //Todo Probablemente tampoco funcione
     @DELETE
-    public void deleteGroup (Long id);
+    public Call<Void> deleteGroup (Long id);
 }
