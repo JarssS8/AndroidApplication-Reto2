@@ -41,7 +41,7 @@ public interface RestDocument {
      * @return All the documents list
      */
     @GET
-    public Call<List<Document>> findAllDocuments();
+    public Call<Set<Document>> findAllDocuments();
 
     /**
      * Method who use the ejb to search a document by his id
@@ -58,7 +58,7 @@ public interface RestDocument {
      * @return A list of names of documents
      */
     @GET("{name}/{category}/{uploadDate}")
-    public Call<List<Document>> findDocumentNameByParameters(
+    public Call<Set<Document>> findDocumentNameByParameters(
             @Path("name") String name,
             @Path("category") String category,
             @Path("uploadDate") Date uploadDate);

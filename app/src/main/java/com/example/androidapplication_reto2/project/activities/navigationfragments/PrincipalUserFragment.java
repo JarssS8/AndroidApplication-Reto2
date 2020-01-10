@@ -30,6 +30,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.beans.Category;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
@@ -46,7 +47,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
     private static final int FILE_PICKER_REQUEST_CODE = 1 ;
     private FloatingActionButton floatingAddDocument;
     private EditText newDocNameUpload;
-    private TextView lbDocUploadPath;
+    private TextView lbDocUploadPath, userData;
     private  ImageView imageButtonFindDocument,imageButtonShowDocument;
     private String path="";
 
@@ -58,6 +59,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
         View root=inflater.inflate(R.layout.fragment_principal_user, container, false);
 
         floatingAddDocument=root.findViewById(R.id.floatingActionButton);
+        userData=root.findViewById(R.id.lbUserData);
 
         floatingAddDocument.setOnClickListener(this);
 

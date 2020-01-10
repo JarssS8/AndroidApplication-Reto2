@@ -4,6 +4,8 @@ import com.example.androidapplication_reto2.project.beans.Group;
 import com.example.androidapplication_reto2.project.beans.User;
 
 import java.util.List;
+import java.util.Set;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -26,11 +28,11 @@ public interface RestGroup {
     public Call<Void> leaveGroup(@Path("id") Long id,@Body User user);
 
     @GET
-    public Call<List<Group>> findGroups();
+    public Call<Set<Group>> findGroups();
 
     //Todo regañar a diego
     @GET("user")
-    public Call<List<Group>> findAllGroups(String login) ;
+    public Call<Set<Group>> findAllGroups(String login) ;
 
     //Todo Probablemente tampoco funcione
     @DELETE
