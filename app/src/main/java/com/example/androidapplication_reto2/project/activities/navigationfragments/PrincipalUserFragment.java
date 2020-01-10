@@ -103,7 +103,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                             fragmentTransaction.commit();
                         }else{
                             //Snackbar.make(v,"Select one pdf before",Snackbar.LENGTH_SHORT).show();
-                            Toast.makeText(getContext(), "dsf", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Select one pdf before", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
