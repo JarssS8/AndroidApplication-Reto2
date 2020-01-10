@@ -37,15 +37,22 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    
+    //NAVIGATION VIEW LIBRARIES
     def material_version = "1.0.0"
     implementation "com.google.android.material:material:$material_version"
     def nav_version = "2.1.0"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
     implementation 'de.hdodenhof:circleimageview:3.0.1'
-    implementation 'com.nbsp:library:1.8'
 
+
+    //PDF LIBRARIES
+    implementation 'com.nbsp:library:1.8'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.1'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+
+    //BUTTERKNIFE LIBRARY
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 }

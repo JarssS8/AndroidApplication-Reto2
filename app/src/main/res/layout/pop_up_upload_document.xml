@@ -67,10 +67,23 @@
         android:src="@drawable/ic_file_upload_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/viewUploadDocmuent"
         app:layout_constraintEnd_toEndOf="@+id/viewUploadDocmuent"
-        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintHorizontal_bias="0.935"
         app:layout_constraintStart_toStartOf="@+id/viewUploadDocmuent"
         app:layout_constraintTop_toTopOf="@+id/viewUploadDocmuent"
-        app:layout_constraintVertical_bias="0.55" />
+        app:layout_constraintVertical_bias="0.477" />
+
+    <ImageView
+        android:id="@+id/imageButtonShowDocument"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:clickable="true"
+        android:src="@drawable/ic_remove_red_eye_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewUploadDocmuent"
+        app:layout_constraintEnd_toEndOf="@+id/viewUploadDocmuent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="@+id/viewUploadDocmuent"
+        app:layout_constraintTop_toTopOf="@+id/viewUploadDocmuent"
+        app:layout_constraintVertical_bias="0.615" />
 
     <Button
         android:id="@+id/btUploadDocument"

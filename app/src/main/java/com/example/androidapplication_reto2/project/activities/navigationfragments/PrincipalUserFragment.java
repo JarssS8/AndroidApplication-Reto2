@@ -26,12 +26,15 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.androidapplication_reto2.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
+import java.io.File;
 import java.util.regex.Pattern;
 
 /**
@@ -44,7 +47,8 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
     private FloatingActionButton floatingAddDocument;
     private EditText newDocNameUpload;
     private TextView lbDocUploadPath;
-
+    private  ImageView imageButtonFindDocument,imageButtonShowDocument;
+    private String path="";
 
 
     @Override
@@ -76,9 +80,9 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                 Button btUploadDocument = popUpView.findViewById(R.id.btUploadDocument);
                 newDocNameUpload = popUpView.findViewById(R.id.txtUploadDocName);
                 Spinner spinnerCategories = popUpView.findViewById(R.id.spinnerCategoriesUploadDocument);
-                ImageView imageButtonFindDocument= popUpView.findViewById(R.id.imageButtonFindFile);
+                imageButtonFindDocument= popUpView.findViewById(R.id.imageButtonFindFile);
                 lbDocUploadPath = popUpView.findViewById(R.id.lbPathDocument);
-
+                imageButtonShowDocument = popUpView.findViewById(R.id.imageButtonShowDocument);
 
                 imageButtonFindDocument.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -87,6 +91,22 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                     }
                 });
 
+                imageButtonShowDocument.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(lbDocUploadPath.getText().toString().equalsIgnoreCase(path)) {
+                            Fragment fragment = new ViewDocumentFragment(new File(lbDocUploadPath.getText().toString()));
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.nav_host_fragment, fragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }else{
+                            //Snackbar.make(v,"Select one pdf before",Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "dsf", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
                 btUploadDocument.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -144,7 +164,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            String path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
             if (path != null) {
                 Log.d("Path (fragment): ", path);
                 lbDocUploadPath.setText(path);
