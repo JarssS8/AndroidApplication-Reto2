@@ -57,6 +57,9 @@ public class SeeAndModifyUserDataFragment extends Fragment {
             case R.id.btEditUserData:
                 Toast.makeText(getContext(), "Hey", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.btSubscription:
+
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
