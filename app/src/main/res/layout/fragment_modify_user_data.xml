@@ -8,6 +8,18 @@
     android:id="@+id/modifyUserData"
     tools:context=".project.activities.navigationfragments.ModifyUserDataFragment">
 
+    <TextView
+        android:id="@+id/lbRepeatPasswordModifyUserData"
+        android:layout_width="193dp"
+        android:layout_height="18dp"
+        android:text="Repeat Password"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.302"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.563" />
 
     <EditText
         android:id="@+id/txtRepeatPasswordModifyUserData"
@@ -23,18 +35,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.608" />
 
-    <TextView
-        android:id="@+id/lbRepeatPasswordModifyUserData"
-        android:layout_width="193dp"
-        android:layout_height="18dp"
-        android:text="Repeat Password"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.302"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
+
 
     <TextView
         android:id="@+id/lbEmailModifyUserData"

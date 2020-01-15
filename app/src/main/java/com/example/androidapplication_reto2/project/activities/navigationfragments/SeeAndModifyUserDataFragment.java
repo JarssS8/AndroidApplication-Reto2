@@ -57,7 +57,7 @@ public class SeeAndModifyUserDataFragment extends Fragment {
                 Navigation.findNavController(getView()).navigate(R.id.action_nav_user_data_to_nav_modify_data);
                 break;
             case R.id.btSubscription:
-
+                Navigation.findNavController(getView()).navigate(R.id.action_nav_user_data_to_nav_subsciption);
                 break;
         }
         return super.onOptionsItemSelected(item);

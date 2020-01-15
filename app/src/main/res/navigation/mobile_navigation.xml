@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_nav_user_data_to_nav_modify_data"
             app:destination="@+id/nav_modify_data" />
+        <action
+            android:id="@+id/action_nav_user_data_to_nav_subsciption"
+            app:destination="@id/nav_subsciption" />
     </fragment>
     <fragment
         android:id="@+id/nav_join_group"
@@ -58,6 +61,13 @@
         android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.ModifyUserDataFragment"
         android:label="Modify User Data"
         tools:layout="@layout/fragment_modify_user_data"
+        />
+
+    <fragment
+        android:id="@+id/nav_subsciption"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SubscriptionFragment"
+        android:label="Subscription"
+        tools:layout="@layout/fragment_subscription"
         />
 
 </navigation>
