@@ -14,10 +14,10 @@ import com.example.androidapplication_reto2.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SeeUserGroupsFragment extends Fragment {
+public class SubscriptionFragment extends Fragment {
 
 
-    public SeeUserGroupsFragment() {
+    public SubscriptionFragment() {
         // Required empty public constructor
     }
 
@@ -26,6 +26,7 @@ public class SeeUserGroupsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_see_user_groups, container, false);
+        return inflater.inflate(R.layout.fragment_subscription, container, false);
     }
+
 }

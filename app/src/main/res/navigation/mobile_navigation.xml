@@ -11,13 +11,30 @@
         android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.PrincipalUserFragment"
         android:label="Main"
         tools:layout="@layout/fragment_principal_user"
-        />
+        >
+        <action
+            android:id="@+id/action_nav_home_to_nav_user_data"
+            app:destination="@id/nav_user_data" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_join_group"
+            app:destination="@id/nav_join_group" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_search_documents"
+            app:destination="@id/nav_search_documents" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_user_groups"
+            app:destination="@id/nav_user_groups" />
+    </fragment>
     <fragment
         android:id="@+id/nav_user_data"
         android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SeeAndModifyUserDataFragment"
         android:label="User Data"
         tools:layout="@layout/fragment_see_and_modify_user_data"
-        />
+        >
+        <action
+            android:id="@+id/action_nav_user_data_to_nav_modify_data"
+            app:destination="@+id/nav_modify_data" />
+    </fragment>
     <fragment
         android:id="@+id/nav_join_group"
         android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.JoinCreateGroupFragment"
@@ -35,6 +52,12 @@
         android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SearchDocumentsFragment"
         android:label="Search Documents"
         tools:layout="@layout/fragment_search_documents"
+        />
+    <fragment
+        android:id="@+id/nav_modify_data"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.ModifyUserDataFragment"
+        android:label="Modify User Data"
+        tools:layout="@layout/fragment_modify_user_data"
         />
 
 </navigation>

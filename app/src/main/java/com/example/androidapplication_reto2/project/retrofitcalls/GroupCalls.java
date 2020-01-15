@@ -19,7 +19,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class GroupCalls {
     private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("/category")
+            .baseUrl("http://localhost:8080/ServerApplication-Reto2/webresources/group/")
             .addConverterFactory(SimpleXmlConverterFactory.create())
             .build();
 

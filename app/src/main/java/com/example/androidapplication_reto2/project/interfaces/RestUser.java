@@ -33,8 +33,8 @@ public interface RestUser {
     @DELETE("/deleteById/{id}")
     public Call<Void> deleteUserById(@Path("id") Long id) ;
 
-    @GET("/logIn")
-    public Call<User> logIn(@Body User user);
+    @GET("/logIn/{login}/{password}")
+    public Call<User> logIn(@Path("login") String login, @Path("password") String password);
 
     @GET("id/{id}")
     public Call<Object> findUserById(@Path("id") Long id);
@@ -42,7 +42,7 @@ public interface RestUser {
     @GET("{login}")
     public Call<Object> findUserByLogin(@Path("login") String login);
 
-    @GET
+    @GET(".")
     public Call<Set<User>> findAllUsers() ;
 
     @PUT("/goFree/")

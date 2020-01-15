@@ -36,7 +36,7 @@ public interface RestCategory {
      * @param id Long used for find one Category
      * @return A {@link Category} object with the category for that id
      */
-    @GET("/id/{id}")
+    @GET("id/{id}")
     public Call<Category> findCategoryById(@Path("id") Long id);
 
     /**

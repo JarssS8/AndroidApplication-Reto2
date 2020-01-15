@@ -11,9 +11,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.beans.Category;
+import com.example.androidapplication_reto2.project.beans.User;
+import com.example.androidapplication_reto2.project.interfaces.RestCategory;
+import com.example.androidapplication_reto2.project.interfaces.RestUser;
+import com.example.androidapplication_reto2.project.retrofitcalls.UserCalls;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class LoginActivity extends AppCompatActivity{
 
@@ -37,6 +51,9 @@ public class LoginActivity extends AppCompatActivity{
         btLogIn = findViewById(R.id.btLogInMain);
         username = findViewById(R.id.txtUsernameMain);
         password = findViewById(R.id.txtPasswordMain);
+
+        username.setText("jarsss8");
+        password.setText("Absd123123");
         Log.i("Login","Try to get user from sign up activity");
         /*Todo user = (User) getIntent().getSerializableExtra("user");
         if (user != null) {
@@ -84,9 +101,29 @@ public class LoginActivity extends AppCompatActivity{
                 } else {
                     Log.i("Login","Fields could be correct. Checking connection");
                     if (isConnected()) {
-                        //Todo codificar esta shit
                         intent = new Intent(this, MainFragmentsController.class);
                         startActivity(intent);
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl("http://192.168.21.129:8080/ServerApplication-Reto2/webresources/category/")
+                                .addConverterFactory(SimpleXmlConverterFactory.create())
+                                .build();
+
+                        RestCategory restUser =  retrofit.create(RestCategory.class);
+
+                        Call<Category> logInCall = restUser.findCategoryById(1L);
+                        logInCall.enqueue(new Callback<Category>() {
+                            @Override
+                            public void onResponse(Call<Category> call, Response<Category> response) {
+                                Category cat = response.body();
+                                Log.d("Response", cat.getName());
+                            }
+
+                            @Override
+                            public void onFailure(Call<Category> call, Throwable t) {
+                                Log.d("Failure","mierda");
+                            }
+                        });
+
                     } else {
                         Log.i("Login","User is connected to internet");
                         final Snackbar snackbar = Snackbar.make(v, "NO CONNECTION, CHECK YOUR CONNECTION", Snackbar.LENGTH_INDEFINITE);

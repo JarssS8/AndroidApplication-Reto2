@@ -3,15 +3,17 @@ package com.example.androidapplication_reto2.project.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
-import android.view.Menu;
 
 
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.beans.User;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainFragmentsController extends AppCompatActivity{
@@ -24,11 +26,14 @@ public class MainFragmentsController extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        User user = (User) getIntent().getSerializableExtra("user");
 
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
         DrawerLayout drawerLayout=findViewById(R.id.drawer);
         NavigationView navigationView=findViewById(R.id.nav_view);
+
+        setSupportActionBar(toolbar);
 
         appBarConfiguration= new AppBarConfiguration.Builder(R.id.nav_home,
                 R.id.nav_user_data,R.id.nav_join_group,
@@ -50,5 +55,10 @@ public class MainFragmentsController extends AppCompatActivity{
                 || super.onSupportNavigateUp();
     }
 
+    public void replaceFragment(Fragment fragment){
+        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        t.replace(R.id.nav_host_fragment, fragment).addToBackStack(null);
+        t.commit();
+    }
 
 }

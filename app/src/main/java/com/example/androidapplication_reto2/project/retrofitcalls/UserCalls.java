@@ -18,7 +18,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class UserCalls {
     private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("/category")
+            .baseUrl("http://localhost:8080/ServerApplication-Reto2/webresources/user/")
             .addConverterFactory(SimpleXmlConverterFactory.create())
             .build();
 
@@ -114,9 +114,9 @@ public class UserCalls {
         });
     }
 
-    public User logIn( User user){
+    public User logIn( String username, String password){
         User[] auxUser = {new User()};
-        Call<User> logInCall = restUser.logIn(user);
+        Call<User> logInCall = restUser.logIn(username,password);
         logInCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {

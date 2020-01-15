@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,10 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.androidapplication_reto2.R;
-import com.example.androidapplication_reto2.project.activities.MainFragmentsController;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +41,6 @@ public class SeeAndModifyUserDataFragment extends Fragment {
         lbPrivilege = root.findViewById(R.id.lbPrivilegeUserData2);
 
 
-
         return root;
     }
 
@@ -55,7 +54,7 @@ public class SeeAndModifyUserDataFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.btEditUserData:
-                Toast.makeText(getContext(), "Hey", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(getView()).navigate(R.id.action_nav_user_data_to_nav_modify_data);
                 break;
             case R.id.btSubscription:
 
