@@ -24,7 +24,16 @@
         <action
             android:id="@+id/action_nav_home_to_nav_user_groups"
             app:destination="@id/nav_user_groups" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_view_document"
+            app:destination="@id/nav_view_document" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_view_document"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.ViewDocumentFragment"
+        android:label="View Document"
+        tools:layout="@layout/fragment_view_document"
+        />
     <fragment
         android:id="@+id/nav_user_data"
         android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SeeAndModifyUserDataFragment"

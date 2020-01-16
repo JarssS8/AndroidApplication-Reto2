@@ -24,8 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import com.example.androidapplication_reto2.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
@@ -37,25 +36,27 @@ import java.util.regex.Pattern;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PrincipalUserFragment extends Fragment implements View.OnClickListener{
+public class PrincipalUserFragment extends Fragment implements View.OnClickListener {
 
     private static final int PERMISSIONS_REQUEST_CODE = 0;
-    private static final int FILE_PICKER_REQUEST_CODE = 1 ;
+    private static final int FILE_PICKER_REQUEST_CODE = 1;
     private FloatingActionButton floatingAddDocument;
     private EditText newDocNameUpload;
     private TextView lbDocUploadPath, userData;
-    private  ImageView imageButtonFindDocument,imageButtonShowDocument;
-    private String path="";
+    private ImageView imageButtonFindDocument, imageButtonShowDocument;
+    private String path = "", docName;
+    private int spinnerId;
+    private static File document;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root=inflater.inflate(R.layout.fragment_principal_user, container, false);
+        View root = inflater.inflate(R.layout.fragment_principal_user, container, false);
 
-        floatingAddDocument=root.findViewById(R.id.floatingActionButton);
-        userData=root.findViewById(R.id.lbUserData);
+        floatingAddDocument = root.findViewById(R.id.floatingActionButton);
+        userData = root.findViewById(R.id.lbUserData);
 
         floatingAddDocument.setOnClickListener(this);
 
@@ -63,24 +64,27 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
     }
 
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.floatingActionButton:
-                Log.i("SignUp", "User click on help button.Creating a layout inflater for the popUp view");
                 LayoutInflater layoutInflater = (LayoutInflater) getContext().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                Log.i("SignUp", "Usign the inflator inflating the layout");
                 View popUpView = layoutInflater.inflate(R.layout.pop_up_upload_document, null);
-                Log.i("SignUp", "Defining pop up componentes");
-                final PopupWindow popupWindow = new PopupWindow(popUpView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,true);
+                final PopupWindow popupWindow = new PopupWindow(popUpView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
                 //FindViewById From the popUp
                 Button btUploadDocument = popUpView.findViewById(R.id.btUploadDocument);
                 newDocNameUpload = popUpView.findViewById(R.id.txtUploadDocName);
                 Spinner spinnerCategories = popUpView.findViewById(R.id.spinnerCategoriesUploadDocument);
-                imageButtonFindDocument= popUpView.findViewById(R.id.imageButtonFindFile);
+                imageButtonFindDocument = popUpView.findViewById(R.id.imageButtonFindFile);
                 lbDocUploadPath = popUpView.findViewById(R.id.lbPathDocument);
                 imageButtonShowDocument = popUpView.findViewById(R.id.imageButtonShowDocument);
+                if (!path.equalsIgnoreCase("")) {
+                    if (docName != null)
+                        newDocNameUpload.setText(docName);
+                    spinnerCategories.setId(spinnerId);
+                    lbDocUploadPath.setText(path);
+
+                }
 
                 imageButtonFindDocument.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -92,14 +96,13 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                 imageButtonShowDocument.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(lbDocUploadPath.getText().toString().equalsIgnoreCase(path)) {
-                            Fragment fragment = new ViewDocumentFragment(new File(lbDocUploadPath.getText().toString()));
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.nav_host_fragment, fragment);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
-                        }else{
+                        document = new File(lbDocUploadPath.getText().toString());
+                        if (lbDocUploadPath.getText().toString().equalsIgnoreCase(path)) {
+                            docName = newDocNameUpload.getText().toString();
+                            spinnerId = spinnerCategories.getId();
+                            Navigation.findNavController(getView()).navigate(R.id.action_nav_home_to_nav_view_document);
+                            popupWindow.dismiss();
+                        } else {
                             //Snackbar.make(v,"Select one pdf before",Snackbar.LENGTH_SHORT).show();
                             Toast.makeText(getContext(), "Select one pdf before", Toast.LENGTH_SHORT).show();
                         }
@@ -169,5 +172,9 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
 
             }
         }
+    }
+
+    public static File getDocument() {
+        return document;
     }
 }

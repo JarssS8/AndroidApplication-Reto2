@@ -36,8 +36,8 @@ public class ViewDocumentFragment extends Fragment implements OnPageChangeListen
     private int pageNumber;
     private String pdfFileName;
 
-    public ViewDocumentFragment(File document) {
-        this.document=document;
+    public ViewDocumentFragment() {
+        this.document=PrincipalUserFragment.getDocument();
     }
 
 
