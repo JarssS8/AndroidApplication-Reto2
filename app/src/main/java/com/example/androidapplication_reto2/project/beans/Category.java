@@ -5,6 +5,10 @@
  */
 package com.example.androidapplication_reto2.project.beans;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 import java.io.Serializable;
 import java.util.Set;
 

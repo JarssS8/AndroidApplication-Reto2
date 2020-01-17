@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.androidapplication_reto2.R;
 import com.example.androidapplication_reto2.project.beans.Category;
 import com.example.androidapplication_reto2.project.beans.User;
+import com.example.androidapplication_reto2.project.factories.CategoryFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestCategory;
 import com.example.androidapplication_reto2.project.interfaces.RestUser;
 import com.example.androidapplication_reto2.project.retrofitcalls.UserCalls;
@@ -101,27 +102,19 @@ public class LoginActivity extends AppCompatActivity{
                 } else {
                     Log.i("Login","Fields could be correct. Checking connection");
                     if (isConnected()) {
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("http://192.168.20.91:8080/ServerApplication-Reto2/webresources/")
-                                .addConverterFactory(SimpleXmlConverterFactory.create())
-                                .build();
 
-                        RestCategory restUser =  retrofit.create(RestCategory.class);
-
-                        Call<Category> logInCall = restUser.findCategoryById(1L);
-                        logInCall.enqueue(new Callback<Category>() {
+                        RestCategory clientCategory = CategoryFactory.getClient();
+                        Call<Category> callfindCategory= clientCategory.findCategoryById(1L);
+                        callfindCategory.enqueue(new Callback<Category>() {
                             @Override
                             public void onResponse(Call<Category> call, Response<Category> response) {
-                                Category cat = response.body();
-                                Log.d("Response", cat.getName());
-                                Intent intent = new Intent(getApplicationContext(), MainFragmentsController.class);
-                                startActivity(intent);
+                                Log.d("LOGIN", response.body().getName());
                             }
 
                             @Override
                             public void onFailure(Call<Category> call, Throwable t) {
-                                Log.d("Failure","mierda");
-
+                                Log.d("LOGIN", "MALLL");
+                                Log.d("LOGIN", t.getMessage());
                             }
                         });
 
