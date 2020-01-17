@@ -101,10 +101,8 @@ public class LoginActivity extends AppCompatActivity{
                 } else {
                     Log.i("Login","Fields could be correct. Checking connection");
                     if (isConnected()) {
-                        intent = new Intent(this, MainFragmentsController.class);
-                        startActivity(intent);
                         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("http://192.168.21.129:8080/ServerApplication-Reto2/webresources/category/")
+                                .baseUrl("http://192.168.20.91:8080/ServerApplication-Reto2/webresources/")
                                 .addConverterFactory(SimpleXmlConverterFactory.create())
                                 .build();
 
@@ -116,11 +114,14 @@ public class LoginActivity extends AppCompatActivity{
                             public void onResponse(Call<Category> call, Response<Category> response) {
                                 Category cat = response.body();
                                 Log.d("Response", cat.getName());
+                                Intent intent = new Intent(getApplicationContext(), MainFragmentsController.class);
+                                startActivity(intent);
                             }
 
                             @Override
                             public void onFailure(Call<Category> call, Throwable t) {
                                 Log.d("Failure","mierda");
+
                             }
                         });
 
