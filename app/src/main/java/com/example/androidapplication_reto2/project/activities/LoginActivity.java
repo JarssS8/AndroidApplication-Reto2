@@ -17,6 +17,7 @@ import com.example.androidapplication_reto2.R;
 import com.example.androidapplication_reto2.project.beans.Category;
 import com.example.androidapplication_reto2.project.beans.User;
 import com.example.androidapplication_reto2.project.factories.CategoryFactory;
+import com.example.androidapplication_reto2.project.factories.UserFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestCategory;
 import com.example.androidapplication_reto2.project.interfaces.RestUser;
 import com.example.androidapplication_reto2.project.retrofitcalls.UserCalls;
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity{
         password = findViewById(R.id.txtPasswordMain);
 
         username.setText("jarsss8");
-        password.setText("Absd123123");
+        password.setText("Abcd*1234");
         Log.i("Login","Try to get user from sign up activity");
         /*Todo user = (User) getIntent().getSerializableExtra("user");
         if (user != null) {
@@ -103,17 +104,17 @@ public class LoginActivity extends AppCompatActivity{
                     Log.i("Login","Fields could be correct. Checking connection");
                     if (isConnected()) {
 
-                        RestCategory clientCategory = CategoryFactory.getClient();
-                        Call<Category> callfindCategory= clientCategory.findCategoryById(1L);
-                        callfindCategory.enqueue(new Callback<Category>() {
+                        RestUser clientUser = UserFactory.getClient();
+                        Call<User> callLogIn= clientUser.logIn(username.getText().toString(),password.getText().toString());
+                        callLogIn.enqueue(new Callback<User>() {
                             @Override
-                            public void onResponse(Call<Category> call, Response<Category> response) {
-                                Log.d("LOGIN", response.body().getName());
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                Log.d("LOGIN", response.body().getFullName());
                             }
 
                             @Override
-                            public void onFailure(Call<Category> call, Throwable t) {
-                                Log.d("LOGIN", "MALLL");
+                            public void onFailure(Call<User> call, Throwable t) {
+                                Log.d("LOGIN", "On failure trying to login");
                                 Log.d("LOGIN", t.getMessage());
                             }
                         });

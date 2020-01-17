@@ -18,22 +18,22 @@ public interface RestUser {
     @POST
     public Call<Void> createUser(@Body User user) ;
 
-    @PUT("/modifyFree/")
+    @PUT("modifyFree/")
     public Call<Void> modifyUserData(@Body Free free);
 
-    @PUT("/modifyPremium/")
+    @PUT("modifyPremium/")
     public Call<Void> modifyUserData(@Body Premium premium);
 
-    @PUT("/modifyAdmin/")
+    @PUT("modifyAdmin/")
     public Call<Void> modifyUserData(@Body Admin admin);
 
-    @DELETE("/deleteByLogin/{login}")
+    @DELETE("deleteByLogin/{login}")
     public Call<Void> deleteUserByLogin(@Path("login") String login);
 
-    @DELETE("/deleteById/{id}")
+    @DELETE("deleteById/{id}")
     public Call<Void> deleteUserById(@Path("id") Long id) ;
 
-    @GET("/logIn/{login}/{password}")
+    @GET("logIn/{login}/{password}")
     public Call<User> logIn(@Path("login") String login, @Path("password") String password);
 
     @GET("id/{id}")
@@ -45,12 +45,12 @@ public interface RestUser {
     @GET(".")
     public Call<Set<User>> findAllUsers() ;
 
-    @PUT("/goFree/")
+    @PUT("goFree/")
     public Call<Void> modifyUserToFree(@Body User user) ;
 
-    @PUT("/goPremium/")
+    @PUT("goPremium/")
     public Call<Void> modifyUserToPremium(@Body Premium premium) ;
 
-    @PUT("/goAdmin/")
+    @PUT("goAdmin/")
     public Call<Void> modifyUserToAdmin(@Body User user) ;
 }
