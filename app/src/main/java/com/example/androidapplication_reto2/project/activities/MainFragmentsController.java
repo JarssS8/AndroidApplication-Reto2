@@ -20,13 +20,14 @@ public class MainFragmentsController extends AppCompatActivity{
 
     private AppBarConfiguration appBarConfiguration;
     private NavController navController;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        User user = (User) getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("user");
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);

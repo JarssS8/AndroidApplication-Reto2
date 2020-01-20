@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity{
     private EditText username;
     private EditText password;
     private boolean justSignUp = false;
+    private User user=null;
 
     /**
      * First instance of components from this activity.
@@ -55,9 +56,9 @@ public class LoginActivity extends AppCompatActivity{
         password = findViewById(R.id.txtPasswordMain);
 
         username.setText("jarsss8");
-        password.setText("Abcd*1234");
+        password.setText("Abcd1234");
         Log.i("Login","Try to get user from sign up activity");
-        /*Todo user = (User) getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("user");
         if (user != null) {
             Log.i("Login","Gets user from sign up activity. Putting values on login and password fields.");
             Snackbar.make(getWindow().getDecorView().getRootView(),"Sign Up completed, now you can LogIn",Snackbar.LENGTH_LONG).show();
@@ -65,7 +66,6 @@ public class LoginActivity extends AppCompatActivity{
             password.setText(user.getPassword());
             justSignUp = true;
         }
-        */
 
     }
 
@@ -109,7 +109,14 @@ public class LoginActivity extends AppCompatActivity{
                         callLogIn.enqueue(new Callback<User>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
-                                Log.d("LOGIN", response.body().getFullName());
+                                Log.d("LOGIN", "BIEN");
+                                switch (response.code()) {
+                                    case 200:
+                                        Intent intent= new Intent(getApplicationContext(),MainFragmentsController.class);
+                                        intent.putExtra("user",response.body());
+                                        startActivity(intent);
+                                        break;
+                                }
                             }
 
                             @Override

@@ -22,21 +22,15 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class UserFactory {
 
-    private static String API_BASE_URL = "http://192.168.21.124:8080/ServerApplication-Reto2/webresources/user/";
+    private static String API_BASE_URL = "http://192.168.20.79:8080/ServerApplication-Reto2/webresources/user/";
 
     public static RestUser getClient(){
-        DateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.FRANCE);
-
-
-        RegistryMatcher m = new RegistryMatcher();
-        m.bind(Date.class, new DateFormatTransformer(format));
-        Serializer ser = new Persister(m);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        Retrofit builder = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(SimpleXmlConverterFactory.create(ser)).client(client).build();
+        Retrofit builder = new Retrofit.Builder().baseUrl(API_BASE_URL).addConverterFactory(SimpleXmlConverterFactory.create()).client(client).build();
 
         RestUser restUser =  builder.create(RestUser.class);
         return restUser;

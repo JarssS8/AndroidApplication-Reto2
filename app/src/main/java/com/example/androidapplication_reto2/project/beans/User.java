@@ -8,7 +8,7 @@ package com.example.androidapplication_reto2.project.beans;
 import android.content.ContentValues;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -52,11 +52,11 @@ public class User implements Serializable {
     /**
      * The date when the user last acceded to the applicacion.
      */
-    private Date lastAccess;
+    private String lastAccess;
     /**
      * The date when the user last changed password.
      */
-    private Date lastPasswordChange;
+    private String lastPasswordChange;
     /**
      * A collection with all the ratings given by the user.
      */
@@ -131,19 +131,33 @@ public class User implements Serializable {
     }
 
     public Date getLastAccess() {
-        return lastAccess;
+        Date resultado=null;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
+            resultado= formatter.parse(lastAccess);
+        }catch (Exception e){
+            resultado=new Date();
+        }
+        return resultado;
     }
 
-    public void setLastAccess(Date lastAccess) {
-        this.lastAccess = lastAccess;
+    public void setLastAccess(String lastAccess) {
+        this.lastAccess = lastAccess.toString();
     }
 
     public Date getLastPasswordChange() {
-        return lastPasswordChange;
+        Date resultado=null;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
+            resultado= formatter.parse(lastPasswordChange);
+        }catch (Exception e){
+            resultado=new Date();
+        }
+        return resultado;
     }
 
-    public void setLastPasswordChange(Date lastPasswordChange) {
-        this.lastPasswordChange = lastPasswordChange;
+    public void setLastPasswordChange(String lastPasswordChange) {
+        this.lastPasswordChange = lastPasswordChange.toString();
     }
 
     public Set<Rating> getRatings() {
@@ -182,31 +196,6 @@ public class User implements Serializable {
      */
     public void setAdminGroups(Set<Group> adminGroups) {
         this.adminGroups = adminGroups;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
-            return false;
-        }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "serverapplication.entities.User[ id=" + id + " ]";
     }
 
     public ContentValues toContentValues(){

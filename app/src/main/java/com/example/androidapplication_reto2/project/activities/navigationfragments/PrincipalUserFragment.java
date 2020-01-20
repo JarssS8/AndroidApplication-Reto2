@@ -20,13 +20,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.ViewGroup.LayoutParams;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.beans.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
@@ -47,7 +51,8 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
     private String path = "", docName;
     private int spinnerId;
     private static File document;
-
+    private PopupWindow popupWindow;
+    private User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +64,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
         userData = root.findViewById(R.id.lbUserData);
 
         floatingAddDocument.setOnClickListener(this);
-
+        userData.setText("Bienvenido "+user.getFullName()+".\nEsta es tu ventana principal.");
         return root;
     }
 
@@ -70,7 +75,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
             case R.id.floatingActionButton:
                 LayoutInflater layoutInflater = (LayoutInflater) getContext().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View popUpView = layoutInflater.inflate(R.layout.pop_up_upload_document, null);
-                final PopupWindow popupWindow = new PopupWindow(popUpView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+                popupWindow = new PopupWindow(popUpView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
                 //FindViewById From the popUp
                 Button btUploadDocument = popUpView.findViewById(R.id.btUploadDocument);
                 newDocNameUpload = popUpView.findViewById(R.id.txtUploadDocName);
@@ -103,8 +108,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                             Navigation.findNavController(getView()).navigate(R.id.action_nav_home_to_nav_view_document);
                             popupWindow.dismiss();
                         } else {
-                            //Snackbar.make(v,"Select one pdf before",Snackbar.LENGTH_SHORT).show();
-                            Toast.makeText(getContext(), "Select one pdf before", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getView(),"Select one pdf before", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });
