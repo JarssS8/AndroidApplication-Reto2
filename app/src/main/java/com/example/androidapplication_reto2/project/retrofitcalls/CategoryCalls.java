@@ -2,6 +2,7 @@ package com.example.androidapplication_reto2.project.retrofitcalls;
 
 import com.example.androidapplication_reto2.project.beans.Category;
 import com.example.androidapplication_reto2.project.beans.Document;
+import com.example.androidapplication_reto2.project.beans.lists.CategoryList;
 import com.example.androidapplication_reto2.project.interfaces.RestCategory;
 import java.util.HashSet;
 import java.util.Set;
@@ -118,21 +119,20 @@ public class CategoryCalls {
         return document[0];
     }
 
-    public Set<Category> findAllCategories(){
+    public CategoryList findAllCategories() {
         Set<Category>[] categories = new Set[]{new HashSet<>()};
-        Call<Set<Category>> findCategoryByName = restCategory.findAllCategories();
-        findCategoryByName.enqueue(new Callback<Set<Category>>() {
+        Call<CategoryList> findCategoryByName = restCategory.findAllCategories();
+        findCategoryByName.enqueue(new Callback<CategoryList>() {
             @Override
-            public void onResponse(Call<Set<Category>> call, Response<Set<Category>> response) {
-                categories[0] = response.body();
+            public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
+
             }
 
             @Override
-            public void onFailure(Call<Set<Category>> call, Throwable t) {
+            public void onFailure(Call<CategoryList> call, Throwable t) {
 
             }
         });
-        return categories[0];
-
+        return null;
     }
 }

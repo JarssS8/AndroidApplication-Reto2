@@ -2,6 +2,8 @@ package com.example.androidapplication_reto2.project.interfaces;
 
 import com.example.androidapplication_reto2.project.beans.Category;
 import com.example.androidapplication_reto2.project.beans.Document;
+import com.example.androidapplication_reto2.project.beans.lists.CategoryList;
+
 import java.util.Set;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -71,6 +73,6 @@ public interface RestCategory {
      * representation
      * @return A Set of {@link Category} object with all the categories in the data base
      */
-    @GET
-    public Call<Set<Category>> findAllCategories();
+    @GET(".")
+    public Call<CategoryList> findAllCategories();
 }

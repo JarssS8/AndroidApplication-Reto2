@@ -20,7 +20,7 @@ public class MainFragmentsController extends AppCompatActivity{
 
     private AppBarConfiguration appBarConfiguration;
     private NavController navController;
-    private User user;
+    private static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,4 +62,7 @@ public class MainFragmentsController extends AppCompatActivity{
         t.commit();
     }
 
+    public static User getUser() {
+        return user;
+    }
 }

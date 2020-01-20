@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,14 +29,28 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.activities.MainFragmentsController;
+import com.example.androidapplication_reto2.project.beans.Category;
+import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.User;
+import com.example.androidapplication_reto2.project.beans.lists.CategoryList;
+import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
+import com.example.androidapplication_reto2.project.factories.CategoryFactory;
+import com.example.androidapplication_reto2.project.factories.DocumentFactory;
+import com.example.androidapplication_reto2.project.interfaces.RestCategory;
+import com.example.androidapplication_reto2.project.interfaces.RestDocument;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +68,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
     private static File document;
     private PopupWindow popupWindow;
     private User user;
+    private Spinner spinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,8 +79,27 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
         floatingAddDocument = root.findViewById(R.id.floatingActionButton);
         userData = root.findViewById(R.id.lbUserData);
 
+        user= MainFragmentsController.getUser();
+
+        RestDocument restDocument = DocumentFactory.getClient();
+        Call<DocumentList> documentsUser=restDocument.findAllDocuments();
+        documentsUser.enqueue(new Callback<DocumentList>() {
+            @Override
+            public void onResponse(Call<DocumentList> call, Response<DocumentList> response) {
+                //Todo adapter
+                Log.d("PRINCIPAL","YUJUUU");
+            }
+
+            @Override
+            public void onFailure(Call<DocumentList> call, Throwable t) {
+                Log.d("PRINCIPAL","NOPE");
+            }
+        });
+
         floatingAddDocument.setOnClickListener(this);
         userData.setText("Bienvenido "+user.getFullName()+".\nEsta es tu ventana principal.");
+
+
         return root;
     }
 
@@ -83,6 +118,43 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                 imageButtonFindDocument = popUpView.findViewById(R.id.imageButtonFindFile);
                 lbDocUploadPath = popUpView.findViewById(R.id.lbPathDocument);
                 imageButtonShowDocument = popUpView.findViewById(R.id.imageButtonShowDocument);
+
+                RestCategory restCategory = CategoryFactory.getClient();
+                Call<CategoryList> categoryListCall = restCategory.findAllCategories();
+                categoryListCall.enqueue(new Callback<CategoryList>() {
+                    @Override
+                    public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
+                        switch (response.code()) {
+                            case 200:
+                                Log.d("FEO","Entra 200");
+                                CategoryList categoryList = response.body();
+                                ArrayList<String>categoriesNames = new ArrayList<String>();
+
+                                Log.d("FEO","rellena array");
+                                for(Category auxCat : categoryList.getCategories()){
+                                    categoriesNames.add(auxCat.getName());
+                                    Log.d("FEO",auxCat.getName());
+                                }
+
+                                Log.d("FEO","for");
+                                ArrayAdapter<String> categoriesNameAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, categoriesNames);
+                                categoriesNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerCategories.setAdapter(categoriesNameAdapter);
+
+                                Log.d("FEO","todo ok");
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CategoryList> call, Throwable t) {
+
+                        Log.d("FEO","Mierda");
+
+                        Log.d("FEO",t.getMessage());
+                    }
+                });
+
                 if (!path.equalsIgnoreCase("")) {
                     if (docName != null)
                         newDocNameUpload.setText(docName);

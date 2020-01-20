@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class CategoryFactory {
-        private static String API_BASE_URL = "http://192.168.21.124:8080/ServerApplication-Reto2/webresources/category/";
+        private static String API_BASE_URL = "http://192.168.20.79:8080/ServerApplication-Reto2/webresources/category/";
 
         public static RestCategory getClient(){
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

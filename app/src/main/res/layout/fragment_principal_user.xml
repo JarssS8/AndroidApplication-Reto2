@@ -19,14 +19,16 @@
 
     <TextView
         android:id="@+id/lbUserData"
-        android:layout_width="119dp"
-        android:layout_height="40dp"
+        android:layout_width="380dp"
+        android:layout_height="57dp"
         android:text="User data here bitches"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

@@ -2,6 +2,7 @@ package com.example.androidapplication_reto2.project.retrofitcalls;
 
 import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.Rating;
+import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
 import com.example.androidapplication_reto2.project.interfaces.RestDocument;
 import java.sql.Date;
 import java.util.HashSet;
@@ -69,15 +70,15 @@ public class DocumentCalls {
 
     public Set<Document> findAllDocuments(){
         Set<Document>[] documents = new Set[]{new HashSet<>()};
-        Call<Set<Document>> findAllDocumentsCall = restDocument.findAllDocuments();
-        findAllDocumentsCall.enqueue(new Callback<Set<Document>>() {
+        Call<DocumentList> findAllDocumentsCall = restDocument.findAllDocuments();
+        findAllDocumentsCall.enqueue(new Callback<DocumentList>() {
             @Override
-            public void onResponse(Call<Set<Document>> call, Response<Set<Document>> response) {
-                documents[0] = response.body();
+            public void onResponse(Call<DocumentList> call, Response<DocumentList> response) {
+                //documents[0]=response.body();
             }
 
             @Override
-            public void onFailure(Call<Set<Document>> call, Throwable t) {
+            public void onFailure(Call<DocumentList> call, Throwable t) {
 
             }
         });

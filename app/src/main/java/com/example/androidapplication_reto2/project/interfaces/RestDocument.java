@@ -2,6 +2,7 @@ package com.example.androidapplication_reto2.project.interfaces;
 
 import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.Rating;
+import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
 
 import java.sql.Date;
 import java.util.List;
@@ -40,8 +41,8 @@ public interface RestDocument {
      * Method who use the ejb to search all the documents
      * @return All the documents list
      */
-    @GET
-    public Call<Set<Document>> findAllDocuments();
+    @GET(".")
+    public Call<DocumentList> findAllDocuments();
 
     /**
      * Method who use the ejb to search a document by his id
@@ -69,6 +70,6 @@ public interface RestDocument {
      * @param id the id of the document
      */
 
-    @GET("/ratings/{id}")
+    @GET("ratings/{id}")
     public Call<Set<Rating>> findRatingsOfDocument(@Path("id") Long id);
 }
