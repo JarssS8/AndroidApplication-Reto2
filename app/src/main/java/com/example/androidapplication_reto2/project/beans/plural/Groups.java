@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.androidapplication_reto2.project.beans;
+package com.example.androidapplication_reto2.project.beans.plural;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -19,7 +19,7 @@ import java.util.Set;
  * @author Diego Urraca
  */
 @Root(name = "groups")
-public class Group implements Serializable {
+public class Groups implements Serializable {
     private static final long serialVersionUID = 1L;
     @Element(name = "id")
     private Long id;
@@ -28,13 +28,13 @@ public class Group implements Serializable {
     @Element(name = "password")
     private String password;
     @Element(name = "groupAdmin")
-    private User groupAdmin;
+    private Users groupAdmin;
     //List of users that are in the group
     @ElementList(name = "users", required = false, inline = true)
-    private Set<User> users;
+    private Set<Users> users;
     //List of documents that are uploaded by the group
     @ElementList(name = "documents", required = false, inline = true)
-    private Set<Document> documents;
+    private Set<Documents> documents;
 
     /**
      * @return the id
@@ -81,28 +81,28 @@ public class Group implements Serializable {
     /**
      * @return the adminId
      */
-    public User getGroupAdmin() {
+    public Users getGroupAdmin() {
         return groupAdmin;
     }
 
     /**
      * @param groupAdmin the adminId to set
      */
-    public void setGroupAdmin(User groupAdmin) {
+    public void setGroupAdmin(Users groupAdmin) {
         this.groupAdmin = groupAdmin;
     }
 
     /**
      * @return the users
      */
-    public Set<User> getUsers() {
+    public Set<Users> getUsers() {
         return users;
     }
 
     /**
      * @param users the users to set
      */
-    public void setUsers(Set<User> users) {
+    public void setUsers(Set<Users> users) {
         this.users = users;
     }
 
@@ -111,14 +111,14 @@ public class Group implements Serializable {
      * @return the documents
      */
 
-    public Set<Document> getDocuments() {
+    public Set<Documents> getDocuments() {
         return documents;
     }
 
     /**
      * @param documents the documents to set
      */
-    public void setDocuments(Set<Document> documents) {
+    public void setDocuments(Set<Documents> documents) {
         this.setDocuments(documents);
     }
 
@@ -142,10 +142,10 @@ public class Group implements Serializable {
      */
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Group)) {
+        if (!(object instanceof Groups)) {
             return false;
         }
-        Group other = (Group) object;
+        Groups other = (Groups) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

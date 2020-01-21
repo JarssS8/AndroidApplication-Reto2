@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity{
         username = findViewById(R.id.txtUsernameMain);
         password = findViewById(R.id.txtPasswordMain);
 
-        username.setText("jarsss8");
+        username.setText("gaizka");
         password.setText("Abcd*1234");
         Log.i("Login","Try to get user from sign up activity");
         user = (User) getIntent().getSerializableExtra("user");

@@ -39,6 +39,7 @@ import com.example.androidapplication_reto2.project.factories.CategoryFactory;
 import com.example.androidapplication_reto2.project.factories.DocumentFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestCategory;
 import com.example.androidapplication_reto2.project.interfaces.RestDocument;
+import com.example.androidapplication_reto2.project.retrofitcalls.DocumentCalls;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
@@ -79,26 +80,28 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
         floatingAddDocument = root.findViewById(R.id.floatingActionButton);
         userData = root.findViewById(R.id.lbUserData);
 
-        user= MainFragmentsController.getUser();
+        user = MainFragmentsController.getUser();
 
         RestDocument restDocument = DocumentFactory.getClient();
-        Call<DocumentList> documentsUser=restDocument.findAllDocuments();
+        Call<DocumentList> documentsUser = restDocument.findAllDocuments();
         documentsUser.enqueue(new Callback<DocumentList>() {
             @Override
             public void onResponse(Call<DocumentList> call, Response<DocumentList> response) {
                 //Todo adapter
-                Log.d("PRINCIPAL","YUJUUU");
+                Log.d("PRINCIPAL", "YUJUUU");
             }
 
             @Override
             public void onFailure(Call<DocumentList> call, Throwable t) {
-                Log.d("PRINCIPAL","NOPE");
+                Log.d("PRINCIPAL", "NOPE");
             }
         });
 
         floatingAddDocument.setOnClickListener(this);
-        userData.setText("Bienvenido "+user.getFullName()+".\nEsta es tu ventana principal.");
-
+        if (user != null)
+            userData.setText("Bienvenido " + user.getFullName() + ".\nEsta es tu ventana principal.");
+        else
+            Toast.makeText(getContext(), "Mierda", Toast.LENGTH_SHORT).show();
 
         return root;
     }
@@ -119,6 +122,27 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                 lbDocUploadPath = popUpView.findViewById(R.id.lbPathDocument);
                 imageButtonShowDocument = popUpView.findViewById(R.id.imageButtonShowDocument);
 
+/*
+                RestDocument restDocument = DocumentFactory.getClient();
+                Call<Document> documentCall = restDocument.findDocument(1L);
+                documentCall.enqueue(new Callback<Document>() {
+                    @Override
+                    public void onResponse(Call<Document> call, Response<Document> response) {
+                        switch (response.code()) {
+                            case 200:
+                                Log.d("FEO", "Entra 200");
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Document> call, Throwable t) {
+                        Log.d("FEO", "Mierda");
+                        Log.d("FEO", t.getMessage());
+                    }
+                });
+*/
+
                 RestCategory restCategory = CategoryFactory.getClient();
                 Call<CategoryList> categoryListCall = restCategory.findAllCategories();
                 categoryListCall.enqueue(new Callback<CategoryList>() {
@@ -126,22 +150,24 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                     public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
                         switch (response.code()) {
                             case 200:
-                                Log.d("FEO","Entra 200");
-                                CategoryList categoryList = response.body();
-                                ArrayList<String>categoriesNames = new ArrayList<String>();
+                                Log.d("FEO", "Entra 200");
+                                if(response.isSuccessful()) {
+                                    CategoryList categoryList = response.body();
+                                    ArrayList<String> categoriesNames = new ArrayList<String>();
 
-                                Log.d("FEO","rellena array");
-                                for(Category auxCat : categoryList.getCategories()){
-                                    categoriesNames.add(auxCat.getName());
-                                    Log.d("FEO",auxCat.getName());
+                                    Log.d("FEO", "rellena array");
+                                    for (Category auxCat : categoryList.getCategories()) {
+                                        categoriesNames.add(auxCat.getName());
+                                        Log.d("FEO", auxCat.getName());
+                                    }
+
+                                    Log.d("FEO", "for");
+                                    ArrayAdapter<String> categoriesNameAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categoriesNames);
+                                    categoriesNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    spinnerCategories.setAdapter(categoriesNameAdapter);
+
+                                    Log.d("FEO", "todo ok");
                                 }
-
-                                Log.d("FEO","for");
-                                ArrayAdapter<String> categoriesNameAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, categoriesNames);
-                                categoriesNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spinnerCategories.setAdapter(categoriesNameAdapter);
-
-                                Log.d("FEO","todo ok");
                                 break;
                         }
                     }
@@ -149,16 +175,17 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                     @Override
                     public void onFailure(Call<CategoryList> call, Throwable t) {
 
-                        Log.d("FEO","Mierda");
+                        Log.d("FEO", "Mierda");
 
-                        Log.d("FEO",t.getMessage());
+                        Log.d("FEO", t.getMessage());
                     }
                 });
 
                 if (!path.equalsIgnoreCase("")) {
                     if (docName != null)
                         newDocNameUpload.setText(docName);
-                    spinnerCategories.setId(spinnerId);
+                    //Todo seleccionar categoria antes de ver docu
+                    spinnerCategories.setSelection(spinnerId);
                     lbDocUploadPath.setText(path);
 
                 }
@@ -176,11 +203,11 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                         document = new File(lbDocUploadPath.getText().toString());
                         if (lbDocUploadPath.getText().toString().equalsIgnoreCase(path)) {
                             docName = newDocNameUpload.getText().toString();
-                            spinnerId = spinnerCategories.getId();
+                            spinnerId = spinnerCategories.getSelectedItemPosition();
                             Navigation.findNavController(getView()).navigate(R.id.action_nav_home_to_nav_view_document);
                             popupWindow.dismiss();
                         } else {
-                            Snackbar.make(getView(),"Select one pdf before", Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(getView(), "Select one pdf before", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });

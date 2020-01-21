@@ -1,5 +1,7 @@
 package com.example.androidapplication_reto2.project.retrofitcalls;
 
+import android.util.Log;
+
 import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.Rating;
 import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
@@ -16,12 +18,12 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class DocumentCalls {
 
-    private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://localhost:8080/ServerApplication-Reto2/webresources/document")
+    private static Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://192.168.21.154:8080/ServerApplication-Reto2/webresources/document")
             .addConverterFactory(SimpleXmlConverterFactory.create())
             .build();
 
-    private final RestDocument restDocument =retrofit.create(RestDocument.class);
+    private static final RestDocument restDocument =retrofit.create(RestDocument.class);
 
     public void newDocument( Document document) {
         Call<Void> newDocumentCall = restDocument.newDocument(document);
@@ -85,7 +87,7 @@ public class DocumentCalls {
         return documents[0];
     }
 
-    public Document findDocument(Long id) {
+    public static Document findDocument(Long id) {
         final Document[] document = {new Document()};
         Call<Document> findDocumentCall = restDocument.findDocument(id);
         findDocumentCall.enqueue(new Callback<Document>() {
@@ -96,7 +98,7 @@ public class DocumentCalls {
 
             @Override
             public void onFailure(Call<Document> call, Throwable t) {
-
+                Log.d("DOC_CALLS", t.getMessage());
             }
         });
         return document[0];
@@ -119,20 +121,5 @@ public class DocumentCalls {
         return documents[0];
     }
 
-    public Set<Rating> findRatingsOfDocument(Long id){
-        Set<Rating>[] documents = new Set[]{new HashSet<>()};
-        Call<Set<Rating>> findAllRatingsOfDocumentCall = restDocument.findRatingsOfDocument(id);
-        findAllRatingsOfDocumentCall.enqueue(new Callback<Set<Rating>>() {
-            @Override
-            public void onResponse(Call<Set<Rating>> call, Response<Set<Rating>> response) {
-                documents[0] = response.body();
-            }
 
-            @Override
-            public void onFailure(Call<Set<Rating>> call, Throwable t) {
-
-            }
-        });
-        return documents[0];
-    }
 }

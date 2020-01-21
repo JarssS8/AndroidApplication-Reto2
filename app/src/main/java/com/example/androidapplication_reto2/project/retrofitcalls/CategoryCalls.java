@@ -14,7 +14,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class CategoryCalls {
     private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://localhost:8080/ServerApplication-Reto2/webresources/category/")
+            .baseUrl("http://192.168.21.154:8080/ServerApplication-Reto2/webresources/category/")
             .addConverterFactory(SimpleXmlConverterFactory.create())
             .build();
 

@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".project.activities.SignUpActivity"/>
         <activity android:name=".project.activities.MainFragmentsController">
+
         </activity>
 
     </application>

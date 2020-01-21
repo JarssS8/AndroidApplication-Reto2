@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.androidapplication_reto2.project.beans;
-
-import com.example.androidapplication_reto2.project.beans.plural.Ratings;
+package com.example.androidapplication_reto2.project.beans.plural;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementArray;
@@ -13,7 +11,6 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
@@ -24,8 +21,8 @@ import java.util.Set;
  *
  * @author Gaizka Andrés
  */
-@Root(name = "document")
-public class Document implements Serializable {
+@Root(name = "documents")
+public class Documents implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
      * Id to identificate the document
@@ -67,25 +64,25 @@ public class Document implements Serializable {
      * The author of the document
      */
     @Element(name = "user", required = false)
-    private User user;
+    private Users user;
     /**
      * The category of the document
      */
     @Element(name = "category", required = false)
-    private Category category;
+    private Categories category;
     /**
      * The author group of the document
      */
     @Element(name = "group",required = false)
-    private Group group;
+    private Groups group;
 
-    public Document() {
+    public Documents() {
     }
 
-    public Document(Long id, String name, String author, String uploadDate, int totalRating, int ratingCount) {
+    public Documents(Long id, String name, String author, String uploadDate, int totalRating, int ratingCount) {
         this.id = id;
         this.name = name;
-        this.user = new User();
+        this.user = new Users();
         this.user.setLogin(author);
         this.uploadDate = uploadDate;
         this.totalRating = totalRating;
@@ -156,28 +153,28 @@ public class Document implements Serializable {
         this.ratings = ratings;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public Category getCategory() {
+    public Categories getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Categories category) {
         this.category = category;
     }
 
 
-    public Group getGroup() {
+    public Groups getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(Groups group) {
         this.group = group;
     }
 
@@ -202,10 +199,10 @@ public class Document implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Document)) {
+        if (!(object instanceof Documents)) {
             return false;
         }
-        Document other = (Document) object;
+        Documents other = (Documents) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

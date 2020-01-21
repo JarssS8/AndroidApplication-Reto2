@@ -1,8 +1,10 @@
 package com.example.androidapplication_reto2.project.interfaces;
 
+import com.example.androidapplication_reto2.project.beans.Category;
 import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.Rating;
 import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
+import com.example.androidapplication_reto2.project.beans.lists.RatingList;
 
 import java.sql.Date;
 import java.util.List;
@@ -71,5 +73,5 @@ public interface RestDocument {
      */
 
     @GET("ratings/{id}")
-    public Call<Set<Rating>> findRatingsOfDocument(@Path("id") Long id);
+    public Call<Set<Category>> findRatingsOfDocument(@Path("id") Long id);
 }

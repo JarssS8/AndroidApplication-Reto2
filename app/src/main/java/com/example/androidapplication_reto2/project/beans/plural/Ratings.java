@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.androidapplication_reto2.project.beans;
+package com.example.androidapplication_reto2.project.beans.plural;
+
+import com.example.androidapplication_reto2.project.beans.RatingId;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -16,8 +18,8 @@ import java.util.Date;
  * Entity class for rating. 
  * @author Gaizka Andrés
  */
-@Root(name = "rating")
-public class Rating implements Serializable{
+@Root(name = "ratings")
+public class Ratings implements Serializable{
     private static final long serialVersionUID=1L;
     /**
      * Id to indentificate the rating
@@ -43,12 +45,12 @@ public class Rating implements Serializable{
      * The document were the rating has been done
      */
     @Element(name = "document", required = false)
-    private Document document;
+    private Documents document;
     /**
      * The user who rates the document
      */
     @Element(name = "user", required = false)
-    private User user;
+    private Users user;
 
     public RatingId getId() {
         return id;
@@ -89,19 +91,19 @@ public class Rating implements Serializable{
         this.ratingDate = ratingDate.toString();
     }
 
-    public Document getDocument() {
+    public Documents getDocument() {
         return document;
     }
 
-    public void setDocument(Document document) {
+    public void setDocument(Documents document) {
         this.document = document;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
     
@@ -123,10 +125,10 @@ public class Rating implements Serializable{
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rating)) {
+        if (!(object instanceof Ratings)) {
             return false;
         }
-        Rating other = (Rating) object;
+        Ratings other = (Ratings) object;
         if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
             return false;
         }

@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.androidapplication_reto2.project.beans;
+package com.example.androidapplication_reto2.project.beans.plural;
 
 import android.content.ContentValues;
 
-import com.example.androidapplication_reto2.project.beans.plural.Documents;
-import com.example.androidapplication_reto2.project.beans.plural.Groups;
-import com.example.androidapplication_reto2.project.beans.plural.Ratings;
+import com.example.androidapplication_reto2.project.beans.Privilege;
+import com.example.androidapplication_reto2.project.beans.Status;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementArray;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -26,8 +24,8 @@ import java.util.Set;
  *
  * @author aimar
  */
-@Root(name = "user")
-public class User implements Serializable {
+@Root(name = "users")
+public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -68,7 +66,7 @@ public class User implements Serializable {
     /**
      * The profile picture for the user.
      */
-    @ElementArray(name = "profilePicture",required = false)
+    @Element(name = "profilePicture",required = false)
     private Byte[] profilePicture;
     /**
      * The date when the user last acceded to the applicacion.
@@ -98,7 +96,7 @@ public class User implements Serializable {
     /**
      * A collection with the group the user administrates.
      */
-    //@ElementList(name="adminGroups",required = false, inline = true)
+    @ElementList(name="adminGroups",required = false, inline = true)
     private Set<Groups> adminGroups;
 
     public Long getId() {

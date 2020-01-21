@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.androidapplication_reto2.project.beans;
-
-import com.example.androidapplication_reto2.project.beans.plural.Documents;
+package com.example.androidapplication_reto2.project.beans.plural;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -20,8 +18,8 @@ import java.util.Set;
  *
  * @author Adrian
  */
-@Root(name = "category")
-public class Category implements Serializable {
+@Root(name = "categories")
+public class Categories implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -85,10 +83,10 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof Categories)) {
             return false;
         }
-        Category other = (Category) object;
+        Categories other = (Categories) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
