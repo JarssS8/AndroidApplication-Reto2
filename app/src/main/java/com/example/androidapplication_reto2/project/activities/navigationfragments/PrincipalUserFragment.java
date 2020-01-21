@@ -27,6 +27,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapplication_reto2.R;
 import com.example.androidapplication_reto2.project.activities.MainFragmentsController;
@@ -39,6 +41,7 @@ import com.example.androidapplication_reto2.project.factories.CategoryFactory;
 import com.example.androidapplication_reto2.project.factories.DocumentFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestCategory;
 import com.example.androidapplication_reto2.project.interfaces.RestDocument;
+import com.example.androidapplication_reto2.project.recyclers.MainRecyclerView;
 import com.example.androidapplication_reto2.project.retrofitcalls.DocumentCalls;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -70,6 +73,9 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
     private PopupWindow popupWindow;
     private User user;
     private Spinner spinner;
+    private RecyclerView recyclerView;
+    private MainRecyclerView mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,8 +93,20 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
         documentsUser.enqueue(new Callback<DocumentList>() {
             @Override
             public void onResponse(Call<DocumentList> call, Response<DocumentList> response) {
-                //Todo adapter
                 Log.d("PRINCIPAL", "YUJUUU");
+                switch (response.code()) {
+                    case 200:
+                        if (response.isSuccessful()) {
+                            layoutManager=new LinearLayoutManager(getContext());
+                            recyclerView= root.findViewById(R.id.recyclerViewDocumentsUser);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setLayoutManager(layoutManager);
+                            mAdapter=new MainRecyclerView(response.body());
+                            recyclerView.setAdapter(mAdapter);
+                        }
+                        break;
+                }
+
             }
 
             @Override
@@ -151,7 +169,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                         switch (response.code()) {
                             case 200:
                                 Log.d("FEO", "Entra 200");
-                                if(response.isSuccessful()) {
+                                if (response.isSuccessful()) {
                                     CategoryList categoryList = response.body();
                                     ArrayList<String> categoriesNames = new ArrayList<String>();
 

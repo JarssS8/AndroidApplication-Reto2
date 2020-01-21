@@ -27,6 +27,12 @@
         <action
             android:id="@+id/action_nav_home_to_nav_view_document"
             app:destination="@id/nav_view_document" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_edit_document"
+            app:destination="@id/nav_edit_document" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_data_document"
+            app:destination="@id/nav_data_document" />
     </fragment>
     <fragment
         android:id="@+id/nav_view_document"
@@ -77,6 +83,20 @@
         android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SubscriptionFragment"
         android:label="Subscription"
         tools:layout="@layout/fragment_subscription"
+        />
+
+    <fragment
+        android:id="@+id/nav_edit_document"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.EditDocumentFragment"
+        android:label="Edit Document"
+        tools:layout="@layout/fragment_edit_document"
+        />
+
+    <fragment
+        android:id="@+id/nav_data_document"
+        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.DocumentDataFragment"
+        android:label="Document Data"
+        tools:layout="@layout/fragment_document_data"
         />
 
 </navigation>
