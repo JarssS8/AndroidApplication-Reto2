@@ -114,23 +114,7 @@ public class UserCalls {
         });
     }
 
-    public User logIn( String username, String password){
-        User[] auxUser = {new User()};
-        Call<User> logInCall = restUser.logIn(username,password);
-        logInCall.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                auxUser[0] = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-
-            }
-        });
-        return auxUser[0];
-    }
-
+  
     public Object findUserById( Long id){
         Call<Object> findUserByIdCall = restUser.findUserById(id);
         //Todo

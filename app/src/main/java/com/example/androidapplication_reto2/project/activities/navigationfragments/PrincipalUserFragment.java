@@ -3,7 +3,9 @@ package com.example.androidapplication_reto2.project.activities.navigationfragme
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -33,7 +35,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidapplication_reto2.R;
 import com.example.androidapplication_reto2.project.activities.MainFragmentsController;
 import com.example.androidapplication_reto2.project.beans.Category;
-import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.User;
 import com.example.androidapplication_reto2.project.beans.lists.CategoryList;
 import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
@@ -42,7 +43,6 @@ import com.example.androidapplication_reto2.project.factories.DocumentFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestCategory;
 import com.example.androidapplication_reto2.project.interfaces.RestDocument;
 import com.example.androidapplication_reto2.project.recyclers.MainRecyclerView;
-import com.example.androidapplication_reto2.project.retrofitcalls.DocumentCalls;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
@@ -50,6 +50,7 @@ import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -76,12 +77,14 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
     private RecyclerView recyclerView;
     private MainRecyclerView mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private static Context mContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_principal_user, container, false);
+        mContext=getContext();
 
         floatingAddDocument = root.findViewById(R.id.floatingActionButton);
         userData = root.findViewById(R.id.lbUserData);
@@ -114,7 +117,6 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                 Log.d("PRINCIPAL", "NOPE");
             }
         });
-
         floatingAddDocument.setOnClickListener(this);
         if (user != null)
             userData.setText("Bienvenido " + user.getFullName() + ".\nEsta es tu ventana principal.");
@@ -298,4 +300,12 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
     public static File getDocument() {
         return document;
     }
+
+    public static void removeDialog(String docNameRemove, DialogInterface.OnClickListener dialogClickListener){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("You are going to delete the document "+docNameRemove+".Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+
+    }
+
 }

@@ -98,7 +98,7 @@ public class User implements Serializable {
     /**
      * A collection with the group the user administrates.
      */
-    //@ElementList(name="adminGroups",required = false, inline = true)
+    @ElementList(name="adminGroups",required = false, inline = true)
     private Set<Groups> adminGroups;
 
     public Long getId() {
