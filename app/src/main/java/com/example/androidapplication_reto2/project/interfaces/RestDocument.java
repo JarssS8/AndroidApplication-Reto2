@@ -61,7 +61,7 @@ public interface RestDocument {
      * @return A list of names of documents
      */
     @GET("{name}/{category}/{uploadDate}")
-    public Call<Set<Document>> findDocumentNameByParameters(
+    public Call<DocumentList> findDocumentNameByParameters(
             @Path("name") String name,
             @Path("category") String category,
             @Path("uploadDate") Date uploadDate);

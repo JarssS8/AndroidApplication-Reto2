@@ -22,7 +22,7 @@ public class Rating implements Serializable{
     /**
      * Id to indentificate the rating
      */
-    @Element(name = "id")
+    @Element(name = "id", required = false)
     private RatingId id;
     /**
      * The rating given to the document

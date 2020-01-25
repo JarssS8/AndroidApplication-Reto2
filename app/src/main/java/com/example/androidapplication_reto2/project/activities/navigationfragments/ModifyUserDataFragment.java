@@ -1,7 +1,5 @@
 package com.example.androidapplication_reto2.project.activities.navigationfragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,7 +33,7 @@ public class ModifyUserDataFragment extends Fragment {
 
         txtFullName = root.findViewById(R.id.txtFullNameModifyUserData);
         txtPassword = root.findViewById(R.id.txtPasswordModifyUserData);
-        txtRepeatPassword = root.findViewById(R.id.txtRepeatPasswordModifyUserData);
+        txtRepeatPassword = root.findViewById(R.id.txtDocumentNameEditDocument);
         txtEmail = root.findViewById(R.id.txtEmailModifyUserData);
 
         return root;

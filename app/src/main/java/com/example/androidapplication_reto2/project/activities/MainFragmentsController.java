@@ -56,11 +56,6 @@ public class MainFragmentsController extends AppCompatActivity{
                 || super.onSupportNavigateUp();
     }
 
-    public void replaceFragment(Fragment fragment){
-        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        t.replace(R.id.nav_host_fragment, fragment).addToBackStack(null);
-        t.commit();
-    }
 
     public static User getUser() {
         return user;

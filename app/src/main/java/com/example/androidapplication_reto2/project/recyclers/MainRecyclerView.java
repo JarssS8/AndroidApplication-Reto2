@@ -18,10 +18,12 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.activities.navigationfragments.DocumentDataFragment;
 import com.example.androidapplication_reto2.project.activities.navigationfragments.EditDocumentFragment;
 import com.example.androidapplication_reto2.project.activities.navigationfragments.PrincipalUserFragment;
 import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
+import com.example.androidapplication_reto2.project.beans.plural.Documents;
 import com.example.androidapplication_reto2.project.factories.DocumentFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestDocument;
 
@@ -40,6 +42,10 @@ public class MainRecyclerView extends RecyclerView.Adapter<MainRecyclerView.MyHo
 
     public MainRecyclerView(DocumentList documents) {
         this.documents.addAll(documents.getDocuments());
+    }
+
+    public MainRecyclerView(Set<Documents> documents) {
+       // this.documents.addAll(documents);
     }
 
     @NonNull
@@ -66,9 +72,6 @@ public class MainRecyclerView extends RecyclerView.Adapter<MainRecyclerView.MyHo
         notifyItemRemoved(index);
     }
 
-    public interface MyClickListener {
-        void onItemClick(int position, View v);
-    }
 
 
     public class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -127,6 +130,7 @@ public class MainRecyclerView extends RecyclerView.Adapter<MainRecyclerView.MyHo
 
                     break;
                 default:
+                    DocumentDataFragment.setRatings(documents.get(getAdapterPosition()));
                     Navigation.findNavController(v).navigate(R.id.action_nav_home_to_nav_data_document);
                     break;
             }

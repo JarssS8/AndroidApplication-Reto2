@@ -121,7 +121,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
         if (user != null)
             userData.setText("Bienvenido " + user.getFullName() + ".\nEsta es tu ventana principal.");
         else
-            Toast.makeText(getContext(), "Mierda", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No found user", Toast.LENGTH_SHORT).show();
 
         return root;
     }
@@ -141,27 +141,6 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                 imageButtonFindDocument = popUpView.findViewById(R.id.imageButtonFindFile);
                 lbDocUploadPath = popUpView.findViewById(R.id.lbPathDocument);
                 imageButtonShowDocument = popUpView.findViewById(R.id.imageButtonShowDocument);
-
-/*
-                RestDocument restDocument = DocumentFactory.getClient();
-                Call<Document> documentCall = restDocument.findDocument(1L);
-                documentCall.enqueue(new Callback<Document>() {
-                    @Override
-                    public void onResponse(Call<Document> call, Response<Document> response) {
-                        switch (response.code()) {
-                            case 200:
-                                Log.d("FEO", "Entra 200");
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Document> call, Throwable t) {
-                        Log.d("FEO", "Mierda");
-                        Log.d("FEO", t.getMessage());
-                    }
-                });
-*/
 
                 RestCategory restCategory = CategoryFactory.getClient();
                 Call<CategoryList> categoryListCall = restCategory.findAllCategories();
@@ -220,8 +199,8 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                 imageButtonShowDocument.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        document = new File(lbDocUploadPath.getText().toString());
                         if (lbDocUploadPath.getText().toString().equalsIgnoreCase(path)) {
+                            ViewDocumentFragment.setDocument(new File(lbDocUploadPath.getText().toString()));
                             docName = newDocNameUpload.getText().toString();
                             spinnerId = spinnerCategories.getSelectedItemPosition();
                             Navigation.findNavController(getView()).navigate(R.id.action_nav_home_to_nav_view_document);

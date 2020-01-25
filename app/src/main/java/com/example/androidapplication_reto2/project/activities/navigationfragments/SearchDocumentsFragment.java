@@ -15,18 +15,26 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
+import com.example.androidapplication_reto2.project.factories.DocumentFactory;
+import com.example.androidapplication_reto2.project.interfaces.RestDocument;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchDocumentsFragment extends Fragment implements View.OnClickListener{
 
-    private EditText date;
+    private EditText date, name,author;
     private ImageView imageButtonCalendar;
     private Button btSearchDocument;
 
@@ -39,6 +47,8 @@ public class SearchDocumentsFragment extends Fragment implements View.OnClickLis
         date = root.findViewById(R.id.date);
         imageButtonCalendar = root.findViewById(R.id.imageButtonCalendar);
         btSearchDocument = root.findViewById(R.id.btSearchDocument);
+        name = root.findViewById(R.id.txtFindDocName);
+        author = root.findViewById(R.id.txtfindAuthorName);
 
         btSearchDocument.setOnClickListener(this);
         imageButtonCalendar.setOnClickListener(this);
@@ -50,8 +60,32 @@ public class SearchDocumentsFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btSearchDocument:
-                //Todo
+                Date pickerDate=null;
+                try {
+                    SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
+                    pickerDate= formatter.parse(date.getText().toString());
+                }catch (Exception e){
+                    pickerDate=new Date();
+                }
+                java.sql.Date utilDate = new java.sql.Date(pickerDate.getTime());
+                RestDocument restDocument = DocumentFactory.getClient();
+                Call<DocumentList> documentListCall = restDocument.findDocumentNameByParameters(name.getText().toString()+"",author.getText().toString()+"",utilDate);
                 Toast.makeText(getContext(), "Buscando...", Toast.LENGTH_SHORT).show();
+                documentListCall.enqueue(new Callback<DocumentList>() {
+                    @Override
+                    public void onResponse(Call<DocumentList> call, Response<DocumentList> response) {
+                        switch (response.code()) {
+                            case
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<DocumentList> call, Throwable t) {
+
+                    }
+                });
+
+
                 break;
             case R.id.imageButtonCalendar:
                 final Calendar c = Calendar.getInstance();

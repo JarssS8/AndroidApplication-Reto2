@@ -30,15 +30,11 @@ import java.util.List;
 public class ViewDocumentFragment extends Fragment implements OnPageChangeListener, OnLoadCompleteListener,
         OnPageErrorListener {
 
-    private File document;
+    private static File document;
     private PDFView pdfView;
     private View root;
     private int pageNumber;
     private String pdfFileName;
-
-    public ViewDocumentFragment() {
-        this.document=PrincipalUserFragment.getDocument();
-    }
 
 
     @Override
@@ -115,5 +111,9 @@ public class ViewDocumentFragment extends Fragment implements OnPageChangeListen
     @Override
     public void onPageError(int page, Throwable t) {
 
+    }
+
+    public static void setDocument(File document) {
+        ViewDocumentFragment.document = document;
     }
 }
