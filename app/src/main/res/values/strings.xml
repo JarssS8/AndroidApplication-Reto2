@@ -8,6 +8,7 @@
     <string name="login_button">LogIn</string>
     <string name="signup_login">SignUp</string>
     <string name="company_name">2DAM 2CURIOUS</string>
+    <string name="email_request">Insert your email</string>
 
     <string name="logout">LogOut</string>
     <string name="welcome">Welcome</string>

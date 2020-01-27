@@ -53,7 +53,7 @@ public class LocalUser implements Serializable {
 
     public ContentValues toContentValues() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("username", getLogin());
+        contentValues.put("login", getLogin());
         contentValues.put("password", getPassword());
         contentValues.put("active", getActive());
         return contentValues;

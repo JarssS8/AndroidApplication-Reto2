@@ -9,6 +9,7 @@
     <string name="login_button">Acceder</string>
     <string name="signup_login">Registrarse</string>
     <string name="company_name">2DAM 2CURIOUS</string>
+    <string name="email_request">Introduzca su email</string>
 
     <!--SIGN UP-->
     <string name="full_name">Nombre completo</string>

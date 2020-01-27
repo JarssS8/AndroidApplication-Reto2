@@ -2,8 +2,11 @@ package com.example.androidapplication_reto2.project.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidapplication_reto2.R;
@@ -43,6 +47,7 @@ public class LoginActivity extends AppCompatActivity{
     private EditText username;
     private EditText password;
     private boolean justSignUp = false;
+    private TextView forgotPassword;
     private User user=null;
     private Switch switchRemember;
 
@@ -60,18 +65,40 @@ public class LoginActivity extends AppCompatActivity{
         username = findViewById(R.id.txtUsernameMain);
         password = findViewById(R.id.txtPasswordMain);
         switchRemember = findViewById(R.id.switchRemember);
+        forgotPassword = findViewById(R.id.txtForgotPassword);
+        
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_NEUTRAL:
+                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                startActivity(Intent.createChooser(intent, "Open your Mail Provider..."));
+                                break;
+                        }
+                    }
+                };
 
-/*
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                final EditText input = new EditText(LoginActivity.this);
+                builder.setView(input);
+                builder.setMessage(getString(R.string.email_request)).setPositiveButton("OK", dialogClickListener)
+                        .setNeutralButton("OK and open mail", dialogClickListener).show();
+            }
+        });
+
         SQLiteManager manager = new SQLiteManager(this);
         LocalUser localUser=manager.getUser();
-        localUser.getPassword();
         manager.close();
-*/
-
-
-        username.setText("gaizka");
-        password.setText("12345678A");
-
+        if (localUser!=null) {
+            if(localUser.getActive()==1){
+                username.setText(localUser.getLogin());
+                password.setText(localUser.getPassword());
+            }
+        }
 
         Log.i("Login","Try to get user from sign up activity");
         user = (User) getIntent().getSerializableExtra("user");

@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidapplication_reto2.R;
 
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TextView lbCompleteFields;
     private EditText txtUsername;
@@ -29,7 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText txtFullName;
     private EditText txtPassword;
     private EditText txtRepeatPassword;
-    private ImageButton btHelp;
+    private ImageView btHelp;
     private ImageView imageViewClickHere;
     private Button btConfirm;
     private Button btGetIt;
@@ -51,6 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
         txtPassword = findViewById(R.id.txtPassword);
         txtRepeatPassword = findViewById(R.id.txtRepeatPassword);
         btHelp = findViewById(R.id.btHelp);
+        btHelp.setOnClickListener(this);
         btConfirm = findViewById(R.id.btConfirm);
         imageViewClickHere = findViewById(R.id.imageViewClickHere);
 

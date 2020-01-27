@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".project.activities.SignUpActivity"/>
-        <activity android:name=".project.activities.MainFragmentsController" android:noHistory="true">
+        <activity android:name=".project.activities.SignUpActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".project.activities.MainFragmentsController" android:noHistory="true" android:screenOrientation="portrait">
 
         </activity>
 

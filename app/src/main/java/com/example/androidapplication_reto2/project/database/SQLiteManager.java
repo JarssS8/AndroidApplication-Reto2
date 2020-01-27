@@ -31,30 +31,27 @@ public class SQLiteManager extends SQLiteOpenHelper {
     }
 
     public void insertUser(LocalUser user) {
-        Cursor auxUser = getReadableDatabase().query(TABLE_NAME_USER, null, null,
-                null, null, null, null);
-        ParseData(auxUser);
-        if (localUser!=null) {
-            sqLiteDatabase.update(TABLE_NAME_USER, user.toContentValues(), "_id = 1", null);
-        } else {
+        if(findUser()==null) {
             sqLiteDatabase.insert(TABLE_NAME_USER, null, user.toContentValues());
+        } else {
+            sqLiteDatabase.update(TABLE_NAME_USER,user.toContentValues(),"_id = 1",null);
         }
 
     }
 
     public LocalUser getUser() {
-        Cursor auxUser = getReadableDatabase().query(TABLE_NAME_USER, null, null,
-                null, null, null, null);
-        ParseData(auxUser);
-        return localUser;
+        return findUser();
     }
 
-    private void ParseData(Cursor usersLocal) {
-        if (usersLocal.moveToFirst())
-            localUser = new LocalUser(
-                    usersLocal.getString(usersLocal.getColumnIndex("login")),
-                    usersLocal.getString(usersLocal.getColumnIndex("password")),
-                    usersLocal.getInt(usersLocal.getColumnIndex("active"))
-            );
+    public LocalUser findUser(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        LocalUser user = null;
+
+        Cursor cursor = db.query(TABLE_NAME_USER, null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            user = new LocalUser(cursor.getString(cursor.getColumnIndex("login")), cursor.getString(cursor.getColumnIndex("password")), cursor.getInt(cursor.getColumnIndex("active")));
+        }
+        return user;
     }
+
 }

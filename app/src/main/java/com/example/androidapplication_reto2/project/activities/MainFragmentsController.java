@@ -9,10 +9,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.activities.navigationfragments.PrincipalUserFragment;
 import com.example.androidapplication_reto2.project.beans.User;
 import com.google.android.material.navigation.NavigationView;
 
@@ -27,6 +33,7 @@ public class MainFragmentsController extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        MediaPlayer.create(this, R.raw.hello).start();
         user = (User) getIntent().getSerializableExtra("user");
 
 
@@ -59,11 +66,5 @@ public class MainFragmentsController extends AppCompatActivity{
 
     public static User getUser() {
         return user;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        //Todo cuadno vaya atras que le salga si quiere deslogearse
     }
 }

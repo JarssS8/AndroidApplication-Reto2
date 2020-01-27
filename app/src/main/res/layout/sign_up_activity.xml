@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="onClick">
+    android:onClick="onClick"
+    android:background="@color/dark_gray">
 
 
     <EditText
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/full_name"
+        android:textColorHint="@color/primary_light"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/password"
+        android:textColorHint="@color/primary_light"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +44,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/repeat_password"
+        android:textColorHint="@color/primary_light"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,16 +61,19 @@
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.051" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:contentDescription="@string/todo"
         android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,8 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.947"
-        app:srcCompat="@android:drawable/ic_dialog_info"
-        android:contentDescription="@string/todo" />
+        app:srcCompat="@android:drawable/ic_dialog_info" />
 
     <EditText
         android:id="@+id/txtEmail"
@@ -83,6 +89,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/email"
+        android:textColorHint="@color/primary_light"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,6 +104,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/username"
+        android:textColorHint="@color/primary_light"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,15 +115,19 @@
 
     <Button
         android:id="@+id/btConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_width="174dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/colorPrimary"
         android:onClick="onClick"
         android:text="@string/confirm"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.947" />
+        app:layout_constraintVertical_bias="0.946" />
 
     <ImageView
         android:id="@+id/imageViewClickHere"
