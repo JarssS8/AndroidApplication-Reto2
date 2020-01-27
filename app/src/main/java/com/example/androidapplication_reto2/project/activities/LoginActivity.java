@@ -6,38 +6,30 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.androidapplication_reto2.R;
-import com.example.androidapplication_reto2.project.beans.Category;
 import com.example.androidapplication_reto2.project.beans.LocalUser;
 import com.example.androidapplication_reto2.project.beans.User;
 import com.example.androidapplication_reto2.project.database.SQLiteManager;
-import com.example.androidapplication_reto2.project.factories.CategoryFactory;
 import com.example.androidapplication_reto2.project.factories.UserFactory;
-import com.example.androidapplication_reto2.project.interfaces.RestCategory;
 import com.example.androidapplication_reto2.project.interfaces.RestUser;
-import com.example.androidapplication_reto2.project.retrofitcalls.UserCalls;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Set;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -137,14 +129,18 @@ public class LoginActivity extends AppCompatActivity {
                         && password.getText().toString().trim().length() < 8 || password.getText().toString().trim().length() > 14) {
 
                     Snackbar.make(v, "Username and password format are not correct", Snackbar.LENGTH_SHORT).show();
+                    showHardKeyboard(username);
 
                 } else if (username.getText().toString().trim().length() < 4 || username.getText().toString().trim().length() > 10) {
                     Snackbar.make(v, "Username format it's not correct", Snackbar.LENGTH_SHORT).show();
+                    showHardKeyboard(username);
 
                 } else if (password.getText().toString().trim().length() < 8 || password.getText().toString().trim().length() > 14) {
                     Snackbar.make(v, "Password format it's not correct", Snackbar.LENGTH_SHORT).show();
+                    showHardKeyboard(password);
                 } else if (!checkNumberUpperPass()) {
                     Snackbar.make(v, "Password format it's not correct", Snackbar.LENGTH_SHORT).show();
+                    showHardKeyboard(password);
 
                 } else {
                     Log.i("Login", "Fields could be correct. Checking connection");
@@ -266,6 +262,19 @@ public class LoginActivity extends AppCompatActivity {
             Log.e("Connection", e.getMessage());
         }
         return connection;
+    }
+
+    public void showHardKeyboard(View view) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (view.requestFocus()) {
+                    InputMethodManager imm = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+                }
+            }
+        }, 1000);
     }
 }
 
