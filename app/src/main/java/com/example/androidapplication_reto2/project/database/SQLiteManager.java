@@ -54,4 +54,15 @@ public class SQLiteManager extends SQLiteOpenHelper {
         return user;
     }
 
+    public void changeToNoRemember(){
+        LocalUser user = null;
+        user = findUser();
+        if (user!=null) {
+            if(user.getActive()==1){
+                user.setActive(0);
+                sqLiteDatabase.update(TABLE_NAME_USER,user.toContentValues(),"_id = 1",null);
+            }
+        }
+    }
+
 }

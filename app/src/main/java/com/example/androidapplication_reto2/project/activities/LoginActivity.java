@@ -39,7 +39,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
 
     public Button btSignUpMain;
     private Button btSignUp;
@@ -48,16 +48,17 @@ public class LoginActivity extends AppCompatActivity{
     private EditText password;
     private boolean justSignUp = false;
     private TextView forgotPassword;
-    private User user=null;
+    private User user = null;
     private Switch switchRemember;
 
     /**
      * First instance of components from this activity.
+     *
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("LogIn","Initilize of log in layout components");
+        Log.i("LogIn", "Initilize of log in layout components");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         btSignUp = findViewById(R.id.btSignUpMain);
@@ -66,14 +67,14 @@ public class LoginActivity extends AppCompatActivity{
         password = findViewById(R.id.txtPasswordMain);
         switchRemember = findViewById(R.id.switchRemember);
         forgotPassword = findViewById(R.id.txtForgotPassword);
-        
+
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case DialogInterface.BUTTON_NEUTRAL:
                                 Intent intent = new Intent(Intent.ACTION_MAIN);
                                 startActivity(Intent.createChooser(intent, "Open your Mail Provider..."));
@@ -91,20 +92,21 @@ public class LoginActivity extends AppCompatActivity{
         });
 
         SQLiteManager manager = new SQLiteManager(this);
-        LocalUser localUser=manager.getUser();
+        LocalUser localUser = manager.getUser();
         manager.close();
-        if (localUser!=null) {
-            if(localUser.getActive()==1){
+        if (localUser != null) {
+            if (localUser.getActive() == 1) {
+                switchRemember.setChecked(true);
                 username.setText(localUser.getLogin());
                 password.setText(localUser.getPassword());
             }
         }
 
-        Log.i("Login","Try to get user from sign up activity");
+        Log.i("Login", "Try to get user from sign up activity");
         user = (User) getIntent().getSerializableExtra("user");
         if (user != null) {
-            Log.i("Login","Gets user from sign up activity. Putting values on login and password fields.");
-            Snackbar.make(getWindow().getDecorView().getRootView(),"Sign Up completed, now you can LogIn",Snackbar.LENGTH_LONG).show();
+            Log.i("Login", "Gets user from sign up activity. Putting values on login and password fields.");
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Sign Up completed, now you can LogIn", Snackbar.LENGTH_LONG).show();
             username.setText(user.getLogin());
             password.setText(user.getPassword());
             justSignUp = true;
@@ -114,22 +116,23 @@ public class LoginActivity extends AppCompatActivity{
 
     /**
      * This method control action onClick when the user press one button in this layout
+     *
      * @param v Is a View who controls the event of the onClick action
      */
     public void onClick(View v) {
-        Log.i("Login","User clicks on one component of the app");
+        Log.i("Login", "User clicks on one component of the app");
         Intent intent = null;
         switch (v.getId()) {
             case R.id.btLogInMain:
-                Log.i("Login","Click on login main button");
+                Log.i("Login", "Click on login main button");
                 if (justSignUp) {
-                    Log.i("Login","User just sign up. Intent to logout don't going to DataBase");
+                    Log.i("Login", "User just sign up. Intent to logout don't going to DataBase");
                     intent = new Intent(this, MainFragmentsController.class);
                     //Todo enviar el user
                     startActivity(intent);
                     this.finish();
                 }
-                Log.i("Login","Check if the login and password could be correct");
+                Log.i("Login", "Check if the login and password could be correct");
                 if (username.getText().toString().trim().length() < 4 || username.getText().toString().trim().length() > 10
                         && password.getText().toString().trim().length() < 8 || password.getText().toString().trim().length() > 14) {
 
@@ -144,25 +147,28 @@ public class LoginActivity extends AppCompatActivity{
                     Snackbar.make(v, "Password format it's not correct", Snackbar.LENGTH_SHORT).show();
 
                 } else {
-                    Log.i("Login","Fields could be correct. Checking connection");
+                    Log.i("Login", "Fields could be correct. Checking connection");
                     if (isConnected()) {
 
                         RestUser clientUser = UserFactory.getClient();
-                        Call<ResponseBody> callLogIn= clientUser.logIn(username.getText().toString(),password.getText().toString());
+                        Call<ResponseBody> callLogIn = clientUser.logIn(username.getText().toString(), password.getText().toString());
                         callLogIn.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 switch (response.code()) {
                                     case 200:
-                                        if(switchRemember.isChecked()){
+                                        SQLiteManager sqLiteManager = new SQLiteManager(getApplicationContext());
+                                        if (switchRemember.isChecked()) {
                                             LocalUser user = new LocalUser();
                                             user.setLogin(username.getText().toString());
                                             user.setPassword(password.getText().toString());
                                             user.setActive(1);
-                                            SQLiteManager sqLiteManager = new SQLiteManager(getApplicationContext());
                                             sqLiteManager.insertUser(user);
-                                            sqLiteManager.close();
+
+                                        } else {
+                                            sqLiteManager.changeToNoRemember();
                                         }
+                                        sqLiteManager.close();
                                         Intent intent = new Intent(getApplicationContext(), MainFragmentsController.class);
                                         startActivity(intent);
                                         finish();
@@ -177,7 +183,7 @@ public class LoginActivity extends AppCompatActivity{
                         });
 
                     } else {
-                        Log.i("Login","User is connected to internet");
+                        Log.i("Login", "User is connected to internet");
                         final Snackbar snackbar = Snackbar.make(v, "NO CONNECTION, CHECK YOUR CONNECTION", Snackbar.LENGTH_INDEFINITE);
                         snackbar.setAction("OK", new View.OnClickListener() {
                             @Override
@@ -192,14 +198,14 @@ public class LoginActivity extends AppCompatActivity{
                 break;
 
             case R.id.btSignUpMain:
-                Log.i("Login","Click on SignUp button");
+                Log.i("Login", "Click on SignUp button");
                 if (isConnected()) {
-                    Log.i("Login","User has internet connection. Going to sign up window");
+                    Log.i("Login", "User has internet connection. Going to sign up window");
                     intent = new Intent(this, SignUpActivity.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 } else {
-                    Log.i("Login","User hasn't internet connection");
+                    Log.i("Login", "User hasn't internet connection");
                     final Snackbar snackbar = Snackbar.make(v, "NO CONNECTION, CHECK YOUR CONNECTION", Snackbar.LENGTH_INDEFINITE);
                     snackbar.setAction("OK", new View.OnClickListener() {
                         @Override
@@ -216,6 +222,7 @@ public class LoginActivity extends AppCompatActivity{
 
     /**
      * This methos check if the password contains at least one upper case and one number for the validation
+     *
      * @return A boolean affirmative if the validations are correct
      */
     private boolean checkNumberUpperPass() {
@@ -243,6 +250,7 @@ public class LoginActivity extends AppCompatActivity{
 
     /**
      * This method checks if the connection with internet is available
+     *
      * @return A boolean affirmative if the validations are correct
      */
     public boolean isConnected() {
