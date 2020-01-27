@@ -5,14 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
+import com.example.androidapplication_reto2.project.beans.LocalUser;
 
-import com.example.androidapplication_reto2.project.beans.User;
 
 public class SQLiteManager extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "User.db";
     private static final String TABLE_NAME_USER = "user";
+    private LocalUser localUser = null;
     private SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
     public SQLiteManager(Context context) {
@@ -21,7 +21,8 @@ public class SQLiteManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME_USER + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL, active BOOLEAN )");
+        db.execSQL("CREATE TABLE " + TABLE_NAME_USER + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL, password TEXT NOT NULL, active NUMBER )");
+
     }
 
     @Override
@@ -29,19 +30,31 @@ public class SQLiteManager extends SQLiteOpenHelper {
 
     }
 
-    public void insertUser(User user){
-        Cursor auxUser=getReadableDatabase().query(TABLE_NAME_USER,null,null,
-                null,null,null,null);
-        if (auxUser!=null){
-            sqLiteDatabase.update(TABLE_NAME_USER,user.toContentValues(),"_id = 1",null);
+    public void insertUser(LocalUser user) {
+        Cursor auxUser = getReadableDatabase().query(TABLE_NAME_USER, null, null,
+                null, null, null, null);
+        ParseData(auxUser);
+        if (localUser!=null) {
+            sqLiteDatabase.update(TABLE_NAME_USER, user.toContentValues(), "_id = 1", null);
         } else {
-            sqLiteDatabase.insert(TABLE_NAME_USER,null,user.toContentValues());
+            sqLiteDatabase.insert(TABLE_NAME_USER, null, user.toContentValues());
         }
 
     }
 
-    public Cursor getUser(){
-        return getReadableDatabase().query(TABLE_NAME_USER,null,null,
-                null,null,null,null);
+    public LocalUser getUser() {
+        Cursor auxUser = getReadableDatabase().query(TABLE_NAME_USER, null, null,
+                null, null, null, null);
+        ParseData(auxUser);
+        return localUser;
+    }
+
+    private void ParseData(Cursor usersLocal) {
+        if (usersLocal.moveToFirst())
+            localUser = new LocalUser(
+                    usersLocal.getString(usersLocal.getColumnIndex("login")),
+                    usersLocal.getString(usersLocal.getColumnIndex("password")),
+                    usersLocal.getInt(usersLocal.getColumnIndex("active"))
+            );
     }
 }

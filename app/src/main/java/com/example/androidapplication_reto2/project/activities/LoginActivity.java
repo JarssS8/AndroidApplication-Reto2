@@ -11,11 +11,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.androidapplication_reto2.R;
 import com.example.androidapplication_reto2.project.beans.Category;
+import com.example.androidapplication_reto2.project.beans.LocalUser;
 import com.example.androidapplication_reto2.project.beans.User;
+import com.example.androidapplication_reto2.project.database.SQLiteManager;
 import com.example.androidapplication_reto2.project.factories.CategoryFactory;
 import com.example.androidapplication_reto2.project.factories.UserFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestCategory;
@@ -25,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Set;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +44,7 @@ public class LoginActivity extends AppCompatActivity{
     private EditText password;
     private boolean justSignUp = false;
     private User user=null;
+    private Switch switchRemember;
 
     /**
      * First instance of components from this activity.
@@ -54,9 +59,20 @@ public class LoginActivity extends AppCompatActivity{
         btLogIn = findViewById(R.id.btLogInMain);
         username = findViewById(R.id.txtUsernameMain);
         password = findViewById(R.id.txtPasswordMain);
+        switchRemember = findViewById(R.id.switchRemember);
+
+/*
+        SQLiteManager manager = new SQLiteManager(this);
+        LocalUser localUser=manager.getUser();
+        localUser.getPassword();
+        manager.close();
+*/
+
 
         username.setText("gaizka");
-        password.setText("Abcd*1234");
+        password.setText("12345678A");
+
+
         Log.i("Login","Try to get user from sign up activity");
         user = (User) getIntent().getSerializableExtra("user");
         if (user != null) {
@@ -105,24 +121,31 @@ public class LoginActivity extends AppCompatActivity{
                     if (isConnected()) {
 
                         RestUser clientUser = UserFactory.getClient();
-                        Call<User> callLogIn= clientUser.logIn(username.getText().toString(),password.getText().toString());
-                        callLogIn.enqueue(new Callback<User>() {
+                        Call<ResponseBody> callLogIn= clientUser.logIn(username.getText().toString(),password.getText().toString());
+                        callLogIn.enqueue(new Callback<ResponseBody>() {
                             @Override
-                            public void onResponse(Call<User> call, Response<User> response) {
-                                Log.d("LOGIN", "BIEN");
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 switch (response.code()) {
                                     case 200:
-                                        Intent intent= new Intent(getApplicationContext(),MainFragmentsController.class);
-                                        intent.putExtra("user",response.body());
+                                        if(switchRemember.isChecked()){
+                                            LocalUser user = new LocalUser();
+                                            user.setLogin(username.getText().toString());
+                                            user.setPassword(password.getText().toString());
+                                            user.setActive(1);
+                                            SQLiteManager sqLiteManager = new SQLiteManager(getApplicationContext());
+                                            sqLiteManager.insertUser(user);
+                                            sqLiteManager.close();
+                                        }
+                                        Intent intent = new Intent(getApplicationContext(), MainFragmentsController.class);
                                         startActivity(intent);
+                                        finish();
                                         break;
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<User> call, Throwable t) {
-                                Log.d("LOGIN", "On failure trying to login");
-                                Log.d("LOGIN", t.getMessage());
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
                             }
                         });
 
@@ -147,6 +170,7 @@ public class LoginActivity extends AppCompatActivity{
                     Log.i("Login","User has internet connection. Going to sign up window");
                     intent = new Intent(this, SignUpActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 } else {
                     Log.i("Login","User hasn't internet connection");
                     final Snackbar snackbar = Snackbar.make(v, "NO CONNECTION, CHECK YOUR CONNECTION", Snackbar.LENGTH_INDEFINITE);

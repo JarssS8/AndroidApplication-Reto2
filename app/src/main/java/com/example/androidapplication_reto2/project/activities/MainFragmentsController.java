@@ -60,4 +60,10 @@ public class MainFragmentsController extends AppCompatActivity{
     public static User getUser() {
         return user;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //Todo cuadno vaya atras que le salga si quiere deslogearse
+    }
 }

@@ -233,12 +233,6 @@ public class User implements Serializable {
         this.adminGroups = adminGroups;
     }
 
-    public ContentValues toContentValues(){
-        ContentValues contentValues=new ContentValues();
-        contentValues.put("username",login);
-        contentValues.put("password",password);
-        contentValues.put("active",1);
-        return contentValues;
-    }
+
 
 }

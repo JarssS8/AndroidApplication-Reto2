@@ -75,7 +75,7 @@ public class SearchDocumentsFragment extends Fragment implements View.OnClickLis
                     @Override
                     public void onResponse(Call<DocumentList> call, Response<DocumentList> response) {
                         switch (response.code()) {
-                            case
+
                         }
                     }
 

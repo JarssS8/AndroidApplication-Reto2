@@ -104,22 +104,5 @@ public class DocumentCalls {
         return document[0];
     }
 
-    public Set<Document> findDocumentNameByParameters(String name, String category, Date uploadDate){
-        Set<Document>[] documents = new Set[]{new HashSet<>()};
-        Call<Set<Document>> findDocumentNameByParameterCall = restDocument.findDocumentNameByParameters(name,category,uploadDate);
-        findDocumentNameByParameterCall.enqueue(new Callback<Set<Document>>() {
-            @Override
-            public void onResponse(Call<Set<Document>> call, Response<Set<Document>> response) {
-                documents[0] = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<Set<Document>> call, Throwable t) {
-
-            }
-        });
-        return documents[0];
-    }
-
 
 }

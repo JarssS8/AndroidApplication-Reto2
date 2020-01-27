@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -33,6 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.activities.LoginActivity;
 import com.example.androidapplication_reto2.project.activities.MainFragmentsController;
 import com.example.androidapplication_reto2.project.beans.Category;
 import com.example.androidapplication_reto2.project.beans.User;
@@ -88,6 +92,7 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
 
         floatingAddDocument = root.findViewById(R.id.floatingActionButton);
         userData = root.findViewById(R.id.lbUserData);
+        setHasOptionsMenu(true);
 
         user = MainFragmentsController.getUser();
 
@@ -287,4 +292,19 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.log_out, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btLogOut:
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

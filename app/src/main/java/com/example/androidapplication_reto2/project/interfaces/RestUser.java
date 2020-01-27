@@ -6,6 +6,8 @@ import com.example.androidapplication_reto2.project.beans.Premium;
 import com.example.androidapplication_reto2.project.beans.User;
 
 import java.util.Set;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -34,7 +36,7 @@ public interface RestUser {
     public Call<Void> deleteUserById(@Path("id") Long id) ;
 
     @GET("logIn/{login}/{password}")
-    public Call<User> logIn(@Path("login") String login, @Path("password") String password);
+    public Call<ResponseBody> logIn(@Path("login") String login, @Path("password") String password);
 
     @GET("id/{id}")
     public Call<Object> findUserById(@Path("id") Long id);

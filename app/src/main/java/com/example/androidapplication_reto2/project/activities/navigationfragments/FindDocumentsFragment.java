@@ -40,7 +40,7 @@ public class FindDocumentsFragment extends Fragment {
         recyclerView= root.findViewById(R.id.recyclerViewDocumentsUser);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter=new MainRecyclerView(response.body());
+        //mAdapter=new MainRecyclerView(response.body());
         recyclerView.setAdapter(mAdapter);
 
         return root;

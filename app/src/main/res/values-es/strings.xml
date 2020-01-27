@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidApplication-Reto2</string>
+
+
+    <!--LOG IN-->
+    <string name="username_login">Usuario</string>
+    <string name="password_login">Contraseña</string>
+    <string name="login_button">Acceder</string>
+    <string name="signup_login">Registrarse</string>
+    <string name="company_name">2DAM 2CURIOUS</string>
+
+    <!--SIGN UP-->
+    <string name="full_name">Nombre completo</string>
+    <string name="signup_text">Complete todos los campos para un registro exitoso</string>
+    <string name="repeat_password">Repita la contraseña</string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="email">Email</string>
+    <string name="paramethers_signup">*El usuario entre 4 -10 caracteres *El email puede tener el mismo formato que el ejemplo email.example@extension.cope *La contraseña entre 8 - 14 caracteres *La contraseña debe tener al menos un numero y una letra mayuscula</string>
+    <string name="getit">Vale</string>
+    <string name="confirm">Confirmar</string>
+
+    <string name="logout">LogOut</string>
+    <string name="welcome">Welcome</string>
+    <string name="user_data">User Data</string>
+    <string name="textview">TextView</string>
+    <string name="todo">TODO</string>
+
+
+
+</resources>

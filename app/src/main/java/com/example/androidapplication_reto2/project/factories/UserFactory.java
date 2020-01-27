@@ -22,7 +22,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class UserFactory {
 
-    private static String API_BASE_URL = "http://192.168.21.113:8080/ServerApplication-Reto2/webresources/user/";
+    private static String API_BASE_URL = "http://192.168.20.58:8080/ServerApplication-Reto2/webresources/user/";
 
     public static RestUser getClient(){
 

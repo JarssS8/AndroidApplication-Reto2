@@ -1,14 +1,19 @@
 package com.example.androidapplication_reto2.project.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.view.ViewGroup.LayoutParams;
@@ -25,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText txtPassword;
     private EditText txtRepeatPassword;
     private ImageButton btHelp;
+    private ImageView imageViewClickHere;
     private Button btConfirm;
     private Button btGetIt;
     private String errorMessage="";
@@ -46,6 +52,12 @@ public class SignUpActivity extends AppCompatActivity {
         txtRepeatPassword = findViewById(R.id.txtRepeatPassword);
         btHelp = findViewById(R.id.btHelp);
         btConfirm = findViewById(R.id.btConfirm);
+        imageViewClickHere = findViewById(R.id.imageViewClickHere);
+
+        Animation animation= AnimationUtils.loadAnimation(SignUpActivity.this, R.anim.slide_down);
+        imageViewClickHere.startAnimation(animation);
+
+        showSoftKeyboard(txtUsername);
     }
 
     /**
@@ -111,6 +123,10 @@ public class SignUpActivity extends AppCompatActivity {
         Log.i("SignUp","User clicks on one component of the app");
         switch (v.getId()) {
             case R.id.btHelp: {
+                if(imageViewClickHere.getVisibility()!=View.GONE) {
+                    Animation animation = AnimationUtils.loadAnimation(SignUpActivity.this, R.anim.slide_up);
+                    imageViewClickHere.startAnimation(animation);
+                }
                 Log.i("SignUp", "User click on help button.Creating a layout inflater for the popUp view");
                 LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 Log.i("SignUp", "Usign the inflator inflating the layout");
@@ -122,6 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
+                        imageViewClickHere.setVisibility(View.GONE);
                     }
                 });
                 Log.i("SignUp", "Showing the pop up");
@@ -176,7 +193,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if (userLength && passLength && passCorrect && passRepeat && emailCorrect) {
                     Log.i("SignUp","Local comprobations are correct. Creating user with the fields data");
-
+                    //Todo
                 }
                 else{
                     Log.i("SignUp","Creating a pop up with all that is wrong with the sign up");
@@ -195,6 +212,14 @@ public class SignUpActivity extends AppCompatActivity {
                     popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
                 }
                 break;
+        }
+    }
+
+    public void showSoftKeyboard(View view) {
+        if(view.requestFocus()){
+            InputMethodManager imm =(InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view,InputMethodManager.SHOW_IMPLICIT);
         }
     }
 }

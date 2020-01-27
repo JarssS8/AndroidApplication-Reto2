@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class DocumentFactory {
-        private static String API_BASE_URL = "http://192.168.21.113:8080/ServerApplication-Reto2/webresources/document/";
+        private static String API_BASE_URL = "http://192.168.20.58:8080/ServerApplication-Reto2/webresources/document/";
 
         public static RestDocument getClient(){
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
