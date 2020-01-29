@@ -1,6 +1,7 @@
 package com.example.androidapplication_reto2.project.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -19,6 +20,20 @@ import android.widget.TextView;
 import android.view.ViewGroup.LayoutParams;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidapplication_reto2.R;
+import com.example.androidapplication_reto2.project.beans.Free;
+import com.example.androidapplication_reto2.project.beans.Privilege;
+import com.example.androidapplication_reto2.project.beans.Status;
+import com.example.androidapplication_reto2.project.beans.User;
+import com.example.androidapplication_reto2.project.factories.UserFactory;
+import com.example.androidapplication_reto2.project.interfaces.RestUser;
+import com.example.androidapplication_reto2.project.utilities.Encryptation;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
@@ -54,6 +69,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         btHelp.setOnClickListener(this);
         btConfirm = findViewById(R.id.btConfirm);
         imageViewClickHere = findViewById(R.id.imageViewClickHere);
+
+        txtUsername.setText("juan");
+        txtEmail.setText("juan@gmail.com");
+        txtFullName.setText("Juan");
+        txtPassword.setText("12345678A");
+        txtRepeatPassword.setText("12345678A");
 
         Animation animation= AnimationUtils.loadAnimation(SignUpActivity.this, R.anim.slide_down);
         imageViewClickHere.startAnimation(animation);
@@ -194,7 +215,43 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                 if (userLength && passLength && passCorrect && passRepeat && emailCorrect) {
                     Log.i("SignUp","Local comprobations are correct. Creating user with the fields data");
-                    //Todo
+                    String encryptedPass="";
+                    User user = new User();
+                    user.setLogin(txtUsername.getText().toString().trim());
+                    encryptedPass = txtPassword.getText().toString().trim();
+                    try {
+                        encryptedPass=Encryptation.encrypt(encryptedPass);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    user.setPassword(encryptedPass);
+                    user.setEmail(txtEmail.getText().toString().trim());
+                    user.setFullName(txtFullName.getText().toString().trim());
+                    //user.setLastAccess(Timestamp.valueOf(String.valueOf(System.currentTimeMillis())));
+                    //user.setLastPasswordChange(Timestamp.valueOf(String.valueOf(System.currentTimeMillis())));
+                    user.setPrivilege(Privilege.FREE);
+                    user.setStatus(Status.ENABLED);
+
+                    RestUser restUser = UserFactory.getClient();
+                    Call<Void> freeCall =  restUser.createUser(user);
+                    freeCall.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            Log.d("SIGN UP","BIEN "+response.code());
+                            switch (response.code()) {
+                                case 200:
+                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d("SIGN UP","MAL "+t.getMessage());
+                        }
+                    });
                 }
                 else{
                     Log.i("SignUp","Creating a pop up with all that is wrong with the sign up");

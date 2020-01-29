@@ -17,8 +17,8 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RestUser {
-    @POST
-    public Call<Void> createUser(@Body User user) ;
+    @POST(".")
+    public Call<Void> createUser(@Body User user);
 
     @PUT("modifyFree/")
     public Call<Void> modifyUserData(@Body Free free);
@@ -33,7 +33,7 @@ public interface RestUser {
     public Call<Void> deleteUserByLogin(@Path("login") String login);
 
     @DELETE("deleteById/{id}")
-    public Call<Void> deleteUserById(@Path("id") Long id) ;
+    public Call<Void> deleteUserById(@Path("id") Long id);
 
     @GET("logIn/{login}/{password}")
     public Call<ResponseBody> logIn(@Path("login") String login, @Path("password") String password);
@@ -45,14 +45,17 @@ public interface RestUser {
     public Call<Object> findUserByLogin(@Path("login") String login);
 
     @GET(".")
-    public Call<Set<User>> findAllUsers() ;
+    public Call<Set<User>> findAllUsers();
 
     @PUT("goFree/")
-    public Call<Void> modifyUserToFree(@Body User user) ;
+    public Call<Void> modifyUserToFree(@Body User user);
 
     @PUT("goPremium/")
-    public Call<Void> modifyUserToPremium(@Body Premium premium) ;
+    public Call<Void> modifyUserToPremium(@Body Premium premium);
 
     @PUT("goAdmin/")
-    public Call<Void> modifyUserToAdmin(@Body User user) ;
+    public Call<Void> modifyUserToAdmin(@Body User user);
+
+    @GET("getPublicKey/")
+    public Call<String> getPublicKey();
 }

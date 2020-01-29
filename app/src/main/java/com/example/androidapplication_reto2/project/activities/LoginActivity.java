@@ -21,7 +21,8 @@ import android.widget.TextView;
 import com.example.androidapplication_reto2.R;
 import com.example.androidapplication_reto2.project.beans.LocalUser;
 import com.example.androidapplication_reto2.project.beans.User;
-import com.example.androidapplication_reto2.project.database.SQLiteManager;
+import com.example.androidapplication_reto2.project.utilities.Encryptation;
+import com.example.androidapplication_reto2.project.utilities.SQLiteManager;
 import com.example.androidapplication_reto2.project.factories.UserFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestUser;
 import com.google.android.material.snackbar.Snackbar;
@@ -53,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         Log.i("LogIn", "Initilize of log in layout components");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
+        Encryptation.getKey();
         btSignUp = findViewById(R.id.btSignUpMain);
         btLogIn = findViewById(R.id.btLogInMain);
         username = findViewById(R.id.txtUsernameMain);

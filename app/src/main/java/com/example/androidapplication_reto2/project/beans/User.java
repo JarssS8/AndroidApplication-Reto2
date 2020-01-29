@@ -17,6 +17,7 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class User implements Serializable {
     /**
      * The Id for the user.
      */
-    @Element(name = "id")
+    @Element(name = "id", required = false)
     private Long id;
     /**
      * The login value for the user.
@@ -93,12 +94,12 @@ public class User implements Serializable {
     /**
      * A collection with all the groups for the user.
      */
-    @ElementList(name = "groups",required = false,inline = true)
+    //@ElementList(name = "groups",required = false,inline = true)
     private Set<Groups> groups;
     /**
      * A collection with the group the user administrates.
      */
-    @ElementList(name="adminGroups",required = false, inline = true)
+    //@ElementList(name="adminGroups",required = false, inline = true)
     private Set<Groups> adminGroups;
 
     public Long getId() {
@@ -176,7 +177,7 @@ public class User implements Serializable {
         return resultado;
     }
 
-    public void setLastAccess(String lastAccess) {
+    public void setLastAccess(Timestamp lastAccess) {
         this.lastAccess = lastAccess.toString();
     }
 
@@ -191,7 +192,7 @@ public class User implements Serializable {
         return resultado;
     }
 
-    public void setLastPasswordChange(String lastPasswordChange) {
+    public void setLastPasswordChange(Timestamp lastPasswordChange) {
         this.lastPasswordChange = lastPasswordChange.toString();
     }
 

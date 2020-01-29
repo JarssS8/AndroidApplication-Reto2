@@ -24,20 +24,6 @@ public class UserCalls {
 
     private final RestUser restUser =retrofit.create(RestUser.class);
 
-    public void createUser( User user) {
-        Call<Void> createUserCall = restUser.createUser(user);
-        createUserCall.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-
-            }
-        });
-    }
 
     public void modifyUserData( Free free){
         Call<Void> modifyUserDataFreeCall = restUser.modifyUserData(free);

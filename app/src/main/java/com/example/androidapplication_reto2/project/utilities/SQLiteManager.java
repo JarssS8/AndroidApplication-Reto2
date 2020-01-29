@@ -1,4 +1,4 @@
-package com.example.androidapplication_reto2.project.database;
+package com.example.androidapplication_reto2.project.utilities;
 
 import android.content.Context;
 import android.database.Cursor;
