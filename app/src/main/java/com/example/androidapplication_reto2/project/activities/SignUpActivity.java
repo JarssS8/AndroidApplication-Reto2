@@ -30,6 +30,8 @@ import com.example.androidapplication_reto2.project.utilities.Encryptation;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private EditText txtPassword;
     private EditText txtRepeatPassword;
     private ImageView btHelp;
-    private ImageView imageViewClickHere;
+    private ImageView imageViewClickHere, imageViewCorrectLogin, imageViewCorrectEmail, imageViewCorrectFullName, imageViewCorrectPass, imageViewCorrectRepPass;
     private Button btConfirm;
     private Button btGetIt;
     private String errorMessage="";
@@ -69,12 +71,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         btHelp.setOnClickListener(this);
         btConfirm = findViewById(R.id.btConfirm);
         imageViewClickHere = findViewById(R.id.imageViewClickHere);
-
-        txtUsername.setText("juan");
-        txtEmail.setText("juan@gmail.com");
-        txtFullName.setText("Juan");
-        txtPassword.setText("12345678A");
-        txtRepeatPassword.setText("12345678A");
+        imageViewCorrectLogin = findViewById(R.id.imageViewCorrectLogin);
+        imageViewCorrectEmail = findViewById(R.id.imageViewCorrectEmail);
+        imageViewCorrectFullName = findViewById(R.id.imageViewCorrectFullName);
+        imageViewCorrectPass = findViewById(R.id.imageViewCorrectPass);
+        imageViewCorrectRepPass = findViewById(R.id.imageViewCorrectRepPass);
 
         Animation animation= AnimationUtils.loadAnimation(SignUpActivity.this, R.anim.slide_down);
         imageViewClickHere.startAnimation(animation);
@@ -119,22 +120,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
      */
     private boolean checkPassRepeat(Editable password, Editable passwordRepeat) {
         boolean checkRepeat = false;
-        if (password.toString().trim().equals(passwordRepeat.toString().trim())) {
+        if (password.toString().trim().equals(passwordRepeat.toString().trim()) && password.toString().length()>0) {
             checkRepeat = true;
         }
         return checkRepeat;
     }
 
-    /**
-     * Checks if the email got the correct format
-     * @param email A String of mail field for validate his format
-     * @return A boolean affirmative if the validations are correct
-     */
-     //Todo añadir la comprobacion del email
-    private boolean checkEmail(Editable email) {
-       // boolean check = Util.validarEmail(email.toString());
-        return true;
-    }
+
+
 
 
     /**
@@ -169,24 +162,34 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             case R.id.btConfirm:
+                if(imageViewCorrectLogin.getVisibility()!=View.VISIBLE){
+                    imageViewCorrectLogin.setVisibility(View.VISIBLE);
+                    imageViewCorrectEmail.setVisibility(View.VISIBLE);
+                    imageViewCorrectFullName.setVisibility(View.VISIBLE);
+                    imageViewCorrectPass.setVisibility(View.VISIBLE);
+                    imageViewCorrectRepPass.setVisibility(View.VISIBLE);
+                }
                 Log.i("SignUp","User clicks on confirm button");
                 errorMessage="";
                 boolean passCheck = checkPassword(txtPassword.getText());
                 boolean passCheckRepeat = checkPassRepeat(txtPassword.getText(),
                         txtRepeatPassword.getText());
-                boolean emailCheck = checkEmail(txtEmail.getText());
+                boolean emailCheck = validarEmail(txtEmail.getText().toString());
                 boolean userLength = false;
                 boolean passLength = false;
                 boolean passRepeat = false;
                 boolean passCorrect = false;
                 boolean emailCorrect = false;
+                boolean fullNameCorrect = txtFullName.length()>0 && txtFullName.length()<45;
                 Log.i("SignUp","Local comprobations if data could be correct");
                 //Check login lenght
                 if (txtUsername.length() >= 4 && txtUsername.length() <= 10) {
                     userLength = true;
+                    imageViewCorrectLogin.setImageResource(R.drawable.ic_play_arrow_green_24dp);
                 }
                 else{
                     errorMessage+="Username invalid format\n";
+                    imageViewCorrectLogin.setImageResource(R.drawable.ic_play_arrow_red_24dp);
                 }
                 //Checks password lenght
                 if (txtPassword.length() >= 8 && txtPassword.length() <= 14) {
@@ -200,20 +203,36 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 } else{
                     errorMessage+="Password must have an upper case and a number\n";
                 }
+                if(passCheck&&passLength){
+                    imageViewCorrectPass.setImageResource(R.drawable.ic_play_arrow_green_24dp);
+                }else{
+                    imageViewCorrectPass.setImageResource(R.drawable.ic_play_arrow_red_24dp);
+                }
                 //Check both password match
                 if (passCheckRepeat) {
+                    imageViewCorrectRepPass.setImageResource(R.drawable.ic_play_arrow_green_24dp);
                     passRepeat = true;
                 }else{
                     errorMessage+="Password and repeat password don't match \n";
+                    imageViewCorrectRepPass.setImageResource(R.drawable.ic_play_arrow_red_24dp);
                 }
                 //Check email format
                 if (emailCheck) {
+                    imageViewCorrectEmail.setImageResource(R.drawable.ic_play_arrow_green_24dp);
                     emailCorrect = true;
                 }else{
+                    imageViewCorrectEmail.setImageResource(R.drawable.ic_play_arrow_red_24dp);
                     errorMessage+="Email invalid format\n";
                 }
 
-                if (userLength && passLength && passCorrect && passRepeat && emailCorrect) {
+                if(!fullNameCorrect){
+                    errorMessage+="Full name long must be between 0 and 45\n";
+                    imageViewCorrectFullName.setImageResource(R.drawable.ic_play_arrow_red_24dp);
+                }else{
+                    imageViewCorrectFullName.setImageResource(R.drawable.ic_play_arrow_green_24dp);
+                }
+
+                if (userLength && passLength && passCorrect && passRepeat && emailCorrect && fullNameCorrect) {
                     Log.i("SignUp","Local comprobations are correct. Creating user with the fields data");
                     String encryptedPass="";
                     User user = new User();
@@ -279,5 +298,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(view,InputMethodManager.SHOW_IMPLICIT);
         }
+    }
+
+    /**
+     * Checks if the email got the correct format
+     * @param email A String of mail field for validate his format
+     * @return A boolean affirmative if the validations are correct
+     */
+    public boolean validarEmail(String email) {
+
+        //String regex = "^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+){1,40}\\@[a-zA-Z0-9\\-]{0,30}\\.[a-zA-Z]{2,4}$";
+        String regex = "^[a-zA-Z0-9\\.\\-\\_]{1,20}\\@[a-zA-Z0-9\\-]{1,20}\\.[a-zA-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+        return matcher.matches();
     }
 }

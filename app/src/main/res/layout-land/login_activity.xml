@@ -112,4 +112,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchRemember"
         app:layout_constraintVertical_bias="0.044" />
+
+    <ImageView
+        android:id="@+id/imageButtonCall"
+        android:layout_width="49dp"
+        android:layout_height="47dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.928"
+        app:srcCompat="@drawable/ic_local_phone_black_24dp" />
+
+    <TextView
+        android:id="@+id/lbCallHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click for help ->"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.897" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,8 @@
 package com.example.androidapplication_reto2.project.recyclers;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,13 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapplication_reto2.R;
 import com.example.androidapplication_reto2.project.activities.navigationfragments.DocumentDataFragment;
-import com.example.androidapplication_reto2.project.activities.navigationfragments.EditDocumentFragment;
-import com.example.androidapplication_reto2.project.activities.navigationfragments.PrincipalUserFragment;
 import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
 import com.example.androidapplication_reto2.project.beans.plural.Documents;
-import com.example.androidapplication_reto2.project.factories.DocumentFactory;
-import com.example.androidapplication_reto2.project.interfaces.RestDocument;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,40 +85,6 @@ public class MainRecyclerView extends RecyclerView.Adapter<MainRecyclerView.MyHo
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.imageButtonDocEdit:
-                    EditDocumentFragment.setOriginalDocument(documents.get(getAdapterPosition()));
-                    Navigation.findNavController(v).navigate(R.id.action_nav_home_to_nav_edit_document);
-                    break;
-                case R.id.imageButtonDocRemove:
-                    DialogInterface.OnClickListener dialogClickListener = (DialogInterface.OnClickListener) (dialog, which) -> {
-                        switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
-                                RestDocument restDocument = DocumentFactory.getClient();
-                                Call<Void> callRemoveDoc = restDocument.deleteDocument(documents.get(getAdapterPosition()).getId());
-                                callRemoveDoc.enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
-                                        switch (response.code()) {
-                                            case 204:
-                                                Log.d("Recicler Docs User", "Deleted document");
-                                                break;
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
-
-                                    }
-                                });
-                                deleteItem(getAdapterPosition());
-                                break;
-                        }
-                    };
-                    PrincipalUserFragment.removeDialog(lbDocName.getText().toString(),dialogClickListener);
-
-
-
-                    break;
                 default:
                     DocumentDataFragment.setRatings(documents.get(getAdapterPosition()));
                     Navigation.findNavController(v).navigate(R.id.action_nav_home_to_nav_data_document);

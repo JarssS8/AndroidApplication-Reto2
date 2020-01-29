@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView forgotPassword;
     private User user = null;
     private Switch switchRemember;
+    private ImageView imageButtonCall;
 
     /**
      * First instance of components from this activity.
@@ -62,6 +65,16 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.txtPasswordMain);
         switchRemember = findViewById(R.id.switchRemember);
         forgotPassword = findViewById(R.id.txtForgotPassword);
+        imageButtonCall = findViewById(R.id.imageButtonCall);
+
+        imageButtonCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:645636710"));
+                startActivity(intent);
+            }
+        });
 
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override

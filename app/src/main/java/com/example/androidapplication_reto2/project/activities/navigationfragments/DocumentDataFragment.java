@@ -32,8 +32,6 @@ import com.example.androidapplication_reto2.project.factories.DocumentFactory;
 import com.example.androidapplication_reto2.project.factories.RatingFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestDocument;
 import com.example.androidapplication_reto2.project.interfaces.RestRating;
-import com.example.androidapplication_reto2.project.recyclers.MainRecyclerView;
-import com.example.androidapplication_reto2.project.recyclers.RecyclerRatings;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -56,11 +54,6 @@ public class DocumentDataFragment extends Fragment implements View.OnClickListen
     private ImageView imageButtonSendReview;
     private EditText commentReview;
 
-    //recycler
-    private RecyclerView recyclerView;
-    private RecyclerRatings mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,14 +71,6 @@ public class DocumentDataFragment extends Fragment implements View.OnClickListen
         ArrayAdapter<String> rateValuesAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, new String[]{"0","1","2","3","4","5"});
         rateValuesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRate.setAdapter(rateValuesAdapter);
-
-        //recycler
-        layoutManager =new LinearLayoutManager(getContext());
-        recyclerView = root.findViewById(R.id.recyclerReviewsDocument);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerRatings(documentData.getRatings());
-        recyclerView.setAdapter(mAdapter);
 
         //data
         docName.setText(documentData.getName());

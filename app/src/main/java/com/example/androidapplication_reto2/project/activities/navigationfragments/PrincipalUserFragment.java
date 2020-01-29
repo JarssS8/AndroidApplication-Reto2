@@ -65,7 +65,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PrincipalUserFragment extends Fragment implements View.OnClickListener {
+public class PrincipalUserFragment extends Fragment {
 
     private static final int PERMISSIONS_REQUEST_CODE = 0;
     private static final int FILE_PICKER_REQUEST_CODE = 1;
@@ -90,8 +90,6 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_principal_user, container, false);
         mContext=getContext();
-
-        floatingAddDocument = root.findViewById(R.id.floatingActionButton);
         userData = root.findViewById(R.id.lbUserData);
         setHasOptionsMenu(true);
 
@@ -123,110 +121,12 @@ public class PrincipalUserFragment extends Fragment implements View.OnClickListe
                 Log.d("PRINCIPAL", "NOPE");
             }
         });
-        floatingAddDocument.setOnClickListener(this);
         if (user != null)
             userData.setText("Bienvenido " + user.getFullName() + ".\nEsta es tu ventana principal.");
         else
             Toast.makeText(getContext(), "No found user", Toast.LENGTH_SHORT).show();
 
         return root;
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.floatingActionButton:
-                LayoutInflater layoutInflater = (LayoutInflater) getContext().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View popUpView = layoutInflater.inflate(R.layout.pop_up_upload_document, null);
-                popupWindow = new PopupWindow(popUpView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
-                //FindViewById From the popUp
-                Button btUploadDocument = popUpView.findViewById(R.id.btUploadDocument);
-                newDocNameUpload = popUpView.findViewById(R.id.txtUploadDocName);
-                Spinner spinnerCategories = popUpView.findViewById(R.id.spinnerCategoriesUploadDocument);
-                imageButtonFindDocument = popUpView.findViewById(R.id.imageButtonFindFile);
-                lbDocUploadPath = popUpView.findViewById(R.id.lbPathDocument);
-                imageButtonShowDocument = popUpView.findViewById(R.id.imageButtonShowDocument);
-
-                RestCategory restCategory = CategoryFactory.getClient();
-                Call<CategoryList> categoryListCall = restCategory.findAllCategories();
-                categoryListCall.enqueue(new Callback<CategoryList>() {
-                    @Override
-                    public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
-                        switch (response.code()) {
-                            case 200:
-                                Log.d("FEO", "Entra 200");
-                                if (response.isSuccessful()) {
-                                    CategoryList categoryList = response.body();
-                                    ArrayList<String> categoriesNames = new ArrayList<String>();
-
-                                    Log.d("FEO", "rellena array");
-                                    for (Category auxCat : categoryList.getCategories()) {
-                                        categoriesNames.add(auxCat.getName());
-                                        Log.d("FEO", auxCat.getName());
-                                    }
-
-                                    Log.d("FEO", "for");
-                                    ArrayAdapter<String> categoriesNameAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categoriesNames);
-                                    categoriesNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                    spinnerCategories.setAdapter(categoriesNameAdapter);
-
-                                    Log.d("FEO", "todo ok");
-                                }
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CategoryList> call, Throwable t) {
-
-                        Log.d("FEO", "Mierda");
-
-                        Log.d("FEO", t.getMessage());
-                    }
-                });
-
-                if (!path.equalsIgnoreCase("")) {
-                    if (docName != null)
-                        newDocNameUpload.setText(docName);
-                    //Todo seleccionar categoria antes de ver docu
-                    spinnerCategories.setSelection(spinnerId);
-                    lbDocUploadPath.setText(path);
-
-                }
-
-                imageButtonFindDocument.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        checkPermisionAndOpenFilePicker();
-                    }
-                });
-
-                imageButtonShowDocument.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (lbDocUploadPath.getText().toString().equalsIgnoreCase(path)) {
-                            ViewDocumentFragment.setDocument(new File(lbDocUploadPath.getText().toString()));
-                            docName = newDocNameUpload.getText().toString();
-                            spinnerId = spinnerCategories.getSelectedItemPosition();
-                            Navigation.findNavController(getView()).navigate(R.id.action_nav_home_to_nav_view_document);
-                            popupWindow.dismiss();
-                        } else {
-                            Snackbar.make(getView(), "Select one pdf before", Snackbar.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                btUploadDocument.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });
-                Log.i("SignUp", "Showing the pop up");
-                popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-                break;
-        }
     }
 
     private void checkPermisionAndOpenFilePicker() {
