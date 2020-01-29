@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
      *
      * @param v Is a View who controls the event of the onClick action
      */
-    public void onClick(View v) {
+    public void onClick(View v) throws Exception {
         Log.i("Login", "User clicks on one component of the app");
         Intent intent = null;
         switch (v.getId()) {
@@ -150,7 +150,9 @@ public class LoginActivity extends AppCompatActivity {
                     if (isConnected()) {
 
                         RestUser clientUser = UserFactory.getClient();
-                        Call<ResponseBody> callLogIn = clientUser.logIn(username.getText().toString(), password.getText().toString());
+                        String encryptedPassword=password.getText().toString().trim();
+                        encryptedPassword = Encryptation.encrypt(encryptedPassword);
+                        Call<ResponseBody> callLogIn = clientUser.logIn(username.getText().toString(), encryptedPassword);
                         callLogIn.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -159,8 +161,8 @@ public class LoginActivity extends AppCompatActivity {
                                         SQLiteManager sqLiteManager = new SQLiteManager(getApplicationContext());
                                         if (switchRemember.isChecked()) {
                                             LocalUser user = new LocalUser();
-                                            user.setLogin(username.getText().toString());
-                                            user.setPassword(password.getText().toString());
+                                            user.setLogin(username.getText().toString().trim());
+                                            user.setPassword(password.getText().toString().trim());
                                             user.setActive(1);
                                             sqLiteManager.insertUser(user);
 
@@ -171,6 +173,9 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(getApplicationContext(), MainFragmentsController.class);
                                         startActivity(intent);
                                         finish();
+                                        break;
+                                    case 500:
+                                        Log.d("LOGIN", response.message());
                                         break;
                                 }
                             }
