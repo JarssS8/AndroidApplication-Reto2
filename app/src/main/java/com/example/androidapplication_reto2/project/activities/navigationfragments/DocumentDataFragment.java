@@ -135,4 +135,12 @@ public class DocumentDataFragment extends Fragment{
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public static Document getDocumentData() {
+        return documentData;
+    }
+
+    public static void setDocumentData(Document documentData) {
+        DocumentDataFragment.documentData = documentData;
+    }
 }
