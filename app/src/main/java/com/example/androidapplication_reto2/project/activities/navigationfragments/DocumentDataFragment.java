@@ -1,6 +1,7 @@
 package com.example.androidapplication_reto2.project.activities.navigationfragments;
 
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,22 +15,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.androidapplication_reto2.R;
 import com.example.androidapplication_reto2.project.activities.LoginActivity;
 import com.example.androidapplication_reto2.project.beans.Document;
-import com.example.androidapplication_reto2.project.beans.Rating;
 import com.example.androidapplication_reto2.project.factories.DocumentFactory;
-import com.example.androidapplication_reto2.project.factories.RatingFactory;
 import com.example.androidapplication_reto2.project.factories.UserFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestDocument;
-import com.example.androidapplication_reto2.project.interfaces.RestRating;
 import com.example.androidapplication_reto2.project.interfaces.RestUser;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -74,12 +67,16 @@ public class DocumentDataFragment extends Fragment{
                             setHasOptionsMenu(true);
                         }
                         break;
+                    case 404:
+                        Snackbar.make(getView(), getString(R.string.email_not_found), Snackbar.LENGTH_SHORT).show();
+                        break;
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(getString(R.string.client_error)).show();
             }
         });
 
