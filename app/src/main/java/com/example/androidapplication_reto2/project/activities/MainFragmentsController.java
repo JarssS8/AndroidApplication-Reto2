@@ -43,9 +43,7 @@ public class MainFragmentsController extends AppCompatActivity{
         DrawerLayout drawerLayout=findViewById(R.id.drawer);
         NavigationView navigationView=findViewById(R.id.nav_view);
         setSupportActionBar(toolbar);
-        appBarConfiguration= new AppBarConfiguration.Builder(R.id.nav_home,
-                R.id.nav_user_data,R.id.nav_join_group,
-                R.id.nav_user_groups,R.id.nav_search_documents)
+        appBarConfiguration= new AppBarConfiguration.Builder(R.id.nav_home)
                 .setDrawerLayout(drawerLayout).build();
         navController = Navigation
                 .findNavController(this,R.id.nav_host_fragment);

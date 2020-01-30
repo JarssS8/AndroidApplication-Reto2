@@ -66,7 +66,6 @@ public class MainRecyclerView extends RecyclerView.Adapter<MainRecyclerView.MyHo
         public void onClick(View v) {
             switch (v.getId()) {
                 default:
-                    DocumentDataFragment.setRatings(documents.get(getAdapterPosition()));
                     Navigation.findNavController(v).navigate(R.id.action_nav_home_to_nav_data_document);
                     break;
             }

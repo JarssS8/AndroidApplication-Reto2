@@ -25,6 +25,10 @@ public class UserFactory {
 
     private static String API_BASE_URL = "http://192.168.20.112:8080/ServerApplication-Reto2/webresources/user/";
 
+    /**
+     * Get client from interact with the factory rest user for xml
+     * @return the client rest
+     */
     public static RestUser getClient(){
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -37,6 +41,10 @@ public class UserFactory {
         return restUser;
     }
 
+    /**
+     * Get client from interact with the factory rest user for plain text
+     * @return the client rest
+     */
     public static RestUser getClientText(){
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

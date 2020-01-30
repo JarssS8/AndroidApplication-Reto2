@@ -47,6 +47,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="logout">Are you sure that want log out?</string>
+    <string name="delete_doc">Document deleted</string>
+    <string name="doc_not_found">Documents not found</string>
+
 
     <string name="user_data">User Data</string>
     <string name="welcome">Welcome toLearn()</string>

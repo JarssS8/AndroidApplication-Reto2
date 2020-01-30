@@ -13,85 +13,9 @@
         tools:layout="@layout/fragment_principal_user"
         >
         <action
-            android:id="@+id/action_nav_home_to_nav_user_data"
-            app:destination="@id/nav_user_data" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_join_group"
-            app:destination="@id/nav_join_group" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_search_documents"
-            app:destination="@id/nav_search_documents" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_user_groups"
-            app:destination="@id/nav_user_groups" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_view_document"
-            app:destination="@id/nav_view_document" />
-        <action
-            android:id="@+id/action_nav_home_to_nav_edit_document"
-            app:destination="@id/nav_edit_document" />
-        <action
             android:id="@+id/action_nav_home_to_nav_data_document"
             app:destination="@id/nav_data_document" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_view_document"
-        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.ViewDocumentFragment"
-        android:label="View Document"
-        tools:layout="@layout/fragment_view_document"
-        />
-    <fragment
-        android:id="@+id/nav_user_data"
-        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SeeAndModifyUserDataFragment"
-        android:label="User Data"
-        tools:layout="@layout/fragment_see_and_modify_user_data"
-        >
-        <action
-            android:id="@+id/action_nav_user_data_to_nav_modify_data"
-            app:destination="@+id/nav_modify_data" />
-        <action
-            android:id="@+id/action_nav_user_data_to_nav_subsciption"
-            app:destination="@id/nav_subsciption" />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_join_group"
-        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.JoinCreateGroupFragment"
-        android:label="Join or Create Group"
-        tools:layout="@layout/fragment_join_create_group"
-        />
-    <fragment
-        android:id="@+id/nav_user_groups"
-        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SeeUserGroupsFragment"
-        android:label="Your Groups"
-        tools:layout="@layout/fragment_see_user_groups"
-        />
-    <fragment
-        android:id="@+id/nav_search_documents"
-        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SearchDocumentsFragment"
-        android:label="Search Documents"
-        tools:layout="@layout/fragment_search_documents"
-        />
-    <fragment
-        android:id="@+id/nav_modify_data"
-        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.ModifyUserDataFragment"
-        android:label="Modify User Data"
-        tools:layout="@layout/fragment_modify_user_data"
-        />
-
-    <fragment
-        android:id="@+id/nav_subsciption"
-        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.SubscriptionFragment"
-        android:label="Subscription"
-        tools:layout="@layout/fragment_subscription"
-        />
-
-    <fragment
-        android:id="@+id/nav_edit_document"
-        android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.EditDocumentFragment"
-        android:label="Edit Document"
-        tools:layout="@layout/fragment_edit_document"
-        />
-
     <fragment
         android:id="@+id/nav_data_document"
         android:name="com.example.androidapplication_reto2.project.activities.navigationfragments.DocumentDataFragment"
@@ -99,8 +23,8 @@
         tools:layout="@layout/fragment_document_data"
         >
         <action
-            android:id="@+id/action_nav_data_document_to_nav_view_document"
-            app:destination="@id/nav_view_document" />
+            android:id="@+id/action_nav_data_document_to_nav_home"
+            app:destination="@id/nav_home" />
     </fragment>
 
 </navigation>

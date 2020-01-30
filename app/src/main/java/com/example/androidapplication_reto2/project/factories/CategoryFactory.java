@@ -11,7 +11,11 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 public class CategoryFactory {
         private static String API_BASE_URL = "http://192.168.20.112:8080/ServerApplication-Reto2/webresources/category/";
 
-        public static RestCategory getClient(){
+    /**
+     * Get client from interact with the factory rest category
+     * @return the client rest
+     */
+    public static RestCategory getClient(){
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();

@@ -48,6 +48,8 @@
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="logout">¿Seguro que quieres cerrar sesion?</string>
+    <string name="delete_doc">Documento eliminado</string>
+    <string name="doc_not_found">Documentos no encontrados</string>
 
 
 

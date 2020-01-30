@@ -30,11 +30,9 @@ public interface RestGroup {
     @GET
     public Call<Set<Group>> findGroups();
 
-    //Todo regañar a diego
     @GET("user")
     public Call<Set<Group>> findAllGroups(String login) ;
 
-    //Todo Probablemente tampoco funcione
     @DELETE
     public Call<Void> deleteGroup (Long id);
 }

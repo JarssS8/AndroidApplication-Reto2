@@ -24,6 +24,9 @@ public class Encryptation {
     private static Cipher cipher;
 
 
+    /**
+     * Get the public key from the server
+     */
     public static void getKey(){
         RestUser restUser = UserFactory.getClientText();
         Call<String> getKeyCall =  restUser.getPublicKey();
@@ -41,6 +44,12 @@ public class Encryptation {
         });
     }
 
+    /**
+     * Encrypt one message to encrypted with public key
+     * @param messageToEncrypt message to encrypt
+     * @return the message encrypted
+     * @throws Exception
+     */
     public static String encrypt(String messageToEncrypt) throws Exception {
         KeyFactory keyFactory = KeyFactory.getInstance(CRYPTO_METHOD);
         X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(hexStringToByteArray(publicKey));
@@ -52,10 +61,15 @@ public class Encryptation {
         return toHexadecimal(encrypted);
     }
 
-    public static String toHexadecimal(byte[] resumen) {
+    /**
+     * Method that transform byte[] to hexadecimal string
+     * @param resume the string that we want transform
+     * @return the byte[] with the transformation
+     */
+    public static String toHexadecimal(byte[] resume) {
         String HEX = "";
-        for (int i = 0; i < resumen.length; i++) {
-            String h = Integer.toHexString(resumen[i] & 0xFF);
+        for (int i = 0; i < resume.length; i++) {
+            String h = Integer.toHexString(resume[i] & 0xFF);
             if (h.length() == 1) {
                 HEX += "0";
             }
@@ -64,6 +78,11 @@ public class Encryptation {
         return HEX.toUpperCase();
     }
 
+    /**
+     * Method that transform hexadecimal string to byte[]
+     * @param s the string that we want transform
+     * @return the byte[] with the transformation
+     */
     public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];

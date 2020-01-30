@@ -7,6 +7,7 @@ import com.example.androidapplication_reto2.project.beans.User;
 
 import java.util.Set;
 
+import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -55,6 +56,9 @@ public interface RestUser {
 
     @PUT("goAdmin/")
     public Call<Void> modifyUserToAdmin(@Body User user);
+
+    @GET("findUserPrivilege/{login}")
+    public Call<String> findPrivilegeOfUserByLogin(@Path("login") String login);
 
     @GET("restorePassword/{email}")
     public Call<Void> restorePassword(@Path("email") String email);

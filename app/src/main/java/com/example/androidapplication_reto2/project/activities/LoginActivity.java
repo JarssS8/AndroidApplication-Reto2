@@ -36,7 +36,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public Button btSignUpMain;
+    private Button btSignUpMain;
     private Button btSignUp;
     private Button btLogIn;
     private EditText username;
@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private User user = null;
     private Switch switchRemember;
     private ImageView imageButtonCall;
+    private static String login;
 
     /**
      * First instance of components from this activity. Including two listeners for that componentes,
@@ -188,6 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                                             user.setPassword(password.getText().toString().trim());
                                             user.setActive(1);
                                             sqLiteManager.insertUser(user);
+                                            setLogin(user.getLogin());
 
                                         } else {
                                             sqLiteManager.changeToNoRemember();
@@ -203,7 +205,7 @@ public class LoginActivity extends AppCompatActivity {
                                     case 401:
                                         Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.user_wrong_password), Snackbar.LENGTH_SHORT).show();
                                         break;
-                                    case 500:
+                                    default:
                                         Log.d("LOGIN", response.message());
                                         Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.server_error), Snackbar.LENGTH_SHORT).show();
                                         break;
@@ -319,6 +321,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         }, 1000);
+    }
+
+    public static String getLogin() {
+        return login;
+    }
+
+    public static void setLogin(String login) {
+        LoginActivity.login = login;
     }
 }
 
