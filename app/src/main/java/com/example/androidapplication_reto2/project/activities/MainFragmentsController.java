@@ -26,28 +26,27 @@ public class MainFragmentsController extends AppCompatActivity{
 
     private AppBarConfiguration appBarConfiguration;
     private NavController navController;
-    private static User user;
 
+    /**
+     * Action when creates the activity that is going to include the app fragments and the navigation darwer for that fragments
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         MediaPlayer.create(this, R.raw.hello).start();
-        user = (User) getIntent().getSerializableExtra("user");
 
-
+        //Navigation drawer elements declaration
         Toolbar toolbar = findViewById(R.id.toolbar);
         DrawerLayout drawerLayout=findViewById(R.id.drawer);
         NavigationView navigationView=findViewById(R.id.nav_view);
-
         setSupportActionBar(toolbar);
-
         appBarConfiguration= new AppBarConfiguration.Builder(R.id.nav_home,
                 R.id.nav_user_data,R.id.nav_join_group,
                 R.id.nav_user_groups,R.id.nav_search_documents)
                 .setDrawerLayout(drawerLayout).build();
-
         navController = Navigation
                 .findNavController(this,R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this,navController,appBarConfiguration);
@@ -57,14 +56,14 @@ public class MainFragmentsController extends AppCompatActivity{
 
     }
 
+    /**
+     * Action when the navigation is being showed
+     * @return true if is being showed
+     */
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController,appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
 
-
-    public static User getUser() {
-        return user;
-    }
 }

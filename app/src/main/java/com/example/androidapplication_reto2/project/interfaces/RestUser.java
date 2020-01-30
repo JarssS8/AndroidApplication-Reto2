@@ -56,6 +56,9 @@ public interface RestUser {
     @PUT("goAdmin/")
     public Call<Void> modifyUserToAdmin(@Body User user);
 
+    @GET("restorePassword/{email}")
+    public Call<Void> restorePassword(@Path("email") String email);
+
     @GET("getPublicKey/")
     public Call<String> getPublicKey();
 }

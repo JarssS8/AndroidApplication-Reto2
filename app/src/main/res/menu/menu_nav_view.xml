@@ -4,12 +4,12 @@
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Main" />
-    <item android:title="Documents">
+    <item android:title="@string/document_menu">
         <menu>
             <item
                 android:id="@+id/nav_search_documents"
                 android:icon="@drawable/ic_search_black_24dp"
-                android:title="Search Documents" />
+                android:title="@string/search_document_menu" />
         </menu>
     </item>
 </menu>

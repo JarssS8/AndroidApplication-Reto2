@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
@@ -15,15 +14,7 @@ import com.example.androidapplication_reto2.R;
 import com.example.androidapplication_reto2.project.activities.navigationfragments.DocumentDataFragment;
 import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
-import com.example.androidapplication_reto2.project.beans.plural.Documents;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainRecyclerView extends RecyclerView.Adapter<MainRecyclerView.MyHolder> {
 
@@ -32,10 +23,6 @@ public class MainRecyclerView extends RecyclerView.Adapter<MainRecyclerView.MyHo
 
     public MainRecyclerView(DocumentList documents) {
         this.documents.addAll(documents.getDocuments());
-    }
-
-    public MainRecyclerView(Set<Documents> documents) {
-       // this.documents.addAll(documents);
     }
 
     @NonNull
@@ -72,13 +59,6 @@ public class MainRecyclerView extends RecyclerView.Adapter<MainRecyclerView.MyHo
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             lbDocName = itemView.findViewById(R.id.lbDocName);
-            btEdit = itemView.findViewById(R.id.imageButtonDocEdit);
-            btRemove = itemView.findViewById(R.id.imageButtonDocRemove);
-
-            btEdit.setOnClickListener(this);
-            btEdit.setClickable(true);
-            btRemove.setOnClickListener(this);
-            btRemove.setClickable(true);
             itemView.setOnClickListener(this);
         }
 

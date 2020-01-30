@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,19 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidapplication_reto2.R;
-import com.example.androidapplication_reto2.project.activities.MainFragmentsController;
 import com.example.androidapplication_reto2.project.beans.Document;
 import com.example.androidapplication_reto2.project.beans.Rating;
-import com.example.androidapplication_reto2.project.beans.plural.Ratings;
-import com.example.androidapplication_reto2.project.factories.DocumentFactory;
 import com.example.androidapplication_reto2.project.factories.RatingFactory;
-import com.example.androidapplication_reto2.project.interfaces.RestDocument;
+import com.example.androidapplication_reto2.project.factories.UserFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestRating;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.io.File;
-import java.lang.reflect.Array;
-import java.util.Set;
+import com.example.androidapplication_reto2.project.interfaces.RestUser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -94,7 +85,6 @@ public class DocumentDataFragment extends Fragment implements View.OnClickListen
                 Rating auxRating = new Rating();
                 auxRating.setReview(commentReview.getText().toString());
                 auxRating.setRating(Integer.parseInt((String)spinnerRate.getSelectedItem()));
-                auxRating.setUser(MainFragmentsController.getUser());
                 auxRating.setDocument(documentData);
                 RestRating restRating = RatingFactory.getClient();
                 Call<Void> callSendReview = restRating.newDocumentRating(auxRating);
@@ -121,19 +111,16 @@ public class DocumentDataFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.view_document,menu);
+        RestUser restUser = UserFactory.getClient();
+
+        inflater.inflate(R.menu.delete_document,menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.btPdfViewDocument:
-               //ViewDocumentFragment.setDocument(new File());
-               Navigation.findNavController(getView()).navigate(R.id.action_nav_data_document_to_nav_view_document);
+            case R.id.btDeleteDoc:
 
-                break;
-            case R.id.btSaveDocument:
-                //Todo
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -22,64 +22,15 @@
 
     <TextView
         android:id="@+id/lbDocumentData"
-        android:layout_width="364dp"
-        android:layout_height="159dp"
+        android:layout_width="361dp"
+        android:layout_height="443dp"
+        android:layout_marginTop="100dp"
         android:text="docData"
         app:autoSizeTextType="none"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerReviewsDocument"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbDocNameDocumentData"
-        app:layout_constraintVertical_bias="0.651" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerReviewsDocument"
-        android:layout_width="396dp"
-        android:layout_height="255dp"
-        android:layout_marginBottom="188dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972" />
-
-    <ImageView
-        android:id="@+id/imageButtonSendRatingDocData"
-        android:layout_width="39dp"
-        android:layout_height="37dp"
-        android:layout_marginEnd="4dp"
-        android:clickable="true"
-        android:src="@drawable/ic_send_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerReviewsDocument"
-        app:layout_constraintVertical_bias="0.283" />
-
-    <EditText
-        android:id="@+id/txtCommentDocumentData"
-        android:layout_width="231dp"
-        android:layout_height="75dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerReviewsDocument"
-        app:layout_constraintVertical_bias="0.225" />
-
-    <Spinner
-        android:id="@+id/spinnerRateDocumentData"
-        android:layout_width="73dp"
-        android:layout_height="52dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButtonSendRatingDocData"
-        app:layout_constraintHorizontal_bias="0.564"
-        app:layout_constraintStart_toEndOf="@+id/txtCommentDocumentData"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerReviewsDocument"
-        app:layout_constraintVertical_bias="0.281" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

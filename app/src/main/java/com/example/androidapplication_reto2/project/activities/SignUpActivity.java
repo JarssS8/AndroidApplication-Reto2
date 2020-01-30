@@ -1,5 +1,6 @@
 package com.example.androidapplication_reto2.project.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,26 +14,22 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.view.ViewGroup.LayoutParams;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidapplication_reto2.R;
-import com.example.androidapplication_reto2.project.beans.Free;
 import com.example.androidapplication_reto2.project.beans.Privilege;
 import com.example.androidapplication_reto2.project.beans.Status;
 import com.example.androidapplication_reto2.project.beans.User;
 import com.example.androidapplication_reto2.project.factories.UserFactory;
 import com.example.androidapplication_reto2.project.interfaces.RestUser;
 import com.example.androidapplication_reto2.project.utilities.Encryptation;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -188,20 +185,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     imageViewCorrectLogin.setImageResource(R.drawable.ic_play_arrow_green_24dp);
                 }
                 else{
-                    errorMessage+="Username invalid format\n";
+                    errorMessage+=getString(R.string.username_bad_format)+"\n";
                     imageViewCorrectLogin.setImageResource(R.drawable.ic_play_arrow_red_24dp);
                 }
                 //Checks password lenght
                 if (txtPassword.length() >= 8 && txtPassword.length() <= 14) {
                     passLength = true;
                 }else{
-                    errorMessage+="Password invalid format\n";
+                    errorMessage+=getString(R.string.password_bad_format)+"\n";
                 }
                 //Check password format
                 if (passCheck) {
                     passCorrect = true;
                 } else{
-                    errorMessage+="Password must have an upper case and a number\n";
+                    errorMessage+=getString(R.string.password_upper_and_number)+"\n";
                 }
                 if(passCheck&&passLength){
                     imageViewCorrectPass.setImageResource(R.drawable.ic_play_arrow_green_24dp);
@@ -213,7 +210,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     imageViewCorrectRepPass.setImageResource(R.drawable.ic_play_arrow_green_24dp);
                     passRepeat = true;
                 }else{
-                    errorMessage+="Password and repeat password don't match \n";
+                    errorMessage+=getString(R.string.password_and_rep_password_no_match)+"\n";
                     imageViewCorrectRepPass.setImageResource(R.drawable.ic_play_arrow_red_24dp);
                 }
                 //Check email format
@@ -222,11 +219,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     emailCorrect = true;
                 }else{
                     imageViewCorrectEmail.setImageResource(R.drawable.ic_play_arrow_red_24dp);
-                    errorMessage+="Email invalid format\n";
+                    errorMessage+=getString(R.string.email_bad_format)+"\n";
                 }
 
                 if(!fullNameCorrect){
-                    errorMessage+="Full name long must be between 0 and 45\n";
+                    errorMessage+=getString(R.string.invalid_full_name)+"\n";
                     imageViewCorrectFullName.setImageResource(R.drawable.ic_play_arrow_red_24dp);
                 }else{
                     imageViewCorrectFullName.setImageResource(R.drawable.ic_play_arrow_green_24dp);
@@ -246,8 +243,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     user.setPassword(encryptedPass);
                     user.setEmail(txtEmail.getText().toString().trim());
                     user.setFullName(txtFullName.getText().toString().trim());
-                    //user.setLastAccess(Timestamp.valueOf(String.valueOf(System.currentTimeMillis())));
-                    //user.setLastPasswordChange(Timestamp.valueOf(String.valueOf(System.currentTimeMillis())));
                     user.setPrivilege(Privilege.FREE);
                     user.setStatus(Status.ENABLED);
 
@@ -263,12 +258,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     startActivity(intent);
                                     overridePendingTransition(R.anim.left_in, R.anim.left_out);
                                     break;
+                                case 403:
+                                    Snackbar.make(getWindow().getDecorView().getRootView(),getString(R.string.user_already_exists),Snackbar.LENGTH_SHORT).show();
+                                    break;
+                                case 500:
+                                    Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.server_error), Snackbar.LENGTH_SHORT).show();
+                                    break;
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
                             Log.d("SIGN UP","MAL "+t.getMessage());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+                            builder.setMessage(getString(R.string.client_error)).show();
                         }
                     });
                 }
@@ -292,6 +295,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * Method that show the soft mode input when an action happens
+     * @param view that is execute this method
+     */
     public void showSoftKeyboard(View view) {
         if(view.requestFocus()){
             InputMethodManager imm =(InputMethodManager)
@@ -306,12 +313,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
      * @return A boolean affirmative if the validations are correct
      */
     public boolean validarEmail(String email) {
-
-        //String regex = "^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+){1,40}\\@[a-zA-Z0-9\\-]{0,30}\\.[a-zA-Z]{2,4}$";
         String regex = "^[a-zA-Z0-9\\.\\-\\_]{1,20}\\@[a-zA-Z0-9\\-]{1,20}\\.[a-zA-Z]{2,4}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
 
         return matcher.matches();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.left_in, R.anim.left_out);
+        finish();
     }
 }

@@ -10,6 +10,19 @@
     <string name="signup_login">Registrarse</string>
     <string name="company_name">2DAM 2CURIOUS</string>
     <string name="email_request">Introduzca su email</string>
+    <string name="confirmation_reset_password">ENVIAR</string>
+    <string name="information_reset_password_correctly">El email se enviara en seguida</string>
+    <string name="telf_number">tel:645636710</string>
+    <string name="no_connection">NO HAY CONEXION, COMPRUEBA TU CONEXION</string>
+    <string name="user_no_correct_format">El formato del login no es correcto</string>
+    <string name="pass_no_correct_format">El formato de la contraseña no es correcto</string>
+    <string name="user_and_pass_no_correct_format">Los formatos de usuario y contraseña no son correctos</string>
+    <string name="help_call">Toca para obtener ayuda -></string>
+    <string name="remember_login">¿Recordar inicio?</string>
+    <string name="forgot_password">¿Olvidaste la contraseña? Haz click aqui</string>
+    <string name="email_not_found">Usuario no encontrado</string>
+    <string name="server_error">Error inesperado, intentelo mas tarde</string>
+    <string name="client_error">Ha ocurrido un error, intentelo mas tarde</string>
 
     <!--SIGN UP-->
     <string name="full_name">Nombre completo</string>
@@ -18,16 +31,31 @@
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="email">Email</string>
-    <string name="paramethers_signup">*El usuario entre 4 -10 caracteres *El email puede tener el mismo formato que el ejemplo email.example@extension.cope *La contraseña entre 8 - 14 caracteres *La contraseña debe tener al menos un numero y una letra mayuscula</string>
+    <string name="paramethers_signup">*El usuario entre 4 -10 caracteres \n*El email puede tener el mismo formato que el ejemplo email.example@extension.cope\n *La contraseña entre 8 - 14 caracteres \n*La contraseña debe tener al menos un numero y una letra mayuscula</string>
     <string name="getit">Vale</string>
     <string name="confirm">Confirmar</string>
+    <string name="username_bad_format">Mal formato de usuario</string>
+    <string name="password_bad_format">Mal formato de contraseña</string>
+    <string name="password_upper_and_number">La contraseña tiene que tener al menos una mayuscula y un numero</string>
+    <string name="password_and_rep_password_no_match">Las contraseñas no coinciden</string>
+    <string name="email_bad_format">Mal formato de email</string>
+    <string name="invalid_full_name">El nombre tiene que tener una longitud entre 0 y 45</string>
+    <string name="user_already_exists">El usuario ya existe en la base de datos</string>
+    <string name="user_wrong_password">Contraseña erronea</string>
 
-    <string name="logout">LogOut</string>
-    <string name="welcome">Welcome</string>
+    <!--MAIN WINDOW-->
+    <string name="welcome">Bievenido toLearn()</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="logout">¿Seguro que quieres cerrar sesion?</string>
+
+
+
     <string name="user_data">User Data</string>
     <string name="textview">TextView</string>
     <string name="todo">TODO</string>
-
+    <string name="document_menu">Documents</string>
+    <string name="search_document_menu">Search documents</string>
 
 
 </resources>

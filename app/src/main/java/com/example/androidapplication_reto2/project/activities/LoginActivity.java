@@ -48,7 +48,8 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView imageButtonCall;
 
     /**
-     * First instance of components from this activity.
+     * First instance of components from this activity. Including two listeners for that componentes,
+     * when the user want interact with the call icon or try to recover his password.
      *
      * @param savedInstanceState
      */
@@ -67,38 +68,58 @@ public class LoginActivity extends AppCompatActivity {
         forgotPassword = findViewById(R.id.txtForgotPassword);
         imageButtonCall = findViewById(R.id.imageButtonCall);
 
+        //Open the phone caller with our phone number
         imageButtonCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:645636710"));
+                intent.setData(Uri.parse(getString(R.string.telf_number)));
                 startActivity(intent);
             }
         });
-
+        //Execute method when user want recover his password
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final EditText input = new EditText(LoginActivity.this);
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
-                            case DialogInterface.BUTTON_NEUTRAL:
-                                Intent intent = new Intent(Intent.ACTION_MAIN);
-                                startActivity(Intent.createChooser(intent, "Open your Mail Provider..."));
+                            case DialogInterface.BUTTON_POSITIVE:
+                                RestUser restUser = UserFactory.getClient();
+                                Call<Void> restorePassCall = restUser.restorePassword(input.getText().toString());
+                                restorePassCall.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        switch (response.code()) {
+                                            case 204:
+                                                Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.information_reset_password_correctly), Snackbar.LENGTH_SHORT).show();
+                                                break;
+                                            case 404:
+                                                Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.email_not_found), Snackbar.LENGTH_SHORT).show();
+                                                break;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                        builder.setMessage(getString(R.string.client_error)).show();
+                                    }
+                                });
                                 break;
                         }
                     }
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                final EditText input = new EditText(LoginActivity.this);
                 builder.setView(input);
-                builder.setMessage(getString(R.string.email_request)).setPositiveButton("OK", dialogClickListener)
-                        .setNeutralButton("OK and open mail", dialogClickListener).show();
+                builder.setMessage(getString(R.string.email_request)).setPositiveButton(getString(R.string.confirmation_reset_password), dialogClickListener).show();
             }
         });
 
+        //Check if there are any username saved on my local database
         SQLiteManager manager = new SQLiteManager(this);
         LocalUser localUser = manager.getUser();
         manager.close();
@@ -110,20 +131,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
-        Log.i("Login", "Try to get user from sign up activity");
-        user = (User) getIntent().getSerializableExtra("user");
-        if (user != null) {
-            Log.i("Login", "Gets user from sign up activity. Putting values on login and password fields.");
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Sign Up completed, now you can LogIn", Snackbar.LENGTH_LONG).show();
-            username.setText(user.getLogin());
-            password.setText(user.getPassword());
-            justSignUp = true;
-        }
-
     }
 
     /**
-     * This method control action onClick when the user press one button in this layout
+     * This method control action onClick when the user press one button in this layout. Controls signup and login buttons.
      *
      * @param v Is a View who controls the event of the onClick action
      */
@@ -136,7 +147,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (justSignUp) {
                     Log.i("Login", "User just sign up. Intent to logout don't going to DataBase");
                     intent = new Intent(this, MainFragmentsController.class);
-                    //Todo enviar el user
                     startActivity(intent);
                     this.finish();
                 }
@@ -144,18 +154,18 @@ public class LoginActivity extends AppCompatActivity {
                 if (username.getText().toString().trim().length() < 4 || username.getText().toString().trim().length() > 10
                         && password.getText().toString().trim().length() < 8 || password.getText().toString().trim().length() > 14) {
 
-                    Snackbar.make(v, "Username and password format are not correct", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, getString(R.string.user_and_pass_no_correct_format), Snackbar.LENGTH_SHORT).show();
                     showHardKeyboard(username);
 
                 } else if (username.getText().toString().trim().length() < 4 || username.getText().toString().trim().length() > 10) {
-                    Snackbar.make(v, "Username format it's not correct", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, getString(R.string.user_no_correct_format), Snackbar.LENGTH_SHORT).show();
                     showHardKeyboard(username);
 
                 } else if (password.getText().toString().trim().length() < 8 || password.getText().toString().trim().length() > 14) {
-                    Snackbar.make(v, "Password format it's not correct", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, getString(R.string.pass_no_correct_format), Snackbar.LENGTH_SHORT).show();
                     showHardKeyboard(password);
                 } else if (!checkNumberUpperPass()) {
-                    Snackbar.make(v, "Password format it's not correct", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, getString(R.string.pass_no_correct_format), Snackbar.LENGTH_SHORT).show();
                     showHardKeyboard(password);
 
                 } else {
@@ -163,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (isConnected()) {
 
                         RestUser clientUser = UserFactory.getClient();
-                        String encryptedPassword=password.getText().toString().trim();
+                        String encryptedPassword = password.getText().toString().trim();
                         encryptedPassword = Encryptation.encrypt(encryptedPassword);
                         Call<ResponseBody> callLogIn = clientUser.logIn(username.getText().toString(), encryptedPassword);
                         callLogIn.enqueue(new Callback<ResponseBody>() {
@@ -187,21 +197,29 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                         break;
+                                    case 404:
+                                        Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.email_not_found), Snackbar.LENGTH_SHORT).show();
+                                        break;
+                                    case 401:
+                                        Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.user_wrong_password), Snackbar.LENGTH_SHORT).show();
+                                        break;
                                     case 500:
                                         Log.d("LOGIN", response.message());
+                                        Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.server_error), Snackbar.LENGTH_SHORT).show();
                                         break;
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                builder.setMessage(getString(R.string.client_error)).show();
                             }
                         });
 
                     } else {
                         Log.i("Login", "User is connected to internet");
-                        final Snackbar snackbar = Snackbar.make(v, "NO CONNECTION, CHECK YOUR CONNECTION", Snackbar.LENGTH_INDEFINITE);
+                        final Snackbar snackbar = Snackbar.make(v, getString(R.string.no_connection), Snackbar.LENGTH_INDEFINITE);
                         snackbar.setAction("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -223,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 } else {
                     Log.i("Login", "User hasn't internet connection");
-                    final Snackbar snackbar = Snackbar.make(v, "NO CONNECTION, CHECK YOUR CONNECTION", Snackbar.LENGTH_INDEFINITE);
+                    final Snackbar snackbar = Snackbar.make(v, getString(R.string.no_connection), Snackbar.LENGTH_INDEFINITE);
                     snackbar.setAction("OK", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -238,7 +256,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * This methos check if the password contains at least one upper case and one number for the validation
+     * This method check if the password contains at least one upper case and one number for the validation
      *
      * @return A boolean affirmative if the validations are correct
      */
@@ -285,6 +303,11 @@ public class LoginActivity extends AppCompatActivity {
         return connection;
     }
 
+    /**
+     * Method that force the keyboard when an action happens
+     *
+     * @param view that is execute this method
+     */
     public void showHardKeyboard(View view) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

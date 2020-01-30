@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class RatingFactory {
-        private static String API_BASE_URL = "http://192.168.20.62:8080/ServerApplication-Reto2/webresources/rating/";
+        private static String API_BASE_URL = "http://192.168.20.112:8080/ServerApplication-Reto2/webresources/rating/";
 
         public static RestRating getClient(){
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
