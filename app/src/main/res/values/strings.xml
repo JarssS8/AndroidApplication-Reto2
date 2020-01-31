@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AndroidApplication-Reto2</string>
-
+    <string name="url_retrofit">http://192.168.21.125:8080/ServerApplication-Reto2/webresources/</string>
 
     <!--LOG IN-->
     <string name="username_login">Username</string>
@@ -52,6 +52,7 @@
     <string name="doc_name_request">Introduce the new document name</string>
     <string name="doc_name_saved">New document name saved</string>
     <string name="document_not_found">Document not found</string>
+    <string name="show_credits">"Cant show the credits please open it manually"</string>
 
 
     <string name="user_data">User Data</string>

@@ -57,7 +57,7 @@ public interface RestUser {
     @PUT("goAdmin/")
     public Call<Void> modifyUserToAdmin(@Body User user);
 
-    @GET("findUserPrivilege/{login}")
+    @GET("findUserPrivilegeByLogin/{login}")
     public Call<String> findPrivilegeOfUserByLogin(@Path("login") String login);
 
     @GET("restorePassword/{email}")

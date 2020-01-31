@@ -176,10 +176,10 @@ public class DocumentDataFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Document getDocumentData() {
-        return documentData;
-    }
-
+    /**
+     * Assign one document to this local document
+     * @param documentData Document variable
+     */
     public static void setDocumentData(Document documentData) {
         DocumentDataFragment.documentData = documentData;
     }

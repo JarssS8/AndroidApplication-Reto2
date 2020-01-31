@@ -117,6 +117,9 @@ public class PrincipalUserFragment extends Fragment {
             case R.id.btLogOut:
                 logOutMessage();
                 break;
+            case R.id.btCredits:
+                Snackbar.make(getView(),getString(R.string.show_credits),Snackbar.LENGTH_SHORT).show();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

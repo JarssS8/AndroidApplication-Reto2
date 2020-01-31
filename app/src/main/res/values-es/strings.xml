@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AndroidApplication-Reto2</string>
+    <string name="url_retrofit">http://192.168.21.125:8080/ServerApplication-Reto2/webresources/</string>
 
 
     <!--LOG IN-->
@@ -53,6 +54,7 @@
     <string name="doc_name_request">Introduce el nuevo nombre de documento</string>
     <string name="doc_name_saved">Nuevo nombre de documento guardado</string>
     <string name="document_not_found">Documento no encontrado</string>
+    <string name="show_credits">"No se puede mostrar los creditos abralo manualmente por favor"</string>
 
 
 
