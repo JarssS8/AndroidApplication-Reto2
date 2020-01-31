@@ -5,75 +5,94 @@
  */
 package com.example.androidapplication_reto2.project.beans;
 
+import com.example.androidapplication_reto2.project.beans.plural.Ratings;
+
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementArray;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
 
 /**
  * Entity class for Document.
+ *
  * @author Gaizka Andrés
  */
-public class Document implements Serializable{
-    private static final long serialVersionUID=1L;
+@Root(name = "document")
+public class Document implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * Id to identificate the document
      */
+    @Element(name = "id")
     private Long id;
     /**
      * The name of the document
      */
+    @Element(name = "name")
     private String name;
     /**
      * The date when the document has been upload
      */
-    private Date uploadDate;
+    @Element(name = "uploadDate")
+    private String uploadDate;
     /**
      * The total rating of the document
      */
+    @Element(name = "totalRating", required = false)
     private int totalRating;
     /**
      * The total of reviews the document has
      */
+    @Element(name = "ratingCount", required = false)
     private int ratingCount;
     /**
      * The file itself
      */
+    @ElementArray(name = "file", required = false)
     private Byte[] file;
     /**
      * The collection of rating the document has been given
      */
-    private Set<Rating> ratings;
+    @ElementList(name = "ratings", required = false, inline = true, empty = true, data = false)
+    private Set<Ratings> ratings;
+
     /**
      * The author of the document
      */
-
+    @Element(name = "user", required = false)
     private User user;
     /**
      * The category of the document
      */
-    
+    @Element(name = "category", required = false)
     private Category category;
     /**
      * The author group of the document
      */
+    @Element(name = "group",required = false)
     private Group group;
-    
-    public Document(){
+
+    public Document() {
     }
-    
-    public Document(Long id,String name, String author, Date uploadDate, int totalRating, int ratingCount){
-        this.id=id;
-        this.name=name;
+
+    public Document(Long id, String name, String author, String uploadDate, int totalRating, int ratingCount) {
+        this.id = id;
+        this.name = name;
         this.user = new User();
         this.user.setLogin(author);
-        this.uploadDate=uploadDate;
-        this.totalRating=totalRating;
-        this.ratingCount=ratingCount;
-        
+        this.uploadDate = uploadDate;
+        this.totalRating = totalRating;
+        this.ratingCount = ratingCount;
+
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -91,11 +110,18 @@ public class Document implements Serializable{
     }
 
     public Date getUploadDate() {
-        return uploadDate;
+        Date resultado=null;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
+            resultado= formatter.parse(uploadDate);
+        }catch (Exception e){
+            resultado=new Date();
+        }
+        return resultado;
     }
 
     public void setUploadDate(Date uploadDate) {
-        this.uploadDate = uploadDate;
+        this.uploadDate = uploadDate.toString();
     }
 
     public int getTotalRating() {
@@ -122,11 +148,11 @@ public class Document implements Serializable{
         this.file = file;
     }
 
-    public Set<Rating> getRatings() {
+    public Set<Ratings> getRatings() {
         return ratings;
     }
 
-    public void setRatings(Set<Rating> ratings) {
+    public void setRatings(Set<Ratings> ratings) {
         this.ratings = ratings;
     }
 
@@ -137,7 +163,7 @@ public class Document implements Serializable{
     public User getUser() {
         return user;
     }
-    
+
     public Category getCategory() {
         return category;
     }
@@ -145,8 +171,8 @@ public class Document implements Serializable{
     public void setCategory(Category category) {
         this.category = category;
     }
- 
- 
+
+
     public Group getGroup() {
         return group;
     }
@@ -154,9 +180,10 @@ public class Document implements Serializable{
     public void setGroup(Group group) {
         this.group = group;
     }
-    
+
     /**
      * Return an int calculated from id for the User
+     *
      * @return an int representating the instance of this entity
      */
     @Override
@@ -165,8 +192,10 @@ public class Document implements Serializable{
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
+
     /**
      * Compares two instances of Users
+     *
      * @param object the other User instance to compare to
      * @return true if instances are equal
      */
@@ -182,8 +211,10 @@ public class Document implements Serializable{
         }
         return true;
     }
-     /**
+
+    /**
      * Obtains a String representation including id value and classes full Name
+     *
      * @return a String of an User id
      */
     @Override
@@ -191,7 +222,5 @@ public class Document implements Serializable{
         return "serverapplication.entities.Document[ id=" + id + " ]";
     }
 
-  
 
-    
 }

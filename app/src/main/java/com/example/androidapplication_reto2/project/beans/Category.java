@@ -5,6 +5,12 @@
  */
 package com.example.androidapplication_reto2.project.beans;
 
+import com.example.androidapplication_reto2.project.beans.plural.Documents;
+
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -14,21 +20,25 @@ import java.util.Set;
  *
  * @author Adrian
  */
+@Root(name = "category")
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
      * A long with the identifier of the category
      */
+    @Element(name = "id")
     private Long id;
     /**
      * A String with the name of the category
      */
+    @Element(name = "name")
     private String name;
     /**
      * A collection with the documents of this category
      */
-    private Set<Document> documents;
+    @ElementList(name = "documents", inline = true, required = false)
+    private Set<Documents> documents;
 
     public Long getId() {
         return id;
@@ -46,11 +56,11 @@ public class Category implements Serializable {
         this.name = Name;
     }
 
-    public Set<Document> getDocuments() {
+    public Set<Documents> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(Set<Document> documents) {
+    public void setDocuments(Set<Documents> documents) {
         this.documents = documents;
     }
 

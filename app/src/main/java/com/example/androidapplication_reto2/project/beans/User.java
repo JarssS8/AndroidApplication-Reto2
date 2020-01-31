@@ -7,8 +7,18 @@ package com.example.androidapplication_reto2.project.beans;
 
 import android.content.ContentValues;
 
+import com.example.androidapplication_reto2.project.beans.plural.Documents;
+import com.example.androidapplication_reto2.project.beans.plural.Groups;
+import com.example.androidapplication_reto2.project.beans.plural.Ratings;
+
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementArray;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -17,62 +27,80 @@ import java.util.Set;
  *
  * @author aimar
  */
-
+@Root(name = "user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
      * The Id for the user.
      */
+    @Element(name = "id", required = false)
     private Long id;
     /**
      * The login value for the user.
      */
+    @Element(name = "login")
     private String login;
     /**
      * The email value for the user.
      */
+    @Element(name = "email",required = false)
     private String email;
     /**
      * The full name for the user.
      */
+    @Element(name = "fullName",required = false)
     private String fullName;
     /**
      * The status for the users account.
      */
+    @Element(name = "status")
     private Status status;
     /**
-     * The privilege for the user.
+     The privilege for the user.
      */
+    @Element(name = "privilege")
     private Privilege privilege;
     /**
      * The password value for the user.
      */
+    @Element(name = "password")
     private String password;
+    /**
+     * The profile picture for the user.
+     */
+    @ElementArray(name = "profilePicture",required = false)
+    private Byte[] profilePicture;
     /**
      * The date when the user last acceded to the applicacion.
      */
-    private Date lastAccess;
+    @Element(name = "lastAccess",required = false)
+    private String lastAccess;
     /**
      * The date when the user last changed password.
      */
-    private Date lastPasswordChange;
+    @Element(name = "lastPasswordChange",required = false)
+    private String lastPasswordChange;
     /**
      * A collection with all the ratings given by the user.
      */
-    private Set<Rating> ratings;
+    @ElementList(name = "ratings",required = false,inline = true)
+    private Set<Ratings> ratings;
     /**
      * A collection with all the documents uploaded by the user.
      */
-    private Set<Document> documents;
+    @ElementList(name = "documents",required = false,inline = true)
+    private Set<Documents> documents;
     /**
      * A collection with all the groups for the user.
      */
-    private Set<Group> groups;
+    //@ElementList(name = "groups",required = false,inline = true)
+    private Set<Groups> groups;
     /**
      * A collection with the group the user administrates.
      */
-    private Set<Group> adminGroups;
+    //@ElementList(name="adminGroups",required = false, inline = true)
+    private Set<Groups> adminGroups;
 
     public Long getId() {
         return id;
@@ -114,6 +142,14 @@ public class User implements Serializable {
         this.status = status;
     }
 
+    public Byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(Byte[] profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
     public Privilege getPrivilege() {
         return privilege;
     }
@@ -131,90 +167,73 @@ public class User implements Serializable {
     }
 
     public Date getLastAccess() {
-        return lastAccess;
+        Date resultado=null;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
+            resultado= formatter.parse(lastAccess);
+        }catch (Exception e){
+            resultado=new Date();
+        }
+        return resultado;
     }
 
-    public void setLastAccess(Date lastAccess) {
-        this.lastAccess = lastAccess;
+    public void setLastAccess(Timestamp lastAccess) {
+        this.lastAccess = lastAccess.toString();
     }
 
     public Date getLastPasswordChange() {
-        return lastPasswordChange;
+        Date resultado=null;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
+            resultado= formatter.parse(lastPasswordChange);
+        }catch (Exception e){
+            resultado=new Date();
+        }
+        return resultado;
     }
 
-    public void setLastPasswordChange(Date lastPasswordChange) {
-        this.lastPasswordChange = lastPasswordChange;
+    public void setLastPasswordChange(Timestamp lastPasswordChange) {
+        this.lastPasswordChange = lastPasswordChange.toString();
     }
 
-    public Set<Rating> getRatings() {
+    public Set<Ratings> getRatings() {
         return ratings;
     }
 
-    public void setRatings(Set<Rating> ratings) {
+    public void setRatings(Set<Ratings> ratings) {
         this.ratings = ratings;
     }
 
-    public Set<Document> getDocuments() {
+    public Set<Documents> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(Set<Document> documents) {
+    public void setDocuments(Set<Documents> documents) {
         this.documents = documents;
     }
 
-    public Set<Group> getGroups() {
+    public Set<Groups> getGroups() {
         return groups;
     }
 
-    public void setGroups(Set<Group> groups) {
+    public void setGroups(Set<Groups> groups) {
         this.groups = groups;
     }
 
     /**
      * @return the adminGroups
      */
-    public Set<Group> getAdminGroups() {
+    public Set<Groups> getAdminGroups() {
         return adminGroups;
     }
 
     /**
      * @param adminGroups the adminGroups to set
      */
-    public void setAdminGroups(Set<Group> adminGroups) {
+    public void setAdminGroups(Set<Groups> adminGroups) {
         this.adminGroups = adminGroups;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
-            return false;
-        }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "serverapplication.entities.User[ id=" + id + " ]";
-    }
-
-    public ContentValues toContentValues(){
-        ContentValues contentValues=new ContentValues();
-        contentValues.put("username",login);
-        contentValues.put("password",password);
-        contentValues.put("active",1);
-        return contentValues;
-    }
 
 }

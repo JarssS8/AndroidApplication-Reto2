@@ -1,28 +1,67 @@
 <resources>
     <string name="app_name">AndroidApplication-Reto2</string>
+    <string name="url_retrofit">http://192.168.21.125:8080/ServerApplication-Reto2/webresources/</string>
 
-    <string name="logout">LogOut</string>
-    <string name="welcome">Welcome</string>
-    <string name="user_data">User Data</string>
-    <string name="getit">GetIt</string>
-    <string name="paramethers_signup">*Username 4 -10 characters *Email possibility example email.example@extension.cope*Password 8 -14 characters *Password must have at least one upper case and one number</string>
+    <!--LOG IN-->
     <string name="username_login">Username</string>
     <string name="password_login">Password</string>
     <string name="login_button">LogIn</string>
     <string name="signup_login">SignUp</string>
     <string name="company_name">2DAM 2CURIOUS</string>
-    <string name="textview">TextView</string>
-    <string name="todo">TODO</string>
+    <string name="email_request">Insert your email</string>
+    <string name="confirmation_reset_password">SEND</string>
+    <string name="information_reset_password_correctly">The email will be send in few seconds</string>
+    <string name="telf_number">tel:645636710</string>
+    <string name="no_connection">NO CONNECTION, CHECK YOUR CONNECTION</string>
+    <string name="user_no_correct_format">Username format its not correct</string>
+    <string name="pass_no_correct_format">Password format its not correct</string>
+    <string name="user_and_pass_no_correct_format">Username and password format are not correct</string>
+    <string name="help_call">Click for help -></string>
+    <string name="remember_login">Remember Login?</string>
+    <string name="forgot_password">Forgot Password? Click Here</string>
+    <string name="email_not_found">User not found</string>
+    <string name="server_error">Unexpected error, try it later</string>
+    <string name="client_error">Error happens try it later</string>
+
+    <!--SIGNUP-->
+
+    <string name="paramethers_signup">*Username 4 -10 characters *Email possibility example email.example@extension.cope*Password 8 -14 characters *Password must have at least one upper case and one number</string>
     <string name="full_name">Full Name</string>
     <string name="signup_text">Complete all the fields for a succesfull SignUp</string>
     <string name="repeat_password">Repeat Password</string>
+    <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="username">Username</string>
+    <string name="getit">GetIt</string>
     <string name="confirm">Confirm</string>
+    <string name="username_bad_format">Username invalid format</string>
+    <string name="password_bad_format">Password invalid format</string>
+    <string name="password_upper_and_number">Password must have an upper case and a number</string>
+    <string name="password_and_rep_password_no_match">Password and repeat password dont match</string>
+    <string name="email_bad_format">Email invalid format</string>
+    <string name="invalid_full_name">Full name long must be between 0 and 45</string>
+    <string name="user_already_exists">Login already exists on database</string>
+    <string name="user_wrong_password">Wrong password</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--MAIN WINDOW-->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="logout">Are you sure that want log out?</string>
+    <string name="delete_doc">Document deleted</string>
+    <string name="doc_not_found">Documents not found</string>
+    <string name="doc_name_request">Introduce the new document name</string>
+    <string name="doc_name_saved">New document name saved</string>
+    <string name="document_not_found">Document not found</string>
+    <string name="show_credits">"Cant show the credits please open it manually"</string>
+
+
+    <string name="user_data">User Data</string>
+    <string name="welcome">Welcome toLearn()</string>
+
+    <string name="textview">TextView</string>
+    <string name="todo">TODO</string>
+    <string name="document_menu">Documents</string>
+    <string name="search_document_menu">Search documents</string>
 
 
 </resources>

@@ -5,30 +5,35 @@
  */
 package com.example.androidapplication_reto2.project.beans;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 import java.io.Serializable;
 import java.util.Set;
 
 
 /**
  * Entity of the groups of users
+ *
  * @author Diego Urraca
  */
-
-public class Group implements Serializable{
-    private static final long serialVersionUID= 1L;
-    
+@Root(name = "groups")
+public class Group implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Element(name = "id")
     private Long id;
-    
+    @Element(name = "name")
     private String name;
-   
+    @Element(name = "password")
     private String password;
-    
+    @Element(name = "groupAdmin")
     private User groupAdmin;
     //List of users that are in the group
-
+    @ElementList(name = "users", required = false, inline = true)
     private Set<User> users;
     //List of documents that are uploaded by the group
-   
+    @ElementList(name = "documents", required = false, inline = true)
     private Set<Document> documents;
 
     /**
@@ -100,7 +105,7 @@ public class Group implements Serializable{
     public void setUsers(Set<User> users) {
         this.users = users;
     }
-    
+
 
     /**
      * @return the documents
@@ -116,9 +121,10 @@ public class Group implements Serializable{
     public void setDocuments(Set<Document> documents) {
         this.setDocuments(documents);
     }
-    
+
     /**
      * Verify if an id is not null
+     *
      * @return 0
      */
     @Override
@@ -127,9 +133,10 @@ public class Group implements Serializable{
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-    
+
     /**
      * Compare if two group ids are equals
+     *
      * @param object
      * @return true or false, it depends
      */
@@ -144,14 +151,15 @@ public class Group implements Serializable{
         }
         return true;
     }
-    
+
     /**
      * id to String
+     *
      * @return the String
      */
     @Override
     public String toString() {
         return "serverapplication.entities.Group[ id=" + id + " ]";
     }
-    
+
 }

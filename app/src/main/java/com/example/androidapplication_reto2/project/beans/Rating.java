@@ -5,41 +5,49 @@
  */
 package com.example.androidapplication_reto2.project.beans;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Entity class for rating. 
  * @author Gaizka Andrés
  */
-
+@Root(name = "rating")
 public class Rating implements Serializable{
     private static final long serialVersionUID=1L;
     /**
      * Id to indentificate the rating
      */
+    @Element(name = "id", required = false)
     private RatingId id;
     /**
      * The rating given to the document
      */
-  
+    @Element(name = "rating", required = false)
     private int rating;
     /**
      * The rating given to the document
      */
+    @Element(name = "review", required = false)
     private String review;
     /**
      * The date the review has been done
      */
-    private Date ratingDate;
+    @Element(name = "ratingDate", required = false)
+    private String ratingDate;
     /**
      * The document were the rating has been done
      */
-   
+    @Element(name = "document", required = false)
     private Document document;
     /**
      * The user who rates the document
      */
+    @Element(name = "user", required = false)
     private User user;
 
     public RatingId getId() {
@@ -67,11 +75,18 @@ public class Rating implements Serializable{
     }
 
     public Date getRatingDate() {
-        return ratingDate;
+        Date resultado=null;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
+            resultado= formatter.parse(ratingDate);
+        }catch (Exception e){
+            resultado=new Date();
+        }
+        return resultado;
     }
 
     public void setRatingDate(Date ratingDate) {
-        this.ratingDate = ratingDate;
+        this.ratingDate = ratingDate.toString();
     }
 
     public Document getDocument() {

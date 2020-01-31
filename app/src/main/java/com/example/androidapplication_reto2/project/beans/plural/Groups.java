@@ -1,0 +1,165 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.example.androidapplication_reto2.project.beans.plural;
+
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+import java.io.Serializable;
+import java.util.Set;
+
+
+/**
+ * Entity of the groups of users
+ *
+ * @author Diego Urraca
+ */
+@Root(name = "groups")
+public class Groups implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Element(name = "id")
+    private Long id;
+    @Element(name = "name")
+    private String name;
+    @Element(name = "password")
+    private String password;
+    @Element(name = "groupAdmin")
+    private Users groupAdmin;
+    //List of users that are in the group
+    @ElementList(name = "users", required = false, inline = true)
+    private Set<Users> users;
+    //List of documents that are uploaded by the group
+    @ElementList(name = "documents", required = false, inline = true)
+    private Set<Documents> documents;
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * @return the adminId
+     */
+    public Users getGroupAdmin() {
+        return groupAdmin;
+    }
+
+    /**
+     * @param groupAdmin the adminId to set
+     */
+    public void setGroupAdmin(Users groupAdmin) {
+        this.groupAdmin = groupAdmin;
+    }
+
+    /**
+     * @return the users
+     */
+    public Set<Users> getUsers() {
+        return users;
+    }
+
+    /**
+     * @param users the users to set
+     */
+    public void setUsers(Set<Users> users) {
+        this.users = users;
+    }
+
+
+    /**
+     * @return the documents
+     */
+
+    public Set<Documents> getDocuments() {
+        return documents;
+    }
+
+    /**
+     * @param documents the documents to set
+     */
+    public void setDocuments(Set<Documents> documents) {
+        this.setDocuments(documents);
+    }
+
+    /**
+     * Verify if an id is not null
+     *
+     * @return 0
+     */
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    /**
+     * Compare if two group ids are equals
+     *
+     * @param object
+     * @return true or false, it depends
+     */
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Groups)) {
+            return false;
+        }
+        Groups other = (Groups) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * id to String
+     *
+     * @return the String
+     */
+    @Override
+    public String toString() {
+        return "serverapplication.entities.Group[ id=" + id + " ]";
+    }
+
+}

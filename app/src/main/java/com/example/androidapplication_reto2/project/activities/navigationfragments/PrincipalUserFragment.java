@@ -1,175 +1,149 @@
 package com.example.androidapplication_reto2.project.activities.navigationfragments;
 
-
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.view.ViewGroup.LayoutParams;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapplication_reto2.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.nbsp.materialfilepicker.MaterialFilePicker;
-import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+import com.example.androidapplication_reto2.project.activities.LoginActivity;
+import com.example.androidapplication_reto2.project.activities.MainFragmentsController;
+import com.example.androidapplication_reto2.project.beans.lists.DocumentList;
+import com.example.androidapplication_reto2.project.factories.DocumentFactory;
+import com.example.androidapplication_reto2.project.interfaces.RestDocument;
+import com.example.androidapplication_reto2.project.recyclers.MainRecyclerView;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.io.File;
-import java.util.regex.Pattern;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment} subclass that is going to be the pricipal window of all my fragments.
  */
-public class PrincipalUserFragment extends Fragment implements View.OnClickListener{
+public class PrincipalUserFragment extends Fragment {
 
-    private static final int PERMISSIONS_REQUEST_CODE = 0;
-    private static final int FILE_PICKER_REQUEST_CODE = 1 ;
-    private FloatingActionButton floatingAddDocument;
-    private EditText newDocNameUpload;
-    private TextView lbDocUploadPath;
-    private  ImageView imageButtonFindDocument,imageButtonShowDocument;
-    private String path="";
+    private RecyclerView recyclerView;
+    private MainRecyclerView mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
-
+    /**
+     * Creation of the principal fragment, is going to be the first fragment showed when the user log in.
+     * Contains a list with all documents in the application.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return the view inflated for this fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View root=inflater.inflate(R.layout.fragment_principal_user, container, false);
+        View root = inflater.inflate(R.layout.fragment_principal_user, container, false);
+        setHasOptionsMenu(true);
 
-        floatingAddDocument=root.findViewById(R.id.floatingActionButton);
+        //Load all documents
+        RestDocument restDocument = DocumentFactory.getClient();
+        Call<DocumentList> documentsUser = restDocument.findAllDocuments();
+        documentsUser.enqueue(new Callback<DocumentList>() {
+            @Override
+            public void onResponse(Call<DocumentList> call, Response<DocumentList> response) {
+                Log.d("PRINCIPAL", "YUJUUU");
+                switch (response.code()) {
+                    case 200:
+                        if (response.isSuccessful()) {
+                            layoutManager = new LinearLayoutManager(getContext());
+                            recyclerView = root.findViewById(R.id.recyclerViewDocumentsUser);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setLayoutManager(layoutManager);
+                            mAdapter = new MainRecyclerView(response.body());
+                            recyclerView.setAdapter(mAdapter);
+                        }
+                        break;
+                    case 404:
+                        Snackbar.make(getView(), getString(R.string.doc_not_found), Snackbar.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Snackbar.make(getView(), getString(R.string.server_error), Snackbar.LENGTH_SHORT).show();
+                        break;
+                }
 
-        floatingAddDocument.setOnClickListener(this);
+            }
+
+            @Override
+            public void onFailure(Call<DocumentList> call, Throwable t) {
+                Log.d("PRINCIPAL", "NOPE");
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(getString(R.string.client_error)).show();
+            }
+        });
 
         return root;
     }
 
 
-
+    /**
+     * Creates the menu selected on the App Bar Main
+     *
+     * @param menu     items that want be created on AppBarMenu
+     * @param inflater component for inflate the menu
+     */
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.floatingActionButton:
-                Log.i("SignUp", "User click on help button.Creating a layout inflater for the popUp view");
-                LayoutInflater layoutInflater = (LayoutInflater) getContext().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                Log.i("SignUp", "Usign the inflator inflating the layout");
-                View popUpView = layoutInflater.inflate(R.layout.pop_up_upload_document, null);
-                Log.i("SignUp", "Defining pop up componentes");
-                final PopupWindow popupWindow = new PopupWindow(popUpView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,true);
-                //FindViewById From the popUp
-                Button btUploadDocument = popUpView.findViewById(R.id.btUploadDocument);
-                newDocNameUpload = popUpView.findViewById(R.id.txtUploadDocName);
-                Spinner spinnerCategories = popUpView.findViewById(R.id.spinnerCategoriesUploadDocument);
-                imageButtonFindDocument= popUpView.findViewById(R.id.imageButtonFindFile);
-                lbDocUploadPath = popUpView.findViewById(R.id.lbPathDocument);
-                imageButtonShowDocument = popUpView.findViewById(R.id.imageButtonShowDocument);
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.log_out, menu);
+    }
 
-                imageButtonFindDocument.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        checkPermisionAndOpenFilePicker();
-                    }
-                });
-
-                imageButtonShowDocument.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(lbDocUploadPath.getText().toString().equalsIgnoreCase(path)) {
-                            Fragment fragment = new ViewDocumentFragment(new File(lbDocUploadPath.getText().toString()));
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.nav_host_fragment, fragment);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
-                        }else{
-                            //Snackbar.make(v,"Select one pdf before",Snackbar.LENGTH_SHORT).show();
-                            Toast.makeText(getContext(), "dsf", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                btUploadDocument.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });
-                Log.i("SignUp", "Showing the pop up");
-                popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+    /**
+     * Select items from my menu
+     *
+     * @param item the item that user is interacting with
+     * @return true if the item was selected
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btLogOut:
+                logOutMessage();
+                break;
+            case R.id.btCredits:
+                Snackbar.make(getView(),getString(R.string.show_credits),Snackbar.LENGTH_SHORT).show();
                 break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
-    private void checkPermisionAndOpenFilePicker() {
-        String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
-
-        if (ContextCompat.checkSelfPermission(getContext(), permission) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permission)) {
-                Toast.makeText(getContext(), "Algo fue mal panita", Toast.LENGTH_SHORT).show();
-            } else {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, PERMISSIONS_REQUEST_CODE);
-            }
-        } else {
-            openFilePicker();
-        }
-    }
-
-    private void openFilePicker() {
-        new MaterialFilePicker()
-                .withSupportFragment(PrincipalUserFragment.this)
-                .withRequestCode(FILE_PICKER_REQUEST_CODE)
-                .withHiddenFiles(true)
-                .withFilter(Pattern.compile(".*\\.pdf$"))
-                .withTitle("Select PDF file")
-                .start();
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_CODE: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openFilePicker();
-                } else {
-                    Toast.makeText(getContext(), "Algo fue mal panita", Toast.LENGTH_SHORT).show();
+    /**
+     * Alert dialog when the user clicks on log out button
+     */
+    public void logOutMessage() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        MediaPlayer.create(getContext(), R.raw.byebye).start();
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivity(intent);
+                        break;
                 }
             }
-        }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(getString(R.string.logout)).setPositiveButton(getString(R.string.yes), dialogClickListener)
+                .setNegativeButton(getString(R.string.no), dialogClickListener).show();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            if (path != null) {
-                Log.d("Path (fragment): ", path);
-                lbDocUploadPath.setText(path);
-
-            }
-        }
-    }
 }
