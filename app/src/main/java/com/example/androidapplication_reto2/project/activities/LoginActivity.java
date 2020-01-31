@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                 builder.setView(input);
-                builder.setMessage(getString(R.string.email_request)).setPositiveButton(getString(R.string.confirmation_reset_password), dialogClickListener).show();
+                builder.setMessage(getString(R.string.email_request)).setPositiveButton(getString(R.string.confirmation_reset_password), dialogClickListener).setNegativeButton(getString(R.string.no),dialogClickListener).show();
             }
         });
 

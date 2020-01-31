@@ -2,6 +2,7 @@ package com.example.androidapplication_reto2.project.activities.navigationfragme
 
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.androidapplication_reto2.R;
@@ -33,7 +35,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DocumentDataFragment extends Fragment{
+public class DocumentDataFragment extends Fragment {
 
     private View root;
     private static Document documentData;
@@ -41,6 +43,7 @@ public class DocumentDataFragment extends Fragment{
 
     /**
      * Isolated fragment that is going to show the data of one document and if the user is admin, lets him delete the document
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -62,7 +65,7 @@ public class DocumentDataFragment extends Fragment{
             public void onResponse(Call<String> call, Response<String> response) {
                 switch (response.code()) {
                     case 200:
-                        Log.d("PRIVILEGE",response.body());
+                        Log.d("PRIVILEGE", response.body());
                         if (response.body().equalsIgnoreCase("admin")) {
                             setHasOptionsMenu(true);
                         }
@@ -82,7 +85,7 @@ public class DocumentDataFragment extends Fragment{
 
         //Document data
         docName.setText(documentData.getName());
-        docData.setText("Author: Gaizka"+"\nCategory: "+documentData.getCategory().getName()+"\nUpload date: "+documentData.getUploadDate());
+        docData.setText("Author: Gaizka" + "\nCategory: " + documentData.getCategory().getName() + "\nUpload date: " + documentData.getUploadDate());
 
         return root;
     }
@@ -97,13 +100,13 @@ public class DocumentDataFragment extends Fragment{
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         RestUser restUser = UserFactory.getClient();
 
-        inflater.inflate(R.menu.delete_document,menu);
+        inflater.inflate(R.menu.delete_document, menu);
     }
 
     /**
      * Select items from my menu
      *
-             * @param item the item that user is interacting with
+     * @param item the item that user is interacting with
      * @return true if the item was selected
      */
     @Override
@@ -128,6 +131,46 @@ public class DocumentDataFragment extends Fragment{
 
                     }
                 });
+                break;
+            case R.id.btEdit:
+                final EditText input = new EditText(getContext());
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                documentData.setName(input.getText().toString());
+                                RestDocument restDocument = DocumentFactory.getClient();
+                                Call<Void> newNameDocCall = restDocument.modifyDocument(documentData);
+                                newNameDocCall.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        switch (response.code()) {
+                                            case 204:
+                                                if (response.isSuccessful())
+                                                    Snackbar.make(getView(), getString(R.string.doc_name_saved), Snackbar.LENGTH_SHORT).show();
+                                                    Navigation.findNavController(getView()).navigate(R.id.action_nav_data_document_to_nav_home);
+                                                break;
+                                            case 404:
+                                                Snackbar.make(getView(), getString(R.string.document_not_found), Snackbar.LENGTH_SHORT).show();
+                                                break;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                        builder.setMessage(getString(R.string.client_error)).show();
+                                    }
+                                });
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setView(input);
+                builder.setMessage(getString(R.string.doc_name_request)).setPositiveButton(getString(R.string.confirmation_reset_password), dialogClickListener).setNegativeButton(getString(R.string.no), dialogClickListener).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -49,6 +49,9 @@
     <string name="logout">Are you sure that want log out?</string>
     <string name="delete_doc">Document deleted</string>
     <string name="doc_not_found">Documents not found</string>
+    <string name="doc_name_request">Introduce the new document name</string>
+    <string name="doc_name_saved">New document name saved</string>
+    <string name="document_not_found">Document not found</string>
 
 
     <string name="user_data">User Data</string>

@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 public class CategoryFactory {
-        private static String API_BASE_URL = "http://192.168.20.112:8080/ServerApplication-Reto2/webresources/category/";
+        private static String API_BASE_URL = "http://192.168.21.125:8080/ServerApplication-Reto2/webresources/category/";
 
     /**
      * Get client from interact with the factory rest category

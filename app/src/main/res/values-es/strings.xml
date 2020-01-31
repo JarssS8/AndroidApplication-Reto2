@@ -50,6 +50,10 @@
     <string name="logout">¿Seguro que quieres cerrar sesion?</string>
     <string name="delete_doc">Documento eliminado</string>
     <string name="doc_not_found">Documentos no encontrados</string>
+    <string name="doc_name_request">Introduce el nuevo nombre de documento</string>
+    <string name="doc_name_saved">Nuevo nombre de documento guardado</string>
+    <string name="document_not_found">Documento no encontrado</string>
+
 
 
 
