@@ -51,14 +51,17 @@ public class Encryptation {
      * @throws Exception
      */
     public static String encrypt(String messageToEncrypt) throws Exception {
-        KeyFactory keyFactory = KeyFactory.getInstance(CRYPTO_METHOD);
-        X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(hexStringToByteArray(publicKey));
-        PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
+        if(!publicKey.equalsIgnoreCase("")) {
+            KeyFactory keyFactory = KeyFactory.getInstance(CRYPTO_METHOD);
+            X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(hexStringToByteArray(publicKey));
+            PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
 
-        cipher = Cipher.getInstance(OPCION_RSA);
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        byte[] encrypted = cipher.doFinal(messageToEncrypt.getBytes());
-        return toHexadecimal(encrypted);
+            cipher = Cipher.getInstance(OPCION_RSA);
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            byte[] encrypted = cipher.doFinal(messageToEncrypt.getBytes());
+            return toHexadecimal(encrypted);
+        }
+        return "";
     }
 
     /**
